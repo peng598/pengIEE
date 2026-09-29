@@ -1,0 +1,32 @@
+---
+layout: default
+title: 嵌入式系统学习笔记
+---
+{% assign embedded_notes = site.pages | where_exp: "item", "item.category == '嵌入式系统'" | sort: "order" %}
+<section class="collection-heading">
+  <p class="eyebrow"><span class="eyebrow-mark"></span> 知识库 / 01</p>
+  <h1>嵌入式系统</h1>
+  <p class="collection-description">从 C 语言与内存，到处理器中断和实时系统。</p>
+  <div class="collection-meta"><span>{{ embedded_notes.size }} 篇笔记</span><span>最近更新：{{ site.time | date: "%Y.%m" }}</span></div>
+</section>
+
+<section class="note-section" aria-labelledby="notes-heading">
+  <div class="section-heading">
+    <h2 id="notes-heading">课程笔记</h2>
+    <span>精选整理</span>
+  </div>
+  <ol class="note-list">
+    {% for item in embedded_notes %}
+      <li>
+        <a class="note-link" href="{{ item.url | relative_url }}">
+          <span class="note-number">{{ item.order | prepend: '0' | slice: -2, 2 }}</span>
+          <span class="note-copy">
+            <strong>{{ item.title }}</strong>
+            <span>{{ item.summary }}</span>
+          </span>
+          <span class="note-chevron" aria-hidden="true"></span>
+        </a>
+      </li>
+    {% endfor %}
+  </ol>
+</section>
