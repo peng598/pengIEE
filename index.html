@@ -4,11 +4,13 @@ title: 嵌入式系统
 summary: 从单片机基础到实时系统的课程笔记与学习记录。
 ---
 {% assign embedded_notes = site.pages | where_exp: "item", "item.category == '嵌入式系统'" | sort: "order" %}
+{% assign all_notes = site.pages | where_exp: "item", "item.category" | sort: "order" %}
+{% assign categories = all_notes | map: "category" | uniq %}
 <header class="collection-heading">
   <p class="eyebrow">PENGIEE <span class="eyebrow-divider">/</span> 课程笔记</p>
   <h1>嵌入式系统</h1>
   <p class="collection-description">从单片机基础、实时系统，到控制算法与整车验证。</p>
-  <div class="collection-meta"><span>{{ embedded_notes.size }} 篇整理笔记</span><span>持续更新</span></div>
+  <div class="collection-meta"><span>{{ all_notes.size }} 篇整理笔记</span><span>{{ categories.size }} 个知识方向</span><span>持续更新</span></div>
 </header>
 
 <section class="learning-path" aria-labelledby="path-heading">
@@ -21,6 +23,16 @@ summary: 从单片机基础到实时系统的课程笔记与学习记录。
     <li><span class="path-index">02</span><span><strong><a href="{{ '/notes/freertos-realtime/' | relative_url }}">实时系统</a></strong><small>任务调度、并发与数据安全</small></span></li>
     <li><span class="path-index">03</span><span><strong><a href="{{ '/notes/pid-digital-control/' | relative_url }}">控制与验证</a></strong><small>PID、FOC、传感器、通信与调试</small></span></li>
   </ol>
+</section>
+
+<section class="note-section" aria-labelledby="categories-heading">
+  <div class="section-heading"><h2 id="categories-heading">知识方向</h2><span>按主题浏览</span></div>
+  <div class="category-grid">
+    {% for category in categories %}
+      {% assign category_notes = all_notes | where: "category", category | sort: "order" %}
+      <a class="category-card" href="{{ category_notes[0].url | relative_url }}"><strong>{{ category }}</strong><span>{{ category_notes.size }} 篇笔记</span><small>{{ category_notes[0].summary }}</small></a>
+    {% endfor %}
+  </div>
 </section>
 
 <section class="note-section" aria-labelledby="notes-heading">

@@ -1,15 +1,11 @@
 ---
-title: 传感器与数字滤波
 layout: note
-category: 嵌入式系统
+title: "传感器与数字滤波"
+category: "嵌入式系统"
 order: 9
 permalink: /notes/sensors-digital-filtering/
-summary: 传感器标定、单位换算、滤波、编码器回绕和数据采样。
-tags:
-  - imu
-  - encoder
-  - adc
-  - filter
+summary: "传感器标定、单位换算、滤波、编码器回绕和数据采样。"
+source: "soft/MCU基础知识/09-传感器与数字滤波.md"
 ---
 
 # 传感器与数字滤波
@@ -135,10 +131,7 @@ fc ≈ 110 Hz
 ```
 
 响应较快，保留平衡控制所需动态。
-
-> **重点**
-> alpha与采样周期绑定。周期从1 ms改到2 ms而alpha不变，截止频率会减半。
-
+> **重点：> alpha与采样周期绑定。周期从1 ms改到2 ms而alpha不变，截止频率会减半。**
 ## 6. 初始化瞬态
 
 如果滤波器初值为0，而真实输入为1 g：
@@ -176,7 +169,7 @@ angle_gyro += gyro_rate * dt;
 angle = alpha * angle_gyro + (1.0f - alpha) * angle_acc;
 ```
 
-详细推导和项目参数见 [平衡车姿态与串级控制]({{ '/notes/balance-car-cascade-control/' | relative_url }})。
+详细推导和项目参数见 [08-平衡车姿态与串级控制]({{ '/notes/balance-car-cascade-control/' | relative_url }})。
 
 ## 8. 编码器回绕
 
@@ -321,4 +314,4 @@ addcheck += sumcheck;
 - [ ] 能处理编码器回绕和差分测速。
 - [ ] 能写出ADC电压、电流的完整换算链路。
 
-上一章：[平衡车姿态与串级控制]({{ '/notes/balance-car-cascade-control/' | relative_url }})  下一章：[串口-DMA与BLE协议]({{ '/notes/uart-dma-ble/' | relative_url }})
+上一章：[08-平衡车姿态与串级控制]({{ '/notes/balance-car-cascade-control/' | relative_url }})  下一章：[10-串口-DMA与BLE协议]({{ '/notes/uart-dma-ble/' | relative_url }})

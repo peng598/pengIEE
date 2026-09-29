@@ -1,15 +1,11 @@
 ---
-title: FOC无刷电机控制
 layout: note
-category: 嵌入式系统
+title: "FOC无刷电机控制"
+category: "嵌入式系统"
 order: 7
 permalink: /notes/foc-motor-control/
-summary: 无刷电机 FOC 控制链路、坐标变换、电流环与 SVPWM。
-tags:
-  - foc
-  - pmsm
-  - bldc
-  - svpwm
+summary: "无刷电机 FOC 控制链路、坐标变换、电流环与 SVPWM。"
+source: "soft/MCU基础知识/07-FOC无刷电机控制.md"
 ---
 
 # FOC无刷电机控制
@@ -47,10 +43,7 @@ while(electrical_angle >= 2.0f * PI)
 while(electrical_angle < 0.0f)
     electrical_angle += 2.0f * PI;
 ```
-
-> **安全警告**
-> 极对数错误或零偏错误会让电压矢量与转子磁场错位，表现为电流很大、转矩很小、抖动或反转。
-
+> **安全警告：> 极对数错误或零偏错误会让电压矢量与转子磁场错位，表现为电流很大、转矩很小、抖动或反转。**
 ## 3. 为什么要坐标变换
 
 三相电流是随电角度变化的正弦量，直接分别控制三个相电流较复杂。FOC通过坐标变换把它们转换到随转子一起旋转的坐标系，使稳态电流变成近似直流量。
@@ -317,4 +310,4 @@ void FOC_ISR(void)
 - [ ] 能描述PWM触发ADC到更新PWM的完整链路。
 - [ ] 能根据故障现象初步判断角度、电流或调参问题。
 
-上一章：[PID与数字控制]({{ '/notes/pid-digital-control/' | relative_url }})  下一章：[平衡车姿态与串级控制]({{ '/notes/balance-car-cascade-control/' | relative_url }})
+上一章：[06-PID与数字控制]({{ '/notes/pid-digital-control/' | relative_url }})  下一章：[08-平衡车姿态与串级控制]({{ '/notes/balance-car-cascade-control/' | relative_url }})

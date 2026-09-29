@@ -1,15 +1,11 @@
 ---
-title: 调试、故障与上板流程
 layout: note
-category: 嵌入式系统
+title: "调试、故障与上板流程"
+category: "嵌入式系统"
 order: 11
 permalink: /notes/debug-and-hardware-bringup/
-summary: 嵌入式调试工具、故障定位和分阶段安全上板流程。
-tags:
-  - debug
-  - hardfault
-  - jlink
-  - safety
+summary: "嵌入式调试工具、故障定位和分阶段安全上板流程。"
+source: "soft/MCU基础知识/11-调试故障与上板流程.md"
 ---
 
 # 调试、故障与上板流程
@@ -107,10 +103,7 @@ gpio_bits_reset(GPIOA, GPIO_PINS_3);
 - `ADC1_2_IRQHandler()`执行时间。
 - SPI编码器读取时间。
 - Flash保存期间的最长阻塞。
-
-> **注意**
-> 不要在FOC中断中频繁调用复杂GPIO库函数。可直接使用置位/清零寄存器减小探针开销。
-
+> **注意：> 不要在FOC中断中频繁调用复杂GPIO库函数。可直接使用置位/清零寄存器减小探针开销。**
 ## 6. 逻辑分析仪检查SPI
 
 检查项目：
@@ -270,4 +263,4 @@ void HardFault_C(uint32_t *stack)
 - [ ] 能按分层顺序定位电机和控制问题。
 - [ ] 能执行安全、可回退的上板流程。
 
-上一章：[串口-DMA与BLE协议]({{ '/notes/uart-dma-ble/' | relative_url }})  下一章：[项目源码导读与练习]({{ '/notes/project-code-reading/' | relative_url }})
+上一章：[10-串口-DMA与BLE协议]({{ '/notes/uart-dma-ble/' | relative_url }})  下一章：[12-项目源码导读与练习]({{ '/notes/project-code-reading/' | relative_url }})

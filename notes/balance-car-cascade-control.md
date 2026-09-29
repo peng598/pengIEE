@@ -1,15 +1,11 @@
 ---
-title: 平衡车姿态与串级控制
 layout: note
-category: 嵌入式系统
+title: "平衡车姿态与串级控制"
+category: "嵌入式系统"
 order: 8
 permalink: /notes/balance-car-cascade-control/
-summary: 姿态融合、平衡车直立环、速度环和转向环的协作。
-tags:
-  - balance-car
-  - inverted-pendulum
-  - complementary-filter
-  - cascade-control
+summary: "姿态融合、平衡车直立环、速度环和转向环的协作。"
+source: "soft/MCU基础知识/08-平衡车姿态与串级控制.md"
 ---
 
 # 平衡车姿态与串级控制
@@ -254,10 +250,7 @@ AND IMU无故障
 - Iq接近限制并持续1秒时判定堵转。
 - 高速和异常加速度条件触发保护。
 - 电池低于7 V时灯光提示。
-
-> **注意**
-> README明确说明传感器和电机保护仍不完整。保护逻辑需要独立于正常控制进行故障注入测试。
-
+> **注意：> README明确说明传感器和电机保护仍不完整。保护逻辑需要独立于正常控制进行故障注入测试。**
 ## 14. 状态机建议
 
 ```mermaid
@@ -300,4 +293,4 @@ stateDiagram-v2
 - [ ] 能说明直立、速度、转向和电机内环的层次。
 - [ ] 能根据物理动作验证整个控制符号链。
 
-上一章：[FOC无刷电机控制]({{ '/notes/foc-motor-control/' | relative_url }})  下一章：[传感器与数字滤波]({{ '/notes/sensors-digital-filtering/' | relative_url }})
+上一章：[07-FOC无刷电机控制]({{ '/notes/foc-motor-control/' | relative_url }})  下一章：[09-传感器与数字滤波]({{ '/notes/sensors-digital-filtering/' | relative_url }})

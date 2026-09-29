@@ -1,14 +1,11 @@
 ---
-title: 项目源码导读与练习
 layout: note
-category: 嵌入式系统
+title: "项目源码导读与练习"
+category: "嵌入式系统"
 order: 12
 permalink: /notes/project-code-reading/
-summary: 按信号链阅读平衡车固件，并通过实验验证控制与保护逻辑。
-tags:
-  - source-code
-  - exercises
-  - project
+summary: "按信号链阅读平衡车固件，并通过实验验证控制与保护逻辑。"
+source: "soft/MCU基础知识/12-项目源码导读与练习.md"
 ---
 
 # 项目源码导读与练习
@@ -292,4 +289,4 @@ for(uint32_t i = 0U; i < ARRAY_SIZE(feedback); i++)
 9. 如何从HardFault的PC定位到源码函数？
 10. 如果小车前倾时车轮向后转，应该按什么顺序排查符号？
 
-上一章：[调试故障与上板流程]({{ '/notes/debug-and-hardware-bringup/' | relative_url }})  返回：[教程总览]({{ '/notes/learning-roadmap/' | relative_url }})
+上一章：[11-调试故障与上板流程]({{ '/notes/debug-and-hardware-bringup/' | relative_url }})  返回：[00-教程总览]({{ '/notes/learning-roadmap/' | relative_url }})

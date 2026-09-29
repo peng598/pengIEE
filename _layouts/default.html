@@ -18,6 +18,7 @@
   <body>
     <a class="skip-link" href="#main">跳到正文</a>
     {% assign note_pages = site.pages | where_exp: "item", "item.category" | sort: "order" %}
+    {% assign nav_categories = note_pages | map: "category" | uniq %}
     <div class="mobile-bar">
       <a class="mobile-brand" href="{{ '/' | relative_url }}">{{ site.title }} <span>学习笔记</span></a>
       <button class="menu-toggle" type="button" aria-label="打开课程目录" aria-expanded="false" aria-controls="course-sidebar">
@@ -34,17 +35,12 @@
         <nav aria-label="课程目录" class="navigation">
           <p class="nav-label">导航</p>
           <a class="nav-link{% if page.url == '/' %} is-active{% endif %}" href="{{ '/' | relative_url }}"><span class="nav-index">⌂</span>笔记首页</a>
-          {% for item in note_pages %}
-            {% assign current_stage = '' %}
-            {% if item.order == 0 %}{% assign current_stage = '学习导览' %}
-            {% elsif item.order <= 3 %}{% assign current_stage = '基础与外设' %}
-            {% elsif item.order <= 5 %}{% assign current_stage = '实时系统' %}
-            {% else %}{% assign current_stage = '控制与验证' %}{% endif %}
-            {% if current_stage != previous_stage %}
-              <p class="nav-label nav-label-course">{{ current_stage }}{% if current_stage == '学习导览' %}<span>01</span>{% elsif current_stage == '基础与外设' %}<span>03</span>{% elsif current_stage == '实时系统' %}<span>02</span>{% else %}<span>07</span>{% endif %}</p>
-              {% assign previous_stage = current_stage %}
-            {% endif %}
-            <a class="nav-link nav-note{% if page.url == item.url %} is-active{% endif %}" href="{{ item.url | relative_url }}"><span class="nav-index">{{ item.order | prepend: '0' | slice: -2, 2 }}</span>{{ item.title }}</a>
+          {% for category in nav_categories %}
+            {% assign category_pages = note_pages | where: "category", category | sort: "order" %}
+            <p class="nav-label nav-label-course">{{ category }}<span>{{ category_pages.size | prepend: '0' | slice: -2, 2 }}</span></p>
+            {% for item in category_pages %}
+              <a class="nav-link nav-note{% if page.url == item.url %} is-active{% endif %}" href="{{ item.url | relative_url }}"><span class="nav-index">{{ item.order | prepend: '0' | slice: -2, 2 }}</span>{{ item.title }}</a>
+            {% endfor %}
           {% endfor %}
         </nav>
         <div class="sidebar-bottom">

@@ -1,14 +1,11 @@
 ---
-title: PID与数字控制
 layout: note
-category: 嵌入式系统
+title: "PID与数字控制"
+category: "嵌入式系统"
 order: 6
 permalink: /notes/pid-digital-control/
-summary: 离散 PID、积分抗饱和、控制环结构与调参实践。
-tags:
-  - pid
-  - control
-  - discrete-time
+summary: "离散 PID、积分抗饱和、控制环结构与调参实践。"
+source: "soft/MCU基础知识/06-PID与数字控制.md"
 ---
 
 # PID与数字控制
@@ -57,10 +54,7 @@ u[k] = Kp × e[k] + I[k] + D[k]
 Ki_discrete = Ki_continuous × Ts
 Kd_discrete = Kd_continuous / Ts
 ```
-
-> **重点**
-> 本项目的 `PID_Adjust()` 直接执行 `integral += error * Ki`，代码中没有显式Ts。因此参数Ki已经隐含当前调用周期。改变任务或控制环频率后，必须重新换算Ki。
-
+> **重点：> 本项目的 `PID_Adjust()` 直接执行 `integral += error * Ki`，代码中没有显式Ts。因此参数Ki已经隐含当前调用周期。改变任务或控制环频率后，必须重新换算Ki。**
 ## 4. 位置式PI例程
 
 ```c
@@ -160,10 +154,7 @@ D_out = gyro_rate * Kd;
 ```
 
 它相当于直接测得角度变化率，省去角度差分并降低差分噪声。
-
-> **说明**
-> D项正负号取决于传感器方向、误差定义和控制输出方向。不能只看公式，必须验证小车前倾时输出是否驱动车轮向前追赶重心。
-
+> **说明：> D项正负号取决于传感器方向、误差定义和控制输出方向。不能只看公式，必须验证小车前倾时输出是否驱动车轮向前追赶重心。**
 ## 7. 一阶滤波D项
 
 ```c
@@ -274,4 +265,4 @@ derivative_filtered += alpha *
 - [ ] 能按内环到外环顺序调参。
 - [ ] 能为每个控制量标注物理单位。
 
-上一章：[实时并发与数据安全]({{ '/notes/realtime-concurrency/' | relative_url }})  下一章：[FOC无刷电机控制]({{ '/notes/foc-motor-control/' | relative_url }})
+上一章：[05-实时并发与数据安全]({{ '/notes/realtime-concurrency/' | relative_url }})  下一章：[07-FOC无刷电机控制]({{ '/notes/foc-motor-control/' | relative_url }})

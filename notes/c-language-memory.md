@@ -1,14 +1,11 @@
 ---
-title: C语言与嵌入式内存
 layout: note
-category: 嵌入式系统
+title: "C语言与嵌入式内存"
+category: "嵌入式系统"
 order: 1
 permalink: /notes/c-language-memory/
-summary: 固定宽度整数、volatile、链接属性，以及栈、堆与程序内存布局。
-tags:
-  - c
-  - memory
-  - embedded
+summary: "固定宽度类型、指针、volatile、链接、结构体和嵌入式内存布局。"
+source: "soft/MCU基础知识/01-C语言与嵌入式内存.md"
 ---
 
 # C语言与嵌入式内存
@@ -35,10 +32,7 @@ uint16_t encoder = 32760U;
 int16_t error = -120;
 float current_a = 0.75f;
 ```
-
-> **注意**
-> `uint16_t value = -1;` 的结果不是 `-1`，而是 `65535`。混合有符号和无符号运算时必须先确认整数提升规则。
-
+> **注意：> `uint16_t value = -1;` 的结果不是 `-1`，而是 `65535`。混合有符号和无符号运算时必须先确认整数提升规则。**
 ### 溢出例程
 
 ```c
@@ -47,7 +41,7 @@ count++;
 /* count变成0，这是无符号整数定义良好的回绕。 */
 ```
 
-编码器回绕计算正是利用“差值”和边界判断处理这一问题，例如在 `Control.c` 的 `SpeedCompute()` 中。
+编码器回绕计算正是利用“差值”和边界判断处理这一问题，参考 `Control.c` 中的 `SpeedCompute()`。
 
 ## 2. 指针与内存映射寄存器
 
@@ -105,7 +99,7 @@ volatile uint32_t count;
 count++;  /* 读取、加一、写回，共多个步骤。 */
 ```
 
-如果任务和中断都执行 `count++`，可能丢失更新。后续的“实时并发与数据安全”章节会继续讨论这个问题。
+如果任务和中断都执行 `count++`，可能丢失更新。解决方案见 [05-实时并发与数据安全]({{ '/notes/realtime-concurrency/' | relative_url }})。
 
 ## 4. `static`、`extern` 与链接
 
@@ -126,10 +120,7 @@ Car_t Car;
 /* control.h：其他文件看到的是声明 */
 extern Car_t Car;
 ```
-
-> **注意**
-> 不要在头文件直接写 `Car_t Car;`。多个 `.c` 包含该头文件会产生重复定义，或者依赖编译器的非标准合并行为。
-
+> **安全警告：> 不要在头文件直接写 `Car_t Car;`。多个 `.c` 包含该头文件会产生重复定义，或者依赖编译器的非标准合并行为。**
 ### 函数内部静态变量
 
 ```c
@@ -228,7 +219,7 @@ flowchart LR
 | heap | `xTaskCreate()`分配 | 运行时分配 |
 | stack | 局部变量、返回地址 | 函数调用或任务运行时使用 |
 
-当前示例工程的 FreeRTOS 配置使用 12 KB 堆，具体参数可在 `FreeRTOSConfig.h` 中查看。
+当前FreeRTOS配置使用12 KB堆，参考 `FreeRTOSConfig.h`。
 
 ## 8. 宏的常见问题
 
@@ -284,4 +275,4 @@ void BuildPacket(const uint8_t *data)
 - [ ] 能解释结构体填充与packed风险。
 - [ ] 能画出Flash、RAM、栈和堆的关系。
 
-下一章：[Cortex-M4与中断系统]({{ '/notes/cortex-m4-interrupts/' | relative_url }})
+下一章：[02-Cortex-M4与中断系统]({{ '/notes/cortex-m4-interrupts/' | relative_url }})

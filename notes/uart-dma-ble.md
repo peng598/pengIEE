@@ -1,15 +1,11 @@
 ---
-title: 串口、DMA与BLE协议
 layout: note
-category: 嵌入式系统
+title: "串口、DMA与BLE协议"
+category: "嵌入式系统"
 order: 10
 permalink: /notes/uart-dma-ble/
-summary: UART、DMA 变长接收、BLE 遥控和可靠帧协议设计。
-tags:
-  - uart
-  - dma
-  - ble
-  - protocol
+summary: "UART、DMA 变长接收、BLE 遥控和可靠帧协议设计。"
+source: "soft/MCU基础知识/10-串口-DMA与BLE协议.md"
 ---
 
 # 串口、DMA与BLE协议
@@ -340,4 +336,4 @@ USART IDLE中断
 - [ ] 能正确处理多字节整数的字节序。
 - [ ] 能规划中断、通信任务和控制任务之间的数据流。
 
-上一章：[传感器与数字滤波]({{ '/notes/sensors-digital-filtering/' | relative_url }})  下一章：[调试故障与上板流程]({{ '/notes/debug-and-hardware-bringup/' | relative_url }})
+上一章：[09-传感器与数字滤波]({{ '/notes/sensors-digital-filtering/' | relative_url }})  下一章：[11-调试故障与上板流程]({{ '/notes/debug-and-hardware-bringup/' | relative_url }})

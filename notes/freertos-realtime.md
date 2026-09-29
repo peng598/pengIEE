@@ -1,14 +1,11 @@
 ---
-title: FreeRTOS实时系统
 layout: note
-category: 嵌入式系统
+title: "FreeRTOS实时系统"
+category: "嵌入式系统"
 order: 4
 permalink: /notes/freertos-realtime/
-summary: 任务状态、周期调度、任务栈、堆管理及任务间通信机制。
-tags:
-  - freertos
-  - rtos
-  - task
+summary: "任务状态、周期调度、任务栈、堆管理及任务间通信机制。"
+source: "soft/MCU基础知识/04-FreeRTOS实时系统.md"
 ---
 
 # FreeRTOS实时系统
@@ -38,10 +35,7 @@ RTOS把不同工作组织为任务，并负责：
 - 管理延时、超时和阻塞。
 - 保存和恢复任务上下文。
 - 提供任务间通信和同步机制。
-
-> **说明**
-> RTOS不会自动让程序实时。错误的优先级、阻塞、共享数据或超长中断仍然会破坏实时性。
-
+> **说明：> RTOS不会自动让程序实时。错误的优先级、阻塞、共享数据或超长中断仍然会破坏实时性。**
 ## 2. 任务状态
 
 ```mermaid
@@ -64,7 +58,7 @@ stateDiagram-v2
 
 ## 3. 创建任务
 
-当前示例工程的任务创建位于 `freertos_app.c`。
+当前项目的任务创建位于 `freertos_app.c`。
 
 ```c
 BaseType_t result = xTaskCreate(
@@ -148,7 +142,7 @@ int main(void)
 
 ## 6. 当前配置参数
 
-参考示例工程的 `FreeRTOSConfig.h`。
+参考 `FreeRTOSConfig.h`。
 
 | 参数 | 当前值 | 含义 |
 |---|---:|---|
@@ -267,10 +261,7 @@ void RxTask(void *argument)
     }
 }
 ```
-
-> **注意**
-> 使用FromISR API前，必须把USART中断优先级设置为数值5到15。当前优先级3不能直接使用这个例程。
-
+> **安全警告：> 使用FromISR API前，必须把USART中断优先级设置为数值5到15。当前优先级3不能直接使用这个例程。**
 ## 10. 优先级设计
 
 当前第一阶段只有一个业务任务：
@@ -325,4 +316,4 @@ void vApplicationStackOverflowHook(TaskHandle_t task, char *name)
 - [ ] 能区分队列、通知、信号量和互斥量。
 - [ ] 能解释FromISR API的优先级限制。
 
-上一章：[AT32外设驱动基础]({{ '/notes/at32-peripherals/' | relative_url }})  下一章：[实时并发与数据安全]({{ '/notes/realtime-concurrency/' | relative_url }})
+上一章：[03-AT32外设驱动基础]({{ '/notes/at32-peripherals/' | relative_url }})  下一章：[05-实时并发与数据安全]({{ '/notes/realtime-concurrency/' | relative_url }})

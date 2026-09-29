@@ -1,18 +1,11 @@
 ---
-title: AT32外设驱动基础
 layout: note
-category: 嵌入式系统
+title: "AT32外设驱动基础"
+category: "嵌入式系统"
 order: 3
 permalink: /notes/at32-peripherals/
-summary: AT32 时钟树、GPIO、定时器、ADC、DMA、SPI、UART 与 Flash。
-tags:
-  - at32
-  - gpio
-  - timer
-  - adc
-  - dma
-  - spi
-  - uart
+summary: "AT32 时钟树、GPIO、定时器、ADC、DMA、SPI、UART 与 Flash。"
+source: "soft/MCU基础知识/03-AT32外设驱动基础.md"
 ---
 
 # AT32外设驱动基础
@@ -32,10 +25,7 @@ AHB = 200 MHz
 APB1 = 100 MHz
 APB2 = 100 MHz
 ```
-
-> **注意**
-> 不同MCU在APB分频不为1时，定时器时钟可能自动乘2。计算PWM频率时必须查AT32参考手册并结合实测，不能只照搬STM32经验。
-
+> **注意：> 不同MCU在APB分频不为1时，定时器时钟可能自动乘2。计算PWM频率时必须查AT32参考手册并结合实测，不能只照搬STM32经验。**
 ## 2. GPIO
 
 GPIO配置结构体常见参数：
@@ -124,10 +114,7 @@ tmr_brkdt_config_struct.deadtime = 20U;
 ```
 
 `20`不是固定的纳秒数，而是定时器死区编码。必须根据定时器时钟、寄存器编码和MOS驱动器特性换算。
-
-> **安全警告**
-> 死区过小可能直通烧毁功率管；死区过大则增加波形失真和低速转矩误差。
-
+> **安全警告：> 死区过小可能直通烧毁功率管；死区过大则增加波形失真和低速转矩误差。**
 ## 4. ADC
 
 12位ADC输出范围通常为0到4095。
@@ -311,4 +298,4 @@ Flash参数必须确认：
 - [ ] 能配置DMA方向、地址自增和数据宽度。
 - [ ] 能判断SPI的CPOL/CPHA配置是否匹配器件手册。
 
-上一章：[Cortex-M4与中断系统]({{ '/notes/cortex-m4-interrupts/' | relative_url }})  下一章：[FreeRTOS实时系统]({{ '/notes/freertos-realtime/' | relative_url }})
+上一章：[02-Cortex-M4与中断系统]({{ '/notes/cortex-m4-interrupts/' | relative_url }})  下一章：[04-FreeRTOS实时系统]({{ '/notes/freertos-realtime/' | relative_url }})

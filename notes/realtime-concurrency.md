@@ -1,14 +1,11 @@
 ---
-title: 实时并发与数据安全
 layout: note
-category: 嵌入式系统
+title: "实时并发与数据安全"
+category: "嵌入式系统"
 order: 5
 permalink: /notes/realtime-concurrency/
-summary: 从竞态与数据一致性到临界区、快照和实时性评估。
-tags:
-  - realtime
-  - concurrency
-  - race-condition
+summary: "从竞态与数据一致性到临界区、快照和实时性评估。"
+source: "soft/MCU基础知识/05-实时并发与数据安全.md"
 ---
 
 # 实时并发与数据安全
@@ -183,10 +180,7 @@ MotorTarget_t Target_Read(void)
 ```
 
 写入开始时序列号变奇数，完成后变偶数。读取者只有在前后序列号相同且为偶数时才接受快照。
-
-> **说明**
-> 这是简化示例。严格实现还要考虑编译器和CPU内存屏障；Cortex-M单核环境较简单，但不能把示例盲目移植到多核系统。
-
+> **说明：> 这是简化示例。严格实现还要考虑编译器和CPU内存屏障；Cortex-M单核环境较简单，但不能把示例盲目移植到多核系统。**
 ## 9. 双缓冲
 
 适合较大的配置或采样数据：
@@ -306,4 +300,4 @@ FOC中断每100us执行20us → 20%
 - [ ] 能测量并解释任务WCET和抖动。
 - [ ] 能为共享数据指定唯一所有者。
 
-上一章：[FreeRTOS实时系统]({{ '/notes/freertos-realtime/' | relative_url }})  下一章：[PID与数字控制]({{ '/notes/pid-digital-control/' | relative_url }})
+上一章：[04-FreeRTOS实时系统]({{ '/notes/freertos-realtime/' | relative_url }})  下一章：[06-PID与数字控制]({{ '/notes/pid-digital-control/' | relative_url }})

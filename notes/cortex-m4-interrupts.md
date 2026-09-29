@@ -1,14 +1,11 @@
 ---
-title: Cortex-M4与中断系统
 layout: note
-category: 嵌入式系统
+title: "Cortex-M4与中断系统"
+category: "嵌入式系统"
 order: 2
 permalink: /notes/cortex-m4-interrupts/
-summary: 复位启动、异常压栈、NVIC 优先级、FreeRTOS 切换与 DWT 计时。
-tags:
-  - cortex-m4
-  - interrupt
-  - nvic
+summary: "从复位启动到 NVIC、异常压栈、FreeRTOS 异常和 HardFault 定位。"
+source: "soft/MCU基础知识/02-Cortex-M4与中断系统.md"
 ---
 
 # Cortex-M4与中断系统
@@ -53,7 +50,7 @@ else
 }
 ```
 
-当前示例工程的 `delay.c` 正是用它避免在中断中调用 `vTaskDelay()`。
+当前 `delay.c` 正是用它避免在中断中调用 `vTaskDelay()`。
 
 ## 3. 异常自动压栈
 
@@ -64,10 +61,7 @@ R0, R1, R2, R3, R12, LR, PC, xPSR
 ```
 
 处理函数返回时硬件自动恢复。编译器还会根据函数使用情况保存R4到R11。使用FPU时，浮点寄存器可能通过惰性压栈保存。
-
-> **说明**
-> 中断函数越复杂，压栈和执行时间越长。FOC中断中不应执行打印、Flash写入或阻塞等待。
-
+> **说明：> 中断函数越复杂，压栈和执行时间越长。FOC中断中不应执行打印、Flash写入或阻塞等待。**
 ## 4. NVIC优先级
 
 本芯片实现4个优先级位，因此有效抢占优先级为0到15。
@@ -92,10 +86,7 @@ nvic_irq_enable(ADC1_2_IRQn, 0, 0);
 | `ADC1_2_IRQn` | 中断号 |
 | 第一个 `0` | 抢占优先级 |
 | 第二个 `0` | 子优先级；Group 4下实际无子优先级位 |
-
-> **注意**
-> “任务优先级5”和“NVIC优先级5”含义相反。FreeRTOS任务数字越大优先级越高；NVIC数字越小优先级越高。
-
+> **安全警告：> “任务优先级5”和“NVIC优先级5”含义相反。FreeRTOS任务数字越大优先级越高；NVIC数字越小优先级越高。**
 ## 5. 中断嵌套示例
 
 假设USART优先级为6，ADC优先级为0：
@@ -160,7 +151,7 @@ sequenceDiagram
 | PendSV | 执行任务上下文切换 |
 | SysTick | 产生系统节拍、更新延时和超时 |
 
-当前示例工程通过 `FreeRTOSConfig.h` 将官方端口处理函数映射到启动文件需要的名称。
+当前工程通过 `FreeRTOSConfig.h` 将官方端口处理函数映射到启动文件需要的名称。
 
 ## 8. DWT周期计数器
 
@@ -201,7 +192,7 @@ float time_us = elapsed / 200.0f;
 - 中断向量错误或重复定义。
 - FPU配置与编译选项不一致。
 
-发生HardFault后应检查：PC、LR、xPSR、CFSR、HFSR、BFAR、MMFAR。后续的“调试故障与上板流程”章节会介绍完整定位步骤。
+发生HardFault后应检查：PC、LR、xPSR、CFSR、HFSR、BFAR、MMFAR。详细流程见 [11-调试故障与上板流程]({{ '/notes/debug-and-hardware-bringup/' | relative_url }})。
 
 ## 本章练习
 
@@ -218,4 +209,4 @@ float time_us = elapsed / 200.0f;
 - [ ] 能解释SysTick、PendSV和SVC各自职责。
 - [ ] 能用DWT测量函数执行时间。
 
-上一章：[C语言与嵌入式内存]({{ '/notes/c-language-memory/' | relative_url }})  下一章：[AT32外设驱动基础]({{ '/notes/at32-peripherals/' | relative_url }})
+上一章：[01-C语言与嵌入式内存]({{ '/notes/c-language-memory/' | relative_url }})  下一章：[03-AT32外设驱动基础]({{ '/notes/at32-peripherals/' | relative_url }})
