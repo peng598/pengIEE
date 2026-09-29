@@ -1,19 +1,32 @@
 ---
 layout: default
-title: 嵌入式系统学习笔记
+title: 嵌入式系统
+summary: 从单片机基础到实时系统的课程笔记与学习记录。
 ---
 {% assign embedded_notes = site.pages | where_exp: "item", "item.category == '嵌入式系统'" | sort: "order" %}
-<section class="collection-heading">
-  <p class="eyebrow"><span class="eyebrow-mark"></span> 知识库 / 01</p>
+<header class="collection-heading">
+  <p class="eyebrow">PENGIEE <span class="eyebrow-divider">/</span> 课程笔记</p>
   <h1>嵌入式系统</h1>
-  <p class="collection-description">从 C 语言与内存，到处理器中断和实时系统。</p>
-  <div class="collection-meta"><span>{{ embedded_notes.size }} 篇笔记</span><span>最近更新：{{ site.time | date: "%Y.%m" }}</span></div>
+  <p class="collection-description">从单片机基础、实时系统，到控制算法与整车验证。</p>
+  <div class="collection-meta"><span>{{ embedded_notes.size }} 篇整理笔记</span><span>持续更新</span></div>
+</header>
+
+<section class="learning-path" aria-labelledby="path-heading">
+  <div class="section-heading">
+    <h2 id="path-heading">学习路径</h2>
+    <span>基础 → 实时 → 控制</span>
+  </div>
+  <ol class="path-list">
+    <li><span class="path-index">01</span><span><strong><a href="{{ '/notes/c-language-memory/' | relative_url }}">基础与外设</a></strong><small>C、Cortex-M、中断与 AT32 外设</small></span></li>
+    <li><span class="path-index">02</span><span><strong><a href="{{ '/notes/freertos-realtime/' | relative_url }}">实时系统</a></strong><small>任务调度、并发与数据安全</small></span></li>
+    <li><span class="path-index">03</span><span><strong><a href="{{ '/notes/pid-digital-control/' | relative_url }}">控制与验证</a></strong><small>PID、FOC、传感器、通信与调试</small></span></li>
+  </ol>
 </section>
 
 <section class="note-section" aria-labelledby="notes-heading">
   <div class="section-heading">
-    <h2 id="notes-heading">课程笔记</h2>
-    <span>精选整理</span>
+    <h2 id="notes-heading">课程内容</h2>
+    <span>{{ embedded_notes.size }} 篇</span>
   </div>
   <ol class="note-list">
     {% for item in embedded_notes %}
@@ -24,7 +37,7 @@ title: 嵌入式系统学习笔记
             <strong>{{ item.title }}</strong>
             <span>{{ item.summary }}</span>
           </span>
-          <span class="note-chevron" aria-hidden="true"></span>
+          <span class="note-open" aria-hidden="true">阅读 →</span>
         </a>
       </li>
     {% endfor %}

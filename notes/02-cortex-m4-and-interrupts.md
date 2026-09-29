@@ -218,4 +218,4 @@ float time_us = elapsed / 200.0f;
 - [ ] 能解释SysTick、PendSV和SVC各自职责。
 - [ ] 能用DWT测量函数执行时间。
 
-上一章：[C语言与嵌入式内存]({{ '/notes/c-language-memory/' | relative_url }})  下一章：AT32外设驱动基础
+上一章：[C语言与嵌入式内存]({{ '/notes/c-language-memory/' | relative_url }})  下一章：[AT32外设驱动基础]({{ '/notes/at32-peripherals/' | relative_url }})

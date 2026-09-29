@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="{{ page.summary | default: site.description | escape }}">
+    <meta name="theme-color" content="#ffffff">
     <title>{% if page.title %}{{ page.title | escape }} - {% endif %}{{ site.title | escape }}</title>
     <link rel="stylesheet" href="{{ '/assets/site.css' | relative_url }}">
     <script>
@@ -17,40 +18,90 @@
   <body>
     <a class="skip-link" href="#main">跳到正文</a>
     {% assign note_pages = site.pages | where_exp: "item", "item.category" | sort: "order" %}
+    <div class="mobile-bar">
+      <a class="mobile-brand" href="{{ '/' | relative_url }}">{{ site.title }} <span>学习笔记</span></a>
+      <button class="menu-toggle" type="button" aria-label="打开课程目录" aria-expanded="false" aria-controls="course-sidebar">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
     <div class="site-shell">
-      <aside class="sidebar">
+      <aside class="sidebar" id="course-sidebar">
         <a class="brand" href="{{ '/' | relative_url }}">
-          <span class="brand-mark" aria-hidden="true">P</span>
-          <span><strong>{{ site.title }}</strong><small>学习笔记</small></span>
+          <span class="brand-monogram" aria-hidden="true">P</span>
+          <span><strong>{{ site.title }}</strong><small>嵌入式 · 电子 · 软件</small></span>
         </a>
-        <nav aria-label="主导航" class="navigation">
-          <a class="nav-home{% if page.url == '/' %} is-active{% endif %}" href="{{ '/' | relative_url }}">笔记首页</a>
-          <p class="nav-label">嵌入式系统</p>
+        <div class="sidebar-rule"></div>
+        <nav aria-label="课程目录" class="navigation">
+          <p class="nav-label">导航</p>
+          <a class="nav-link{% if page.url == '/' %} is-active{% endif %}" href="{{ '/' | relative_url }}"><span class="nav-index">⌂</span>笔记首页</a>
           {% for item in note_pages %}
-            <a class="nav-note{% if page.url == item.url %} is-active{% endif %}" href="{{ item.url | relative_url }}">{{ item.title }}</a>
+            {% assign current_stage = '' %}
+            {% if item.order == 0 %}{% assign current_stage = '学习导览' %}
+            {% elsif item.order <= 3 %}{% assign current_stage = '基础与外设' %}
+            {% elsif item.order <= 5 %}{% assign current_stage = '实时系统' %}
+            {% else %}{% assign current_stage = '控制与验证' %}{% endif %}
+            {% if current_stage != previous_stage %}
+              <p class="nav-label nav-label-course">{{ current_stage }}{% if current_stage == '学习导览' %}<span>01</span>{% elsif current_stage == '基础与外设' %}<span>03</span>{% elsif current_stage == '实时系统' %}<span>02</span>{% else %}<span>07</span>{% endif %}</p>
+              {% assign previous_stage = current_stage %}
+            {% endif %}
+            <a class="nav-link nav-note{% if page.url == item.url %} is-active{% endif %}" href="{{ item.url | relative_url }}"><span class="nav-index">{{ item.order | prepend: '0' | slice: -2, 2 }}</span>{{ item.title }}</a>
           {% endfor %}
         </nav>
         <div class="sidebar-bottom">
-          <span class="status-dot" aria-hidden="true"></span>
-          <span>持续整理中</span>
+          <span>个人学习资料库</span>
+          <a href="https://github.com/peng598/PENGIEE">GitHub ↗</a>
         </div>
       </aside>
+      <button class="sidebar-scrim" type="button" aria-label="关闭课程目录" tabindex="-1"></button>
       <main id="main" class="main-content">
-        {{ content }}
-        <footer class="site-footer">
-          <span>{{ site.title }}</span>
-          <a href="https://github.com/peng598/PENGIEE">GitHub 仓库</a>
-        </footer>
+        <div class="content-frame">
+          <div class="page-kicker"><span class="kicker-line"></span>{{ page.category | default: '个人知识库' }}</div>
+          {{ content }}
+          <footer class="site-footer">
+            <span>© {{ site.title }} · 持续整理中</span>
+            <a href="https://github.com/peng598/PENGIEE">查看仓库</a>
+          </footer>
+        </div>
       </main>
     </div>
+    <script>
+      const sidebar = document.querySelector('.sidebar');
+      const toggle = document.querySelector('.menu-toggle');
+      const scrim = document.querySelector('.sidebar-scrim');
+      const setMenu = (open) => {
+        document.body.classList.toggle('menu-open', open);
+        toggle?.setAttribute('aria-expanded', String(open));
+        toggle?.setAttribute('aria-label', open ? '关闭课程目录' : '打开课程目录');
+      };
+      toggle?.addEventListener('click', () => setMenu(!document.body.classList.contains('menu-open')));
+      scrim?.addEventListener('click', () => setMenu(false));
+      sidebar?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenu(false)));
+
+      const article = document.querySelector('.prose');
+      const toc = document.querySelector('.article-toc-list');
+      if (article && toc) {
+        article.querySelectorAll('h2, h3').forEach((heading) => {
+          if (!heading.id) return;
+          const item = document.createElement('li');
+          if (heading.tagName === 'H3') item.className = 'toc-subitem';
+          const link = document.createElement('a');
+          link.href = `#${heading.id}`;
+          link.textContent = heading.textContent;
+          item.appendChild(link);
+          toc.appendChild(item);
+        });
+        if (toc.children.length === 0) toc.closest('.article-toc').hidden = true;
+      }
+    </script>
     <script type="module">
       import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
       mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'strict' });
-      document.querySelectorAll('.language-mermaid pre code').forEach((code) => {
+      document.querySelectorAll('.language-mermaid pre code, pre > code.language-mermaid').forEach((code) => {
         const diagram = document.createElement('pre');
         diagram.className = 'mermaid';
         diagram.textContent = code.textContent;
-        code.closest('.language-mermaid').replaceWith(diagram);
+        const block = code.closest('.highlighter-rouge') ?? code.closest('pre') ?? code;
+        block.replaceWith(diagram);
       });
       mermaid.run({ querySelector: '.mermaid' });
     </script>

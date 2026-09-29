@@ -325,4 +325,4 @@ void vApplicationStackOverflowHook(TaskHandle_t task, char *name)
 - [ ] 能区分队列、通知、信号量和互斥量。
 - [ ] 能解释FromISR API的优先级限制。
 
-上一章：AT32外设驱动基础  下一章：实时并发与数据安全
+上一章：[AT32外设驱动基础]({{ '/notes/at32-peripherals/' | relative_url }})  下一章：[实时并发与数据安全]({{ '/notes/realtime-concurrency/' | relative_url }})
