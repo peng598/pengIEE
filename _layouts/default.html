@@ -5,7 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="{{ page.summary | default: site.description | escape }}">
     <meta name="theme-color" content="#ffffff">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="PENGIEE">
     <title>{% if page.title %}{{ page.title | escape }} - {% endif %}{{ site.title | escape }}</title>
+    <link rel="manifest" href="{{ '/manifest.webmanifest' | relative_url }}">
+    <link rel="icon" href="{{ '/assets/pwa/icon-192.svg' | relative_url }}" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="{{ '/assets/pwa/icon-192.png' | relative_url }}">
     <link rel="stylesheet" href="{{ '/assets/site.css' | relative_url }}">
     <script>
       window.MathJax = {
@@ -21,6 +27,9 @@
     {% assign nav_categories = note_pages | map: "category" | uniq %}
     <div class="mobile-bar">
       <a class="mobile-brand" href="{{ '/' | relative_url }}">{{ site.title }} <span>学习笔记</span></a>
+      <button class="pwa-install" type="button" aria-label="安装 PENGIEE 到手机" title="安装到手机" hidden>
+        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 16v3h14v-3" /></svg>
+      </button>
       <button class="menu-toggle" type="button" aria-label="打开课程目录" aria-expanded="false" aria-controls="course-sidebar">
         <span></span><span></span><span></span>
       </button>
@@ -101,6 +110,28 @@
         block.replaceWith(diagram);
       });
       mermaid.run({ querySelector: '.mermaid' });
+    </script>
+    <script>
+      const installButton = document.querySelector('.pwa-install');
+      let installPrompt;
+      window.addEventListener('beforeinstallprompt', (event) => {
+        event.preventDefault();
+        installPrompt = event;
+        if (installButton) installButton.hidden = false;
+      });
+      installButton?.addEventListener('click', async () => {
+        if (!installPrompt) return;
+        installPrompt.prompt();
+        await installPrompt.userChoice;
+        installPrompt = null;
+        installButton.hidden = true;
+      });
+      window.addEventListener('appinstalled', () => {
+        if (installButton) installButton.hidden = true;
+      });
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => navigator.serviceWorker.register("{{ '/sw.js' | relative_url }}", { scope: "{{ '/' | relative_url }}" }));
+      }
     </script>
   </body>
 </html>

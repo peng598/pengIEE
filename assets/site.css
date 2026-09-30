@@ -173,6 +173,9 @@ button { font: inherit; }
   .mobile-bar { position: sticky; top: 0; z-index: 30; display: flex; height: 54px; align-items: center; justify-content: space-between; padding: 0 17px; border-bottom: 1px solid var(--line); background: rgba(255,255,255,0.97); }
   .mobile-brand { color: var(--ink); font-size: 14px; font-weight: 700; text-decoration: none; }
   .mobile-brand span { margin-left: 8px; color: var(--muted); font-size: 10px; font-weight: 400; }
+  .pwa-install { display: grid; width: 36px; height: 34px; flex: 0 0 36px; place-items: center; padding: 0; border: 1px solid var(--line); background: var(--paper); color: var(--accent-dark); cursor: pointer; }
+  .pwa-install[hidden] { display: none; }
+  .pwa-install svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; }
   .menu-toggle { display: grid; width: 36px; height: 34px; align-content: center; justify-items: center; gap: 4px; padding: 0; border: 0; background: transparent; cursor: pointer; }
   .menu-toggle span { width: 18px; height: 1px; background: #444a46; }
   .sidebar { inset: 54px auto 0 0; width: min(84vw, 292px); transform: translateX(-101%); transition: transform 180ms ease; box-shadow: 7px 0 24px rgba(27,34,29,0.08); }

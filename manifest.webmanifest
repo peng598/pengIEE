@@ -1,0 +1,28 @@
+{
+  "id": "/pengIEE/",
+  "name": "PENGIEE 嵌入式与电子技术笔记",
+  "short_name": "PENGIEE",
+  "description": "嵌入式、电子硬件、PCB、模拟电路与工程经验学习笔记",
+  "lang": "zh-CN",
+  "start_url": "/pengIEE/",
+  "scope": "/pengIEE/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "background_color": "#ffffff",
+  "theme_color": "#bf4d48",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/pengIEE/assets/pwa/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/pengIEE/assets/pwa/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
