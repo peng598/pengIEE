@@ -2,6 +2,7 @@
 layout: note
 title: "Cortex-M4与中断系统"
 category: "嵌入式系统"
+level: "进阶"
 order: 2
 permalink: /notes/cortex-m4-interrupts/
 summary: "从复位启动到 NVIC、异常压栈、FreeRTOS 异常和 HardFault 定位。"

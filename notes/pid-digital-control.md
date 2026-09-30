@@ -2,6 +2,7 @@
 layout: note
 title: "PID与数字控制"
 category: "嵌入式系统"
+level: "进阶"
 order: 6
 permalink: /notes/pid-digital-control/
 summary: "离散 PID、积分抗饱和、控制环结构与调参实践。"

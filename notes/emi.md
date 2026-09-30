@@ -2,6 +2,7 @@
 layout: note
 title: "EMI"
 category: "硬件基础与电源"
+level: "进阶"
 order: 55
 permalink: /notes/emi/
 summary: "传输线阻抗不匹配产生的振铃，是导致电磁干扰（EMI）问题的一个非常主要且常见的根源。可以说，严重的信号振铃几乎等同于一个“EMI发生器”。"

@@ -2,6 +2,7 @@
 layout: note
 title: "计算示例"
 category: "PCB与信号完整性"
+level: "基础"
 order: 2
 permalink: /notes/high-frequency-return-path/
 summary: "通过计算示例理解高频回流和参考平面连续性。"
@@ -29,7 +30,7 @@ source: "笔记/硬件/01信号完整性/高频信号回流路径"
 
 ### 1.2 电磁场分析
 
-<p class="attachment-note">附件未随公开版发布：Pasted image 20251106205457.png</p>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-044.png' | relative_url }}" alt="附件：Pasted image 20251106205457.png"><figcaption>Pasted image 20251106205457.png</figcaption></figure>
 
 ## 2. 地平面分割的问题分析
 
@@ -102,12 +103,12 @@ Z0 = √(L/C) = (1/2π)√(μ/ε) · ln(4h/d)
 ```
 
 #### 信号反射计算
-<p class="attachment-note">附件未随公开版发布：Pasted image 20251106205704.png</p>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-045.png' | relative_url }}" alt="附件：Pasted image 20251106205704.png"><figcaption>Pasted image 20251106205704.png</figcaption></figure>
 当回流路径被迫绕行时，等效阻抗变化，引起反射。
 
 ### 3.2 EMI辐射问题
 
-<p class="attachment-note">附件未随公开版发布：Pasted image 20251106205714.png</p>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-046.png' | relative_url }}" alt="附件：Pasted image 20251106205714.png"><figcaption>Pasted image 20251106205714.png</figcaption></figure>
 
 **示例**：
 - 正常：A = 0.06mm²
@@ -178,7 +179,7 @@ Z0 = √(L/C) = (1/2π)√(μ/ε) · ln(4h/d)
 
 ### 5.1 回流深度与频率的关系
 
-<p class="attachment-note">附件未随公开版发布：Pasted image 20251106205856.png</p>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-047.png' | relative_url }}" alt="附件：Pasted image 20251106205856.png"><figcaption>Pasted image 20251106205856.png</figcaption></figure>
 
 ### 5.2 不同频率的回流分布
 

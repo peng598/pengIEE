@@ -2,6 +2,7 @@
 layout: note
 title: "运放相位偏移引起的问题"
 category: "模拟、音频与声学"
+level: "基础"
 order: 3
 permalink: /notes/op-amp-phase-shift/
 summary: "运放相位偏移、稳定性和波形异常。"

@@ -2,6 +2,7 @@
 layout: note
 title: "三极管VBE会随温度变化"
 category: "硬件基础与电源"
+level: "基础"
 order: 41
 permalink: /notes/三极管vbe会随温度变化/
 summary: "VBE会随着温度升高变小，属于正反馈，电路的话要加三极管温度补偿"

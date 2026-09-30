@@ -2,6 +2,7 @@
 layout: note
 title: "偏置电阻"
 category: "模拟、音频与声学"
+level: "基础"
 order: 15
 permalink: /notes/microphone-bias-resistor/
 summary: "麦克风偏置电阻的选择与信号幅度。"

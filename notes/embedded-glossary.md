@@ -2,6 +2,7 @@
 layout: note
 title: "术语表"
 category: "嵌入式系统"
+level: "基础"
 order: 13
 permalink: /notes/embedded-glossary/
 summary: "嵌入式、实时系统和电机控制中常用术语的快速索引。"

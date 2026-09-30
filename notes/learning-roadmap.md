@@ -2,6 +2,7 @@
 layout: note
 title: "教程总览"
 category: "嵌入式系统"
+level: "基础"
 order: 0
 permalink: /notes/learning-roadmap/
 summary: "从 C 语言、Cortex-M 和外设，到实时系统、控制算法与整车验证。"

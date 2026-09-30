@@ -2,6 +2,7 @@
 layout: note
 title: "LDO原理"
 category: "硬件基础与电源"
+level: "基础"
 order: 5
 permalink: /notes/ldo-principles/
 summary: "LDO 的基本结构、压差、稳定性与热设计。"
@@ -14,9 +15,9 @@ source: "笔记/硬件/02元器件/LDO/LDO原理"
 
 原理:误差放大器控制VGS电压,在VGS大于VTH且远仅大于VTH一点的时候,等效电阻会非常大,LDO就是利用这一点,来分压,让输入产生压降.同时,这也是为什么LDO纹波干净的原因.
 
-<p class="attachment-note">附件未随公开版发布：Pasted image 20251203200144.png</p>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-082.png' | relative_url }}" alt="附件：Pasted image 20251203200144.png"><figcaption>Pasted image 20251203200144.png</figcaption></figure>
 
-<p class="attachment-note">附件未随公开版发布：Pasted image 20251203200153.png</p>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-083.png' | relative_url }}" alt="附件：Pasted image 20251203200153.png"><figcaption>Pasted image 20251203200153.png</figcaption></figure>
 
-<p class="attachment-note">附件未随公开版发布：Pasted image 20251203200202.png</p>
-<p class="attachment-note">附件未随公开版发布：Pasted image 20251203200213.png</p>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-084.png' | relative_url }}" alt="附件：Pasted image 20251203200202.png"><figcaption>Pasted image 20251203200202.png</figcaption></figure>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-085.png' | relative_url }}" alt="附件：Pasted image 20251203200213.png"><figcaption>Pasted image 20251203200213.png</figcaption></figure>

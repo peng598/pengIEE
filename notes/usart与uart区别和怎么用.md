@@ -2,6 +2,7 @@
 layout: note
 title: "USART与UART区别和怎么用"
 category: "硬件基础与电源"
+level: "进阶"
 order: 65
 permalink: /notes/usart与uart区别和怎么用/
 summary: "USART（即通用同步异步收发器）和 UART（即通用异步收发"

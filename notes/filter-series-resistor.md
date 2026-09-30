@@ -2,6 +2,7 @@
 layout: note
 title: "在高通、低通滤波器后面串电阻作用"
 category: "模拟、音频与声学"
+level: "进阶"
 order: 5
 permalink: /notes/filter-series-resistor/
 summary: "滤波器后串联电阻对隔离、稳定和负载的影响。"

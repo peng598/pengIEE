@@ -2,6 +2,7 @@
 layout: note
 title: "EMC"
 category: "硬件基础与电源"
+level: "进阶"
 order: 54
 permalink: /notes/emc/
 summary: "EMC分为EMI 与EMS 即电磁干扰和抗电磁干扰 我们车类的主要是测试"

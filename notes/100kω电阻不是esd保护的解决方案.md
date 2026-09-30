@@ -2,6 +2,7 @@
 layout: note
 title: "100kΩ电阻不是ESD保护的解决方案"
 category: "硬件基础与电源"
+level: "实战"
 order: 16
 permalink: /notes/100kω电阻不是esd保护的解决方案/
 summary: "|机制|解释|为什么100kΩ电阻无效或有害|"

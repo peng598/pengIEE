@@ -2,6 +2,7 @@
 layout: note
 title: "非平衡转平衡"
 category: "模拟、音频与声学"
+level: "核心"
 order: 11
 permalink: /notes/unbalanced-to-balanced/
 summary: "非平衡音频转平衡传输的电路思路。"

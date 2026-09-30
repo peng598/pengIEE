@@ -2,6 +2,7 @@
 layout: note
 title: "进出临界区"
 category: "实时系统与软件"
+level: "基础"
 order: 3
 permalink: /notes/freertos-critical-sections/
 summary: "任务与中断上下文进入、退出临界区的原则。"

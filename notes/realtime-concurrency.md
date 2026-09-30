@@ -2,6 +2,7 @@
 layout: note
 title: "实时并发与数据安全"
 category: "嵌入式系统"
+level: "基础"
 order: 5
 permalink: /notes/realtime-concurrency/
 summary: "从竞态与数据一致性到临界区、快照和实时性评估。"

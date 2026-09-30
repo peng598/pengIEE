@@ -7,6 +7,8 @@ layout: default
     <span class="meta-separator" aria-hidden="true">/</span>
     <span>{{ page.category }}</span>
     <span class="meta-separator" aria-hidden="true">/</span>
+    <span class="article-level">{{ page.level }}</span>
+    <span class="meta-separator" aria-hidden="true">/</span>
     {% if page.category == '嵌入式系统' and page.order == 0 %}
       <span>学习导览</span>
     {% else %}
@@ -14,8 +16,19 @@ layout: default
     {% endif %}
   </header>
   <div class="article-layout">
-    <div class="prose">
+      <div class="prose">
       {{ content }}
+      {% assign related_resources = site.data.resources | where: "category", page.category %}
+      {% if related_resources.size > 0 %}
+        <section class="article-resources" aria-labelledby="related-resources-heading">
+          <div class="section-heading"><h2 id="related-resources-heading">关联资料</h2><a href="{{ '/resources/' | relative_url }}">查看全部 →</a></div>
+          <div class="article-resource-list">
+            {% for resource in related_resources limit: 4 %}
+              <a href="{{ resource.file | relative_url }}" target="_blank" rel="noopener"><span>{{ resource.level }}</span><strong>{{ resource.title }}</strong></a>
+            {% endfor %}
+          </div>
+        </section>
+      {% endif %}
     </div>
     <aside class="article-toc" aria-label="本页目录">
       <p>本页目录</p>

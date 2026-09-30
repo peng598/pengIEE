@@ -1,0 +1,95 @@
+- title: 高低带通滤波器
+  file: /assets/docs/analog-filter-basics.pdf
+  category: 模拟、音频与声学
+  level: 基础
+  description: 从频率响应和截止频率入门理解低通、高通、带通与带阻。
+- title: 运算放大电路
+  file: /assets/docs/op-amp-circuits.pdf
+  category: 模拟、音频与声学
+  level: 基础
+  description: 运放基本拓扑、闭环增益和常见应用电路速查。
+- title: 运算放大器精密整流电路
+  file: /assets/docs/precision-rectifier.pdf
+  category: 模拟、音频与声学
+  level: 核心
+  description: 用运放改善二极管压降影响的精密整流电路资料。
+- title: 运算滤波器与信号发生器电路
+  file: /assets/docs/active-filters-and-oscillators.pdf
+  category: 模拟、音频与声学
+  level: 核心
+  description: 有源滤波器、振荡器和信号发生电路的补充资料。
+- title: Analog Circuit I
+  file: /assets/docs/analog-circuit-i.pdf
+  category: 模拟、音频与声学
+  level: 基础
+  description: 模拟电路基础课程资料，适合配合运放和滤波笔记阅读。
+- title: Analog Circuit II
+  file: /assets/docs/analog-circuit-ii.pdf
+  category: 模拟、音频与声学
+  level: 核心
+  description: 模拟电路中级专题资料。
+- title: Analog Circuit III
+  file: /assets/docs/analog-circuit-iii.pdf
+  category: 模拟、音频与声学
+  level: 核心
+  description: 模拟电路分析与设计的进阶课程资料。
+- title: Analog Circuit IV
+  file: /assets/docs/analog-circuit-iv.pdf
+  category: 模拟、音频与声学
+  level: 进阶
+  description: 复杂模拟电路和系统级分析补充资料。
+- title: Analog Circuit V
+  file: /assets/docs/analog-circuit-v.pdf
+  category: 模拟、音频与声学
+  level: 进阶
+  description: 模拟电路综合设计与扩展阅读。
+- title: Power Handbook
+  file: /assets/docs/power-handbook.pdf
+  category: 硬件基础与电源
+  level: 核心
+  description: 电源架构、器件选择和设计检查的综合参考。
+- title: 德州仪器高性能模拟器件电源应用指南
+  file: /assets/docs/ti-power-guide.pdf
+  category: 硬件基础与电源
+  level: 核心
+  description: 线性稳压、开关电源和模拟电源应用补充资料。
+- title: Buck 变换器技术概述
+  file: /assets/docs/buck-converter-overview.pdf
+  category: 硬件基础与电源
+  level: 基础
+  description: Buck 拓扑、工作模式和关键波形的入门资料。
+- title: MCU EMC 设计指南
+  file: /assets/docs/mcu-emc-guide.pdf
+  category: PCB与信号完整性
+  level: 进阶
+  description: MCU 系统中的接地、回流、时钟和抗干扰设计要点。
+- title: 电源轨纹波测量入门
+  file: /assets/docs/power-rail-measurements.pdf
+  category: 测试与工程经验
+  level: 实战
+  description: 示波器探头、带宽限制和电源纹波测量方法。
+- title: 数据采样系统基础知识
+  file: /assets/docs/data-acquisition-basics.pdf
+  category: 硬件基础与电源
+  level: 核心
+  description: 采样链路、ADC 前端和数据采集系统基础。
+- title: 保护以太网端口免受浪涌事件的影响
+  file: /assets/docs/ethernet-surge-protection.pdf
+  category: 测试与工程经验
+  level: 实战
+  description: 以太网端口浪涌保护器件和布局思路。
+- title: 示波器的原理及应用
+  file: /assets/docs/oscilloscope-principles.pdf
+  category: 测试与工程经验
+  level: 基础
+  description: 示波器带宽、采样、探头和常见测量方法。
+- title: USB 2.0 规范
+  file: /assets/docs/usb-2-0-specification.pdf
+  category: 嵌入式系统
+  level: 核心
+  description: USB 2.0 总线、电气和协议约束参考。
+- title: DDR5 JESD79-5
+  file: /assets/docs/ddr5-specification.pdf
+  category: PCB与信号完整性
+  level: 进阶
+  description: DDR5 接口时序、电气和设计约束参考。

@@ -2,6 +2,7 @@
 layout: note
 title: "D类功放关键问题"
 category: "模拟、音频与声学"
+level: "进阶"
 order: 14
 permalink: /notes/class-d-amplifier-issues/
 summary: "D 类功放的 EMI、死区、滤波和效率问题。"
@@ -19,7 +20,7 @@ source: "笔记/硬件/音频/D类功放/D类功放关键问题"
     
 - **静音**：PWM波的脉冲宽度**固定**在50%。经过低通滤波器平均后，得到的**平均电压**是一个稳定的直流电压（比如电源电压的一半）。由于喇叭的隔直电容（或滤波器本身）会阻挡直流，所以没有声音。
 
-	<p class="attachment-note">附件未随公开版发布：Pasted image 20251124092356.png</p>
+	<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-060.png' | relative_url }}" alt="附件：Pasted image 20251124092356.png"><figcaption>Pasted image 20251124092356.png</figcaption></figure>
 	假设同样评论的音源,输入的DAC幅度减少,在经过三角波比较后产生的方波,变化幅度会等比例减少
 
 ==功放发热==:发热是由于MOS管内阻发热;设计时均需要考虑热设计

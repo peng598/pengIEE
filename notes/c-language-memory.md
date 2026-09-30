@@ -2,6 +2,7 @@
 layout: note
 title: "C语言与嵌入式内存"
 category: "嵌入式系统"
+level: "基础"
 order: 1
 permalink: /notes/c-language-memory/
 summary: "固定宽度类型、指针、volatile、链接、结构体和嵌入式内存布局。"

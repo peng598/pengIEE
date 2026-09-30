@@ -2,6 +2,7 @@
 layout: note
 title: "ESD失效分析"
 category: "硬件基础与电源"
+level: "进阶"
 order: 4
 permalink: /notes/esd-failure-analysis/
 summary: "从失效现象反推 ESD 保护路径和布局问题。"

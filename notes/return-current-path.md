@@ -2,6 +2,7 @@
 layout: note
 title: "传输线速率到多少，回流按最小感抗"
 category: "PCB与信号完整性"
+level: "进阶"
 order: 1
 permalink: /notes/return-current-path/
 summary: "高速信号回流路径、最小电感与参考平面的关系。"

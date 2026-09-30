@@ -2,6 +2,7 @@
 layout: note
 title: "眼图"
 category: "测试与工程经验"
+level: "进阶"
 order: 2
 permalink: /notes/eye-diagram/
 summary: "用眼图观察高速链路抖动、噪声和码间串扰。"
@@ -26,5 +27,5 @@ source: "笔记/硬件/经验/示波器使用/眼图"
             
         3. **时序裕量**：结合接收端的时序窗口，判断信号是否在正确的时间到达。
 
-<p class="attachment-note">附件未随公开版发布：Pasted image 20251202085054.png</p>
-<p class="attachment-note">附件未随公开版发布：Pasted image 20251202085105.png</p>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-080.png' | relative_url }}" alt="附件：Pasted image 20251202085054.png"><figcaption>Pasted image 20251202085054.png</figcaption></figure>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-081.png' | relative_url }}" alt="附件：Pasted image 20251202085105.png"><figcaption>Pasted image 20251202085105.png</figcaption></figure>

@@ -2,6 +2,7 @@
 layout: note
 title: "简单计算脚本"
 category: "模拟、音频与声学"
+level: "基础"
 order: 9
 permalink: /notes/op-amp-input-impedance/
 summary: "从电路拓扑判断运放输入阻抗。"

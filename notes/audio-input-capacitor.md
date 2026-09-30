@@ -2,6 +2,7 @@
 layout: note
 title: "音频输入为什么使用大电容"
 category: "模拟、音频与声学"
+level: "实战"
 order: 8
 permalink: /notes/audio-input-capacitor/
 summary: "音频输入隔直电容的容量、低频截止和漏电权衡。"

@@ -2,6 +2,7 @@
 layout: note
 title: "LC滤波器"
 category: "硬件基础与电源"
+level: "进阶"
 order: 15
 permalink: /notes/lc-filter-design/
 summary: "LC 滤波器的结构、谐振与阻尼设计。"
@@ -10,7 +11,7 @@ source: "笔记/硬件/05设计/滤波/LC滤波器"
 
 # LC滤波器
 
-<p class="attachment-note">附件未随公开版发布：LC滤波器设计与制作.pdf</p>
+<p class="attachment-link"><a href="{{ '/assets/attachments/attachment-006.pdf' | relative_url }}">打开附件：LC滤波器设计与制作.pdf</a></p>
 好的，这是一个非常实用的工程问题。共模电感（Common Mode Choke）与电容组成的滤波电路（通常称为**共模滤波器**）的计算和设计是一个系统性的过程，它更依赖于对标准件的选择和基于实测的调整，而非纯粹的理论计算。
 
 下面我将为您详细解释其工作原理、设计步骤、计算方法以及注意事项。

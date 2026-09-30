@@ -2,6 +2,7 @@
 layout: note
 title: "输入阻抗和使用场景关系"
 category: "模拟、音频与声学"
+level: "实战"
 order: 2
 permalink: /notes/input-impedance-scenarios/
 summary: "输入阻抗如何影响信号源、滤波器和级间连接。"

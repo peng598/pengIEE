@@ -2,6 +2,7 @@
 layout: note
 title: "RC充放电公式"
 category: "硬件基础与电源"
+level: "基础"
 order: 63
 permalink: /notes/rc充放电公式/
 summary: "RC充电时间常数(τ)"
@@ -19,7 +20,7 @@ $τ = R × C$
 再根据充放电曲线图
 		
 
-<p class="attachment-note">附件未随公开版发布：Pasted image 20251103184809.png</p>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-032.png' | relative_url }}" alt="附件：Pasted image 20251103184809.png"><figcaption>Pasted image 20251103184809.png</figcaption></figure>
 
 常规中:    0.7τ = 50%
 		1τ = 63%
@@ -27,7 +28,7 @@ $τ = R × C$
 		3τ = 95%
 		5τ = 98%
 	
-<p class="attachment-note">附件未随公开版发布：Pasted image 20251103183453.png</p>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-031.png' | relative_url }}" alt="附件：Pasted image 20251103183453.png"><figcaption>Pasted image 20251103183453.png</figcaption></figure>
 
 一个最简单的RC电路由一个电阻（R）和一个电容（C）串联组成。
 

@@ -2,6 +2,7 @@
 layout: note
 title: "插入损耗"
 category: "PCB与信号完整性"
+level: "核心"
 order: 14
 permalink: /notes/insertion-loss/
 summary: "插入损耗的含义、频率响应与链路预算。"

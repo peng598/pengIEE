@@ -2,6 +2,7 @@
 layout: note
 title: "示例：灵敏度 90dB, 功率 50W, 距离 5m, 半空间 Q=2, 吸声量 A=50m^2"
 category: "模拟、音频与声学"
+level: "核心"
 order: 16
 permalink: /notes/sound-pressure-level/
 summary: "声压级、功率、距离和声场的常用计算。"

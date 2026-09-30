@@ -6,11 +6,12 @@ summary: 嵌入式软件、硬件设计、PCB、模拟电路、音频与测试�
 {% assign embedded_notes = site.pages | where_exp: "item", "item.category == '嵌入式系统'" | sort: "order" %}
 {% assign all_notes = site.pages | where_exp: "item", "item.category" | sort: "order" %}
 {% assign categories = all_notes | map: "category" | uniq %}
+{% assign levels = "基础|核心|进阶|实战" | split: "|" %}
 <header class="collection-heading">
   <p class="eyebrow">PENGIEE <span class="eyebrow-divider">/</span> 课程笔记</p>
   <h1>嵌入式与电子技术</h1>
   <p class="collection-description">从单片机与实时系统，到硬件设计、PCB、模拟电路、音频和工程测试。</p>
-  <div class="collection-meta"><span>{{ all_notes.size }} 篇整理笔记</span><span>{{ categories.size }} 个知识方向</span><span>持续更新</span></div>
+  <div class="collection-meta"><span>{{ all_notes.size }} 篇整理笔记</span><span>{{ categories.size }} 个知识方向</span><span><a href="{{ '/resources/' | relative_url }}">{{ site.data.resources.size }} 份参考资料</a></span></div>
 </header>
 
 <section class="learning-path" aria-labelledby="path-heading">
@@ -25,12 +26,22 @@ summary: 嵌入式软件、硬件设计、PCB、模拟电路、音频与测试�
   </ol>
 </section>
 
+<section class="note-section" aria-labelledby="levels-heading">
+  <div class="section-heading"><h2 id="levels-heading">学习层级</h2><span>由浅入深，再到实践</span></div>
+  <div class="level-grid">
+    {% for level in levels %}
+      {% assign level_notes = all_notes | where: "level", level %}
+      <div class="level-card level-{{ forloop.index }}"><strong>{{ level }}</strong><span>{{ level_notes.size }} 篇笔记</span><small>{% if level == '基础' %}术语、公式、器件和基本原理{% elsif level == '核心' %}模块设计与系统方法{% elsif level == '进阶' %}高速、实时、EMC 与复杂问题{% else %}调试、测试、选型和项目验证{% endif %}</small></div>
+    {% endfor %}
+  </div>
+</section>
+
 <section class="note-section" aria-labelledby="categories-heading">
   <div class="section-heading"><h2 id="categories-heading">知识方向</h2><span>按主题浏览</span></div>
   <div class="category-grid">
     {% for category in categories %}
       {% assign category_notes = all_notes | where: "category", category | sort: "order" %}
-      <a class="category-card" href="{{ category_notes[0].url | relative_url }}"><strong>{{ category }}</strong><span>{{ category_notes.size }} 篇笔记</span><small>{{ category_notes[0].summary }}</small></a>
+      <a class="category-card" href="{{ category_notes[0].url | relative_url }}"><strong>{{ category }}</strong><span>{{ category_notes.size }} 篇笔记</span><div class="category-levels">{% for level in levels %}{% assign level_notes = category_notes | where: "level", level %}{% if level_notes.size > 0 %}<em>{{ level }} {{ level_notes.size }}</em>{% endif %}{% endfor %}</div><small>{{ category_notes[0].summary }}</small></a>
     {% endfor %}
   </div>
 </section>

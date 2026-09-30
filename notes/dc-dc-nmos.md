@@ -2,6 +2,7 @@
 layout: note
 title: "为什么大部分DC-DC内部用的是NMOS"
 category: "硬件基础与电源"
+level: "基础"
 order: 1
 permalink: /notes/dc-dc-nmos/
 summary: "从导通损耗、体二极管和驱动方式理解 DC-DC 常用 NMOS 的原因。"

@@ -2,6 +2,7 @@
 layout: note
 title: "同相放大与反相放大器的输入阻抗问题"
 category: "模拟、音频与声学"
+level: "进阶"
 order: 7
 permalink: /notes/non-inverting-inverting-input/
 summary: "同相和反相放大器输入阻抗的差异与设计取舍。"

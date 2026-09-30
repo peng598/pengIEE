@@ -2,6 +2,7 @@
 layout: note
 title: "原理"
 category: "模拟、音频与声学"
+level: "基础"
 order: 13
 permalink: /notes/class-d-amplifier/
 summary: "D 类功放的 PWM、滤波和输出级原理。"

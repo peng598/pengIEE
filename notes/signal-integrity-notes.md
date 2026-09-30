@@ -2,6 +2,7 @@
 layout: note
 title: "个人结论"
 category: "PCB与信号完整性"
+level: "基础"
 order: 4
 permalink: /notes/signal-integrity-notes/
 summary: "对回流、阻抗和信号完整性的阶段性总结。"

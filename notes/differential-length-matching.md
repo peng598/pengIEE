@@ -2,6 +2,7 @@
 layout: note
 title: "等长差分走线"
 category: "PCB与信号完整性"
+level: "进阶"
 order: 6
 permalink: /notes/differential-length-matching/
 summary: "差分对等长和走线约束的快速笔记。"

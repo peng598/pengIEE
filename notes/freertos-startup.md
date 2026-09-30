@@ -2,6 +2,7 @@
 layout: note
 title: "系统启动流程及任务相关函数"
 category: "实时系统与软件"
+level: "实战"
 order: 4
 permalink: /notes/freertos-startup/
 summary: "vTaskStartScheduler 与任务调度器启动流程。"

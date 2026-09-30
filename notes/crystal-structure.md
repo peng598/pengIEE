@@ -2,6 +2,7 @@
 layout: note
 title: "晶振结构"
 category: "硬件基础与电源"
+level: "基础"
 order: 8
 permalink: /notes/crystal-structure/
 summary: "晶振的等效结构、负载电容与起振条件。"

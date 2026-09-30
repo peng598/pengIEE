@@ -2,6 +2,7 @@
 layout: note
 title: "LINUX启动流程"
 category: "硬件基础与电源"
+level: "实战"
 order: 59
 permalink: /notes/linux启动流程/
 summary: "U-BOOT存在哪里，"

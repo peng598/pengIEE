@@ -2,6 +2,7 @@
 layout: note
 title: "放大倍数dB"
 category: "硬件基础与电源"
+level: "核心"
 order: 30
 permalink: /notes/放大倍数db/
 summary: "分贝不是一个绝对单位，而是一个比率的对数表示。它主要用于表示两个数值之间的相对关系，比如输出相对于输入的变化。"
@@ -49,6 +50,6 @@ source: "笔记/硬件/公式相关/放大倍数dB"
 
 所以，**功率降低一半，在分贝表示上就是大约 -3 dB**。我们通常简称为 **-3dB**。
 
-<p class="attachment-note">附件未随公开版发布：Pasted image 20250529140737.png</p>
-<p class="attachment-note">附件未随公开版发布：Pasted image 20250529140748.png</p>
-<p class="attachment-note">附件未随公开版发布：Pasted image 20250529141630.png</p>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-021.png' | relative_url }}" alt="附件：Pasted image 20250529140737.png"><figcaption>Pasted image 20250529140737.png</figcaption></figure>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-022.png' | relative_url }}" alt="附件：Pasted image 20250529140748.png"><figcaption>Pasted image 20250529140748.png</figcaption></figure>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-023.png' | relative_url }}" alt="附件：Pasted image 20250529141630.png"><figcaption>Pasted image 20250529141630.png</figcaption></figure>

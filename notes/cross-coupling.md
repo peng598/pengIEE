@@ -2,6 +2,7 @@
 layout: note
 title: "交叉耦合"
 category: "模拟、音频与声学"
+level: "基础"
 order: 1
 permalink: /notes/cross-coupling/
 summary: "交叉耦合结构在模拟电路中的作用与分析方法。"

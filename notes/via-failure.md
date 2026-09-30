@@ -2,6 +2,7 @@
 layout: note
 title: "过孔失效"
 category: "PCB与信号完整性"
+level: "核心"
 order: 15
 permalink: /notes/via-failure/
 summary: "过孔失效模式、热应力和制造可靠性。"
@@ -19,9 +20,9 @@ PCB在用户端使用一段时候后，出现个别孔开路；
 
 针对某PCB板通孔孔铜断裂的情况，本文通过[剖面分析](https://zhida.zhihu.com/search?content_id=230535923&content_type=Article&match_order=1&q=%E5%89%96%E9%9D%A2%E5%88%86%E6%9E%90&zhida_source=entity)、热性能分析、吸水率验证等分析手段查找分析[失效原因](https://zhida.zhihu.com/search?content_id=230535923&content_type=Article&match_order=1&q=%E5%A4%B1%E6%95%88%E5%8E%9F%E5%9B%A0&zhida_source=entity)，分析结果显示，导致该失效样品通孔孔铜断裂的原因为：板材的[耐热性](https://zhida.zhihu.com/search?content_id=230535923&content_type=Article&match_order=1&q=%E8%80%90%E7%83%AD%E6%80%A7&zhida_source=entity)不足，加之通孔在电镀铜工艺存在问题，使铜晶粒异常，导致孔铜的抗拉强度和延伸能力严重不足，在焊接组装受热过程中，孔铜易受[应力开裂](https://zhida.zhihu.com/search?content_id=230535923&content_type=Article&match_order=1&q=%E5%BA%94%E5%8A%9B%E5%BC%80%E8%A3%82&zhida_source=entity)。
 
-<p class="attachment-note">附件未随公开版发布：1759998489305.png</p>
-<p class="attachment-note">附件未随公开版发布：1759998507940.jpg</p>
-<p class="attachment-note">附件未随公开版发布：1759998534305.jpg</p>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-001.png' | relative_url }}" alt="附件：1759998489305.png"><figcaption>1759998489305.png</figcaption></figure>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-002.jpg' | relative_url }}" alt="附件：1759998507940.jpg"><figcaption>1759998507940.jpg</figcaption></figure>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-003.jpg' | relative_url }}" alt="附件：1759998534305.jpg"><figcaption>1759998534305.jpg</figcaption></figure>
 
 ### 1. 电化学迁移（ECM）—— 最主要和常见的原因
 

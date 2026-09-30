@@ -2,6 +2,7 @@
 layout: note
 title: "音频 CODEC 通用选型与硬件设计经验手册"
 category: "模拟、音频与声学"
+level: "实战"
 order: 22
 permalink: /notes/audio_codec通用选型与硬件设计经验手册/
 summary: "本手册用于音频 CODEC（音频编解码器）的器件选型、外围设计、PCB 布局、软件初始化和量产验证。内容适用于语音终端、录音设备、智能硬件、蓝牙音频、USB 音频和带麦克风的电池设备。"

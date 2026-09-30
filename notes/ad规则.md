@@ -2,6 +2,7 @@
 layout: note
 title: "AD规则"
 category: "测试与工程经验"
+level: "核心"
 order: 9
 permalink: /notes/ad规则/
 summary: "走线间距5ｍｉｌ"
@@ -19,4 +20,4 @@ DDR小孔一般 8 14 间距 5
 
 焊盘连接方式　焊盘两边要散热差不多，防止立碑
 
-<p class="attachment-note">附件未随公开版发布：Pasted image 20251120094051.png</p>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-059.png' | relative_url }}" alt="附件：Pasted image 20251120094051.png"><figcaption>Pasted image 20251120094051.png</figcaption></figure>

@@ -2,6 +2,7 @@
 layout: note
 title: "信号在PCB板上的传输速度与延时"
 category: "PCB与信号完整性"
+level: "基础"
 order: 3
 permalink: /notes/pcb-propagation-delay/
 summary: "PCB 介质中的传播速度、延时和长度估算。"
@@ -18,7 +19,7 @@ source: "笔记/硬件/01信号完整性/信号在PCB板上的传输速度与延
 
 介质不一样可以延申到板材选型,以及基板的工艺上,见[工作速率大于8Gbps]({{ '/notes/工作速率大于8gbps/' | relative_url }})的板材要求
 
-<p class="attachment-note">附件未随公开版发布：Pasted image 20251201145333.png</p>
-<p class="attachment-note">附件未随公开版发布：Pasted image 20251201145341.png</p>
-<p class="attachment-note">附件未随公开版发布：Pasted image 20251201145353.png</p>
-<p class="attachment-note">附件未随公开版发布：Pasted image 20251201145403.png</p>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-075.png' | relative_url }}" alt="附件：Pasted image 20251201145333.png"><figcaption>Pasted image 20251201145333.png</figcaption></figure>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-076.png' | relative_url }}" alt="附件：Pasted image 20251201145341.png"><figcaption>Pasted image 20251201145341.png</figcaption></figure>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-077.png' | relative_url }}" alt="附件：Pasted image 20251201145353.png"><figcaption>Pasted image 20251201145353.png</figcaption></figure>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-078.png' | relative_url }}" alt="附件：Pasted image 20251201145403.png"><figcaption>Pasted image 20251201145403.png</figcaption></figure>

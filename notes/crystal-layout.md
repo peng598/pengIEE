@@ -2,6 +2,7 @@
 layout: note
 title: "晶振布局与走线"
 category: "硬件基础与电源"
+level: "实战"
 order: 9
 permalink: /notes/crystal-layout/
 summary: "晶振布局、回流路径和走线注意事项。"

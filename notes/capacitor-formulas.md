@@ -2,6 +2,7 @@
 layout: note
 title: "电容公式"
 category: "硬件基础与电源"
+level: "基础"
 order: 12
 permalink: /notes/capacitor-formulas/
 summary: "电容、电抗和储能的常用计算关系。"

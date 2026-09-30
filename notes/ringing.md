@@ -2,6 +2,7 @@
 layout: note
 title: "振铃"
 category: "PCB与信号完整性"
+level: "进阶"
 order: 12
 permalink: /notes/ringing/
 summary: "振铃的成因、观测方法和抑制思路。"
@@ -12,7 +13,7 @@ source: "笔记/硬件/专业名词/振铃"
 
 振铃频率：
 
-<p class="attachment-note">附件未随公开版发布：Pasted image 20251106151302.png</p>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-038.png' | relative_url }}" alt="附件：Pasted image 20251106151302.png"><figcaption>Pasted image 20251106151302.png</figcaption></figure>
 
 **阻抗不匹配，导致信号反射，反射波与入射波叠加形成振铃**
 BUCK上的振铃不是阻抗不匹配引起的，是[LC谐振]({{ '/notes/lc谐振/' | relative_url }})

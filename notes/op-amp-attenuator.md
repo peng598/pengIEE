@@ -2,6 +2,7 @@
 layout: note
 title: "衰减器"
 category: "模拟、音频与声学"
+level: "基础"
 order: 6
 permalink: /notes/op-amp-attenuator/
 summary: "运放衰减器的结构、增益和阻抗。"

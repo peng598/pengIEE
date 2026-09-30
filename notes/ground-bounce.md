@@ -2,6 +2,7 @@
 layout: note
 title: "地弹"
 category: "PCB与信号完整性"
+level: "核心"
 order: 13
 permalink: /notes/ground-bounce/
 summary: "地弹噪声及其与封装、回流和同时开关的关系。"
@@ -11,7 +12,7 @@ source: "笔记/硬件/专业名词/地弹"
 # 地弹
 
 相关公式：
-<p class="attachment-note">附件未随公开版发布：Pasted image 20251201153148.png</p>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-079.png' | relative_url }}" alt="附件：Pasted image 20251201153148.png"><figcaption>Pasted image 20251201153148.png</figcaption></figure>
 
 芯片引脚在开关瞬间,电流会瞬间增大,电流突变会引起电感的增大,电感增大会导致电压突变
 

@@ -2,6 +2,7 @@
 layout: note
 title: "常规分压电阻设计---热噪声"
 category: "硬件基础与电源"
+level: "基础"
 order: 14
 permalink: /notes/adc-divider-noise/
 summary: "ADC 分压电阻的阻值选择与热噪声权衡。"
@@ -32,16 +33,16 @@ GND ──┴──────┴─ GND
 ```
 
 **总热噪声电压**（输出端）为两个电阻噪声的叠加：
-<p class="attachment-note">附件未随公开版发布：Pasted image 20260114151836.png</p>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-108.png' | relative_url }}" alt="附件：Pasted image 20260114151836.png"><figcaption>Pasted image 20260114151836.png</figcaption></figure>
 
 **关键结论：**
 - **热噪声取决于并联值**，而不是单个电阻。
-- 如果保持比例 <p class="attachment-note">附件未随公开版发布：Pasted image 20260114151907.png</p> 不变，让两个电阻等比例放大N倍：
+- 如果保持比例 <figure class="note-figure"><img src="{{ '/assets/attachments/attachment-109.png' | relative_url }}" alt="附件：Pasted image 20260114151907.png"><figcaption>Pasted image 20260114151907.png</figcaption></figure> 不变，让两个电阻等比例放大N倍：
   - 每个电阻噪声增大√N倍
   - 但并联电阻值也增大N倍 → **总输出噪声增大√N倍**
   - **是的，电阻越大，噪声越大**
 
-<p class="attachment-note">附件未随公开版发布：Pasted image 20260114151941.png</p>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-110.png' | relative_url }}" alt="附件：Pasted image 20260114151941.png"><figcaption>Pasted image 20260114151941.png</figcaption></figure>
 
 **可见：电阻增大100倍，噪声增大10倍，但功耗降低100倍！**
 
@@ -52,11 +53,11 @@ GND ──┴──────┴─ GND
 - **电池供电/低功耗设备**：优先考虑低功耗 → **使用较大电阻**（几百kΩ到几MΩ）
 
 #### ② **输入偏置电流的影响**
-<p class="attachment-note">附件未随公开版发布：Pasted image 20260114152324.png</p>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-111.png' | relative_url }}" alt="附件：Pasted image 20260114152324.png"><figcaption>Pasted image 20260114152324.png</figcaption></figure>
 
 #### ③ **响应速度与带宽**
 分压器与**负载电容**（走线电容+输入电容）形成RC低通：
-<p class="attachment-note">附件未随公开版发布：Pasted image 20260114152429.png</p>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-112.png' | relative_url }}" alt="附件：Pasted image 20260114152429.png"><figcaption>Pasted image 20260114152429.png</figcaption></figure>
 - **较大电阻**：带宽窄，响应慢，可能引入建立时间问题
 - **较小电阻**：带宽宽，响应快
 

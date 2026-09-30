@@ -2,6 +2,7 @@
 layout: note
 title: "项目源码导读与练习"
 category: "嵌入式系统"
+level: "实战"
 order: 12
 permalink: /notes/project-code-reading/
 summary: "按信号链阅读平衡车固件，并通过实验验证控制与保护逻辑。"

@@ -2,6 +2,7 @@
 layout: note
 title: "阻抗匹配"
 category: "PCB与信号完整性"
+level: "进阶"
 order: 11
 permalink: /notes/impedance-matching/
 summary: "阻抗匹配、功率传输和数字信号端接。"
@@ -11,10 +12,10 @@ source: "笔记/硬件/专业名词/阻抗匹配"
 # 阻抗匹配
 
 反射系数:
-<p class="attachment-note">附件未随公开版发布：Pasted image 20251106150347.png</p>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-036.png' | relative_url }}" alt="附件：Pasted image 20251106150347.png"><figcaption>Pasted image 20251106150347.png</figcaption></figure>
 
 反射电压:
-<p class="attachment-note">附件未随公开版发布：Pasted image 20251106150407.png</p>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-037.png' | relative_url }}" alt="附件：Pasted image 20251106150407.png"><figcaption>Pasted image 20251106150407.png</figcaption></figure>
 
 - **阻抗匹配**：当传输线的终端负载阻抗（Z_L）等于其特性阻抗（Z₀）时，能量会被负载完全吸收，没有反射。这是信号完整性的理想状态。
     

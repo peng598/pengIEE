@@ -2,6 +2,7 @@
 layout: note
 title: "AT32外设驱动基础"
 category: "嵌入式系统"
+level: "基础"
 order: 3
 permalink: /notes/at32-peripherals/
 summary: "AT32 时钟树、GPIO、定时器、ADC、DMA、SPI、UART 与 Flash。"

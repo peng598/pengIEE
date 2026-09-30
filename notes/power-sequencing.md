@@ -2,6 +2,7 @@
 layout: note
 title: "多电源上电时序"
 category: "硬件基础与电源"
+level: "基础"
 order: 13
 permalink: /notes/power-sequencing/
 summary: "多电源系统的上电时序、复位和监控。"
@@ -39,4 +40,4 @@ source: "笔记/硬件/05设计/上电时序/多电源上电时序"
 大功率下：
 调整C349，来改变MOS开启时间
 
-<p class="attachment-note">附件未随公开版发布：Pasted image 20251103191301.png</p>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-033.png' | relative_url }}" alt="附件：Pasted image 20251103191301.png"><figcaption>Pasted image 20251103191301.png</figcaption></figure>

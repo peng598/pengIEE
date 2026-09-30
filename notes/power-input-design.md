@@ -2,6 +2,7 @@
 layout: note
 title: "输入设计"
 category: "硬件基础与电源"
+level: "基础"
 order: 7
 permalink: /notes/power-input-design/
 summary: "电源输入保护、滤波、浪涌与后级供电规划。"

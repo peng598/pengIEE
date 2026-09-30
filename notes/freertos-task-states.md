@@ -2,6 +2,7 @@
 layout: note
 title: "FreeRTOS 任务状态"
 category: "实时系统与软件"
+level: "进阶"
 order: 1
 permalink: /notes/freertos-task-states/
 summary: "运行、就绪、阻塞和挂起四种任务状态。"
@@ -44,4 +45,4 @@ FreeRTOS 中任务存在四种任务状态，分别为运行态、就绪态、�
 
 处于挂起态的任务也无法被运行。
 
-<p class="attachment-note">附件未随公开版发布：Pasted image 20250410095313.png</p>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-007.png' | relative_url }}" alt="附件：Pasted image 20250410095313.png"><figcaption>Pasted image 20250410095313.png</figcaption></figure>

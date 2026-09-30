@@ -2,6 +2,7 @@
 layout: note
 title: "IO口信号上升沿与下降沿时间计算"
 category: "PCB与信号完整性"
+level: "基础"
 order: 9
 permalink: /notes/io-edge-rate/
 summary: "IO 上升沿、下降沿与负载电容的关系。"

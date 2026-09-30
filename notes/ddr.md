@@ -2,6 +2,7 @@
 layout: note
 title: "DDR"
 category: "硬件基础与电源"
+level: "进阶"
 order: 53
 permalink: /notes/ddr/
 summary: "引脚定义"
@@ -12,11 +13,11 @@ source: "笔记/硬件/02元器件/DDR/DDR"
 
 引脚定义
 
-<p class="attachment-note">附件未随公开版发布：Pasted image 20251125144841.png</p>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-061.png' | relative_url }}" alt="附件：Pasted image 20251125144841.png"><figcaption>Pasted image 20251125144841.png</figcaption></figure>
 
 走线要求
 
-<p class="attachment-note">附件未随公开版发布：Pasted image 20251125150504.png</p>
+<figure class="note-figure"><img src="{{ '/assets/attachments/attachment-062.png' | relative_url }}" alt="附件：Pasted image 20251125150504.png"><figcaption>Pasted image 20251125150504.png</figcaption></figure>
 
 等长分类  高八位数据线+(DQS0P+DQS0N差分锁存)+DM0 掩码
 

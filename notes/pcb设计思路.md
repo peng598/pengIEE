@@ -2,6 +2,7 @@
 layout: note
 title: "PCB设计思路"
 category: "PCB与信号完整性"
+level: "进阶"
 order: 30
 permalink: /notes/pcb设计思路/
 summary: "拿到设计图纸，先观察高速线路有多少，如果有BGA封装的，要先考虑BGA散出，需要多少层板．PCB板是否有成本限制，有哪些高速信号，"

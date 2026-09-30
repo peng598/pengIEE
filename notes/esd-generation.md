@@ -2,6 +2,7 @@
 layout: note
 title: "静电产生"
 category: "硬件基础与电源"
+level: "基础"
 order: 2
 permalink: /notes/esd-generation/
 summary: "静电的产生、积累和放电路径。"

@@ -2,6 +2,7 @@
 layout: note
 title: "MOS"
 category: "硬件基础与电源"
+level: "基础"
 order: 60
 permalink: /notes/mos/
 summary: "选型参数有哪些,关键参数有哪些"

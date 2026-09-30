@@ -2,6 +2,7 @@
 layout: note
 title: "选型"
 category: "硬件基础与电源"
+level: "实战"
 order: 11
 permalink: /notes/ferrite-bead-selection/
 summary: "磁珠阻抗曲线、直流偏置和电源滤波选型。"
