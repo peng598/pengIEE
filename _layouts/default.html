@@ -45,6 +45,7 @@
           <p class="nav-label">导航</p>
           <a class="nav-link{% if page.url == '/' %} is-active{% endif %}" href="{{ '/' | relative_url }}"><span class="nav-index">⌂</span>笔记首页</a>
           <a class="nav-link{% if page.url == '/resources/' %} is-active{% endif %}" href="{{ '/resources/' | relative_url }}"><span class="nav-index">↗</span>参考资料</a>
+          <a class="nav-link{% if page.url == '/formulas/' %} is-active{% endif %}" href="{{ '/formulas/' | relative_url }}"><span class="nav-index">ƒx</span>公式与计算</a>
           {% for category in nav_categories %}
             {% assign category_pages = note_pages | where: "category", category | sort: "order" %}
             <p class="nav-label nav-label-course">{{ category }}<span>{{ category_pages.size | prepend: '0' | slice: -2, 2 }}</span></p>
