@@ -1,0 +1,144 @@
+{
+  "groups": [
+    {
+      "topic": "学习导览",
+      "notes": ["/notes/readme/", "/notes/learning-roadmap/", "/notes/embedded-glossary/"]
+    },
+    {
+      "topic": "Cortex-M 中断与外设",
+      "notes": ["/notes/cortex-m4-interrupts/", "/notes/nvic结构及作用/", "/notes/中断定义/", "/notes/at32-peripherals/"]
+    },
+    {
+      "topic": "FreeRTOS 调度与任务",
+      "notes": ["/notes/freertos-realtime/", "/notes/freertos-startup/", "/notes/freertos-scheduling/", "/notes/freertos-task-states/", "/notes/列表和列表项/", "/notes/freertos-critical-sections/", "/notes/realtime-concurrency/"]
+    },
+    {
+      "topic": "电机控制与平衡车",
+      "notes": ["/notes/pid-digital-control/", "/notes/balance-car-cascade-control/", "/notes/foc-motor-control/", "/notes/sensors-digital-filtering/", "/notes/project-code-reading/"]
+    },
+    {
+      "topic": "串口与通信",
+      "notes": ["/notes/uart-dma-ble/", "/notes/usart与uart区别和怎么用/", "/notes/芯片之间为什么用串口多/", "/notes/software-bit-banging/"]
+    },
+    {
+      "topic": "嵌入式调试与代码",
+      "notes": ["/notes/debug-and-hardware-bringup/", "/notes/software-assert/", "/notes/c-language-memory/"]
+    },
+    {
+      "topic": "存储与启动",
+      "notes": ["/notes/单片机内的flash与eeprom作用及区别/", "/notes/linux启动流程/"]
+    },
+    {
+      "topic": "阻抗与传输线基础",
+      "notes": ["/notes/impedance-matching/", "/notes/characteristic-impedance/", "/notes/传输线理论/", "/notes/when-impedance-matching-matters/", "/notes/02-什么时候才需要考虑阻抗匹配/", "/notes/常用阻抗/", "/notes/电压倍增/"]
+    },
+    {
+      "topic": "端接与振铃",
+      "notes": ["/notes/termination-resistor-placement/", "/notes/源端匹配/", "/notes/ringing/", "/notes/ringing-root-causes/", "/notes/振铃不一定出现在高频信号/"]
+    },
+    {
+      "topic": "边沿、带宽与延时",
+      "notes": ["/notes/io-edge-rate/", "/notes/上升边与带宽关系/", "/notes/上升时间与带宽公式/", "/notes/pcb-propagation-delay/", "/notes/工作速率大于8gbps/", "/notes/关于芯片尺寸与上升速度的关系/"]
+    },
+    {
+      "topic": "回流、串扰与地弹",
+      "notes": ["/notes/return-current-path/", "/notes/high-frequency-return-path/", "/notes/ground-bounce/", "/notes/03-电路板走线分隔开多远才能减少串扰-３ｗ规则/", "/notes/signal-integrity-notes/"]
+    },
+    {
+      "topic": "差分与高速链路",
+      "notes": ["/notes/差分线间距要求/", "/notes/differential-length-matching/", "/notes/eye-diagram/", "/notes/insertion-loss/"]
+    },
+    {
+      "topic": "DDR 与高速布局",
+      "notes": ["/notes/ddr/", "/notes/ddr-layout-注意/", "/notes/架构/", "/notes/bga设计/", "/notes/叠层设计/"]
+    },
+    {
+      "topic": "PCB 规划与设计流程",
+      "notes": ["/notes/pcb设计思路/", "/notes/原理图设计思路/", "/notes/orcad-capture教程/", "/notes/ad规则/"]
+    },
+    {
+      "topic": "ESD 机理与防护",
+      "notes": ["/notes/esd-principles/", "/notes/esd-generation/", "/notes/esd-failure-analysis/", "/notes/100kω电阻不是esd保护的解决方案/", "/notes/电源输入保护/"]
+    },
+    {
+      "topic": "电磁兼容与干扰",
+      "notes": ["/notes/emc/", "/notes/emi/", "/notes/天线效应/", "/notes/电磁场/", "/notes/电场/", "/notes/wifi-near-field-interference/"]
+    },
+    {
+      "topic": "以太网故障与阻容网络",
+      "notes": ["/notes/短网线可以用-长网线用不了/", "/notes/ethernet-magnetics-rc/"]
+    },
+    {
+      "topic": "PCB 可靠性与制造",
+      "notes": ["/notes/pcb-life-factors/", "/notes/pcb-lifetime/", "/notes/via-failure/", "/notes/工艺与良率控制/", "/notes/saturn/"]
+    },
+    {
+      "topic": "晶振与负载电容",
+      "notes": ["/notes/crystal-structure/", "/notes/crystal-load-capacitor/", "/notes/crystal-layout/"]
+    },
+    {
+      "topic": "DC-DC 拓扑与工作模式",
+      "notes": ["/notes/dc-dc/", "/notes/dc-dc-nmos/", "/notes/dc-dc-pwm-pfm自动切换/", "/notes/dc-dc负压拓扑架构/", "/notes/dc-dc调试及测试经验/"]
+    },
+    {
+      "topic": "LDO 原理与稳定性",
+      "notes": ["/notes/ldo/", "/notes/ldo-principles/", "/notes/ldo-output-capacitor/", "/notes/ldo调试及测试经验/"]
+    },
+    {
+      "topic": "电源规划与保护",
+      "notes": ["/notes/power-input-design/", "/notes/power-sequencing/", "/notes/电源功率选型/", "/notes/简易的降压电路/"]
+    },
+    {
+      "topic": "MOS 与三极管应用",
+      "notes": ["/notes/mos/", "/notes/mos管/", "/notes/mos管n-和p-管工艺区别/", "/notes/三极管及mos管选型及应用/", "/notes/电机的dcr吸收电路/", "/notes/判断三极管在放大还是饱和的关键/", "/notes/三极管au-aus计算/", "/notes/三极管vbe会随温度变化/"]
+    },
+    {
+      "topic": "二极管与稳压保护",
+      "notes": ["/notes/二极管/", "/notes/稳压二极管/", "/notes/二极管关于突变电流关系/"]
+    },
+    {
+      "topic": "电容、电感与谐振",
+      "notes": ["/notes/capacitor-formulas/", "/notes/电阻-电容-电感/", "/notes/rc充放电公式/", "/notes/lc谐振/", "/notes/谐振频率公式/", "/notes/电感q值/"]
+    },
+    {
+      "topic": "滤波器与电源噪声",
+      "notes": ["/notes/lc-filter-design/", "/notes/滤波器设计思路/", "/notes/filter-series-resistor/", "/notes/ferrite-bead-selection/", "/notes/电容寄生电感也会影响信号完整性/"]
+    },
+    {
+      "topic": "音频麦克风输入",
+      "notes": ["/notes/12-动圈麦克风输入电路设计/", "/notes/microphone-bias-resistor/", "/notes/原理/", "/notes/会议话筒/"]
+    },
+    {
+      "topic": "声压级与音频计量",
+      "notes": ["/notes/sound-pressure-level/", "/notes/acoustics-glossary/", "/notes/放大倍数db/"]
+    },
+    {
+      "topic": "音频链路与声学",
+      "notes": ["/notes/audio_codec通用选型与硬件设计经验手册/", "/notes/audio-input-capacitor/", "/notes/audio-mixing/", "/notes/音频处理对音频参数影响/"]
+    },
+    {
+      "topic": "运放与模拟放大",
+      "notes": ["/notes/运放指标/", "/notes/input-impedance-scenarios/", "/notes/op-amp-input-impedance/", "/notes/non-inverting-inverting-input/", "/notes/op-amp-attenuator/", "/notes/op-amp-phase-shift/", "/notes/负反馈电容/", "/notes/audio-differential-amplifier/", "/notes/cross-coupling/", "/notes/unbalanced-to-balanced/"]
+    },
+    {
+      "topic": "功率放大与 D 类功放",
+      "notes": ["/notes/class-d-amplifier/", "/notes/class-d-amplifier-issues/", "/notes/功放相关计算/"]
+    },
+    {
+      "topic": "显示屏电源与时序",
+      "notes": ["/notes/avdd-vgl-vgh-电压作用/", "/notes/自举电容/", "/notes/画面有撕裂横-高低温开机时间/"]
+    },
+    {
+      "topic": "ADC 与采样精度",
+      "notes": ["/notes/adc精度/", "/notes/adc-divider-noise/"]
+    },
+    {
+      "topic": "示波器与频域测量",
+      "notes": ["/notes/ｍath模式/", "/notes/频谱仪使用/"]
+    },
+    {
+      "topic": "接口与电路隔离",
+      "notes": ["/notes/光耦隔离器件计算/", "/notes/光耦应用注意点/", "/notes/io口没用到-需要接地/"]
+    }
+  ]
+}

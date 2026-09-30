@@ -18,13 +18,26 @@ layout: default
   <div class="article-layout">
       <div class="prose">
       {{ content }}
-      {% assign related_resources = site.data.resources | where: "category", page.category %}
-      {% if related_resources.size > 0 %}
-        <section class="article-resources" aria-labelledby="related-resources-heading">
-          <div class="section-heading"><h2 id="related-resources-heading">关联资料</h2><a href="{{ '/resources/' | relative_url }}">查看全部 →</a></div>
-          <div class="article-resource-list">
-            {% for resource in related_resources limit: 4 %}
-              <a href="{{ resource.file | relative_url }}" target="_blank" rel="noopener"><span>{{ resource.level }}</span><strong>{{ resource.title }}</strong></a>
+      {% assign related_urls = nil %}
+      {% for related_group in site.data.related_notes.groups %}
+        {% if related_group.notes contains page.url %}
+          {% assign related_urls = related_group.notes %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
+      {% if related_urls %}
+        {% assign displayed_related_count = 0 %}
+        <section class="article-related-notes" aria-labelledby="related-notes-heading">
+          <div class="section-heading"><h2 id="related-notes-heading">相关阅读</h2></div>
+          <div class="article-related-list">
+            {% for related_url in related_urls %}
+              {% unless related_url == page.url %}
+                {% assign related_page = site.pages | where: "url", related_url | first %}
+                {% if related_page and displayed_related_count < 4 %}
+                  <a href="{{ related_page.url | relative_url }}"><span>{{ related_page.category }} · {{ related_page.level }}</span><strong>{{ related_page.title }}</strong></a>
+                  {% assign displayed_related_count = displayed_related_count | plus: 1 %}
+                {% endif %}
+              {% endunless %}
             {% endfor %}
           </div>
         </section>
