@@ -2,7 +2,7 @@
 layout: note
 title: "DC-DC"
 category: "硬件基础与电源"
-level: "进阶"
+level: "核心设计"
 order: 50
 permalink: /notes/dc-dc/
 summary: "基本拓扑图"

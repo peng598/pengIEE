@@ -2,7 +2,7 @@
 layout: note
 title: "Mini Balance Car 嵌入式与控制教程"
 category: "嵌入式系统"
-level: "进阶"
+level: "核心设计"
 order: 15
 permalink: /notes/readme/
 summary: "这是一个可以直接用 Obsidian 打开的教程库，内容围绕当前 AT32F413 双轮平衡车工程展开。"

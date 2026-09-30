@@ -2,7 +2,7 @@
 layout: note
 title: "AD规则"
 category: "测试与工程经验"
-level: "核心"
+level: "核心设计"
 order: 9
 permalink: /notes/ad规则/
 summary: "走线间距5ｍｉｌ"

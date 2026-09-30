@@ -2,7 +2,7 @@
 layout: note
 title: "地弹"
 category: "PCB与信号完整性"
-level: "核心"
+level: "核心设计"
 order: 13
 permalink: /notes/ground-bounce/
 summary: "地弹噪声及其与封装、回流和同时开关的关系。"

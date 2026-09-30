@@ -2,7 +2,7 @@
 layout: note
 title: "传感器与数字滤波"
 category: "嵌入式系统"
-level: "进阶"
+level: "核心设计"
 order: 9
 permalink: /notes/sensors-digital-filtering/
 summary: "传感器标定、单位换算、滤波、编码器回绕和数据采样。"

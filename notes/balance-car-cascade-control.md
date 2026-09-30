@@ -2,7 +2,7 @@
 layout: note
 title: "平衡车姿态与串级控制"
 category: "嵌入式系统"
-level: "核心"
+level: "核心设计"
 order: 8
 permalink: /notes/balance-car-cascade-control/
 summary: "姿态融合、平衡车直立环、速度环和转向环的协作。"

@@ -2,7 +2,7 @@
 layout: note
 title: "D类功放关键问题"
 category: "模拟、音频与声学"
-level: "进阶"
+level: "核心设计"
 order: 14
 permalink: /notes/class-d-amplifier-issues/
 summary: "D 类功放的 EMI、死区、滤波和效率问题。"

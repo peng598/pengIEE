@@ -2,7 +2,7 @@
 layout: note
 title: "WIFI 近场干扰"
 category: "测试与工程经验"
-level: "进阶"
+level: "核心设计"
 order: 3
 permalink: /notes/wifi-near-field-interference/
 summary: "Wi-Fi 近场干扰的来源、耦合路径和排查思路。"

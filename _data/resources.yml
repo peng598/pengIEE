@@ -11,12 +11,12 @@
 - title: 运算放大器精密整流电路
   file: /assets/docs/precision-rectifier.pdf
   category: 模拟、音频与声学
-  level: 核心
+  level: 核心设计
   description: 用运放改善二极管压降影响的精密整流电路资料。
 - title: 运算滤波器与信号发生器电路
   file: /assets/docs/active-filters-and-oscillators.pdf
   category: 模拟、音频与声学
-  level: 核心
+  level: 核心设计
   description: 有源滤波器、振荡器和信号发生电路的补充资料。
 - title: Analog Circuit I
   file: /assets/docs/analog-circuit-i.pdf
@@ -26,32 +26,32 @@
 - title: Analog Circuit II
   file: /assets/docs/analog-circuit-ii.pdf
   category: 模拟、音频与声学
-  level: 核心
+  level: 核心设计
   description: 模拟电路中级专题资料。
 - title: Analog Circuit III
   file: /assets/docs/analog-circuit-iii.pdf
   category: 模拟、音频与声学
-  level: 核心
+  level: 核心设计
   description: 模拟电路分析与设计的进阶课程资料。
 - title: Analog Circuit IV
   file: /assets/docs/analog-circuit-iv.pdf
   category: 模拟、音频与声学
-  level: 进阶
+  level: 核心设计
   description: 复杂模拟电路和系统级分析补充资料。
 - title: Analog Circuit V
   file: /assets/docs/analog-circuit-v.pdf
   category: 模拟、音频与声学
-  level: 进阶
+  level: 核心设计
   description: 模拟电路综合设计与扩展阅读。
 - title: Power Handbook
   file: /assets/docs/power-handbook.pdf
   category: 硬件基础与电源
-  level: 核心
+  level: 核心设计
   description: 电源架构、器件选择和设计检查的综合参考。
 - title: 德州仪器高性能模拟器件电源应用指南
   file: /assets/docs/ti-power-guide.pdf
   category: 硬件基础与电源
-  level: 核心
+  level: 核心设计
   description: 线性稳压、开关电源和模拟电源应用补充资料。
 - title: Buck 变换器技术概述
   file: /assets/docs/buck-converter-overview.pdf
@@ -61,22 +61,22 @@
 - title: MCU EMC 设计指南
   file: /assets/docs/mcu-emc-guide.pdf
   category: PCB与信号完整性
-  level: 进阶
+  level: 核心设计
   description: MCU 系统中的接地、回流、时钟和抗干扰设计要点。
 - title: 电源轨纹波测量入门
   file: /assets/docs/power-rail-measurements.pdf
   category: 测试与工程经验
-  level: 实战
+  level: 工程实战
   description: 示波器探头、带宽限制和电源纹波测量方法。
 - title: 数据采样系统基础知识
   file: /assets/docs/data-acquisition-basics.pdf
   category: 硬件基础与电源
-  level: 核心
+  level: 核心设计
   description: 采样链路、ADC 前端和数据采集系统基础。
 - title: 保护以太网端口免受浪涌事件的影响
   file: /assets/docs/ethernet-surge-protection.pdf
   category: 测试与工程经验
-  level: 实战
+  level: 工程实战
   description: 以太网端口浪涌保护器件和布局思路。
 - title: 示波器的原理及应用
   file: /assets/docs/oscilloscope-principles.pdf
@@ -86,10 +86,10 @@
 - title: USB 2.0 规范
   file: /assets/docs/usb-2-0-specification.pdf
   category: 嵌入式系统
-  level: 核心
+  level: 核心设计
   description: USB 2.0 总线、电气和协议约束参考。
 - title: DDR5 JESD79-5
   file: /assets/docs/ddr5-specification.pdf
   category: PCB与信号完整性
-  level: 进阶
+  level: 核心设计
   description: DDR5 接口时序、电气和设计约束参考。

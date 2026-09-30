@@ -2,7 +2,7 @@
 layout: note
 title: "LDO"
 category: "硬件基础与电源"
-level: "进阶"
+level: "核心设计"
 order: 58
 permalink: /notes/ldo/
 summary: "内部工作原理"

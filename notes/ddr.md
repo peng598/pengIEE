@@ -2,7 +2,7 @@
 layout: note
 title: "DDR"
 category: "硬件基础与电源"
-level: "进阶"
+level: "核心设计"
 order: 53
 permalink: /notes/ddr/
 summary: "引脚定义"

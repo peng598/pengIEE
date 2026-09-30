@@ -2,7 +2,7 @@
 layout: note
 title: "高速信号串接电阻与并联电阻放置"
 category: "PCB与信号完整性"
-level: "进阶"
+level: "核心设计"
 order: 7
 permalink: /notes/termination-resistor-placement/
 summary: "串联端接和并联端接的放置位置。"

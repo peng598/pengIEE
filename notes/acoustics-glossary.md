@@ -2,7 +2,7 @@
 layout: note
 title: "专业名称"
 category: "模拟、音频与声学"
-level: "核心"
+level: "核心设计"
 order: 17
 permalink: /notes/acoustics-glossary/
 summary: "音频与声学处理中常见专业名词。"

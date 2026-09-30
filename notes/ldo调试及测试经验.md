@@ -2,7 +2,7 @@
 layout: note
 title: "LDO 通用设计、计算与调试经验手册"
 category: "测试与工程经验"
-level: "实战"
+level: "工程实战"
 order: 11
 permalink: /notes/ldo调试及测试经验/
 summary: "适用范围：固定输出、可调输出、低压差、低噪声、超低静态电流和高 PSRR LDO 的方案选型、计算、原理图、PCB、测试与故障定位。"

@@ -1,0 +1,84 @@
+[
+  {
+    "title": "电子基础知识",
+    "count": "271 份 PDF",
+    "description": "以元器件基础目录为主，从器件认识进入特性、参数和应用。",
+    "children": [
+      { "title": "电阻", "description": "基础知识与电路中的限流、分压、采样。", "children": ["基础知识", "特性与参数", "选型与应用"] },
+      { "title": "电容", "description": "电容类型、频率特性和输入输出端应用。", "children": ["参考资料", "电解电容研究", "MLCC 研究", "输入输出电容选择"] },
+      { "title": "电感", "description": "功率电感、共模电感以及啸叫问题。", "children": ["参考资料", "功率电感与共模电感", "啸叫分析", "参数与选型"] },
+      { "title": "磁珠", "description": "电源和信号路径中的高频噪声抑制。", "children": ["基础知识", "阻抗特性", "选型与应用"] },
+      { "title": "压敏电阻、TVS 与 PPTC", "description": "过压、浪涌和过流保护器件。", "children": ["工作特性", "保护参数", "接口与电源应用"] },
+      { "title": "二极管、三极管、MOS 与 IGBT", "description": "半导体器件的工作状态、驱动和开关应用。", "children": ["器件原理", "静态与动态参数", "整流、开关与驱动应用"] },
+      { "title": "运算放大器", "description": "运放、比较器和有源滤波电路。", "children": ["基本结构与指标", "比较器与反馈", "放大和滤波应用"] },
+      { "title": "晶振、GDT、电池与存储器", "description": "时钟、放电保护、供电和数据存储器件。", "children": ["晶振与时钟", "GDT 放电管", "锂离子电池", "NAND Flash 与存储器"] },
+      { "title": "模数与数模转换", "description": "ADC、DAC 的精度、采样和接口基础。", "children": ["ADC 转换", "DAC 转换", "精度与误差"] }
+    ]
+  },
+  {
+    "title": "电源设计",
+    "count": "101 份 PDF",
+    "description": "拓扑、器件选型、测试和 EMC 组成的电源设计主线。",
+    "children": [
+      { "title": "大厂培训资料", "description": "TI、ADI、MPS、ST、英飞凌等厂商培训内容。", "children": ["拓扑与控制原理", "器件应用指南", "典型参考设计"] },
+      { "title": "电源测试", "description": "从波形观察到效率、纹波和动态响应验证。", "children": ["电源纹波测试", "负载瞬态", "效率与温升"] },
+      { "title": "电源电子书", "description": "开关电源、变压器和电感器设计资料。", "children": ["开关电源设计", "变压器与电感器", "电源 EMC 与 PCB"] },
+      { "title": "电源基础与器件选型", "description": "反激、Buck 等电源器件和参数计算。", "children": ["拓扑基础", "磁性器件选型", "RCD 与环路计算"] },
+      { "title": "电源 EMC", "description": "降低 Buck、DC-DC 和整机电源噪声。", "children": ["EMI/EMC 基础", "低 EMI 设计", "整改与验证"] }
+    ]
+  },
+  {
+    "title": "技术文档",
+    "count": "1,377 份资料",
+    "description": "大厂技术资料、参考设计和芯片厂商文档。",
+    "children": [
+      { "title": "大厂参考设计方案", "description": "平台、核心板和整机参考设计。", "children": ["NXP 与 i.MX", "全志与 RK3588", "创龙科技参考设计"] },
+      { "title": "华为、华为海思与中兴", "description": "通信和嵌入式系统相关技术资料。", "children": ["硬件设计资料", "芯片与平台资料", "系统参考方案"] },
+      { "title": "ADI、CYPRESS 与 Microchip", "description": "模拟、MCU 和接口器件厂商资料。", "children": ["数据手册与应用笔记", "培训课程", "参考代码与设计文件"] },
+      { "title": "华硕、上海贝尔与上汽", "description": "企业硬件和行业项目资料。", "children": ["产品设计资料", "行业应用", "项目参考"] }
+    ]
+  },
+  {
+    "title": "优质电子书",
+    "count": "45 份资料",
+    "description": "按学习主题整理的模拟、高速、信号完整性和 EMC 书籍。",
+    "children": [
+      { "title": "模电基础", "description": "晶体管、模拟电子技术和模拟电路入门。", "children": ["晶体管电路", "模拟电路基础", "Analog Circuit 系列"] },
+      { "title": "高速电路与信号完整性", "description": "传输线、时序、阻抗和高速 PCB。", "children": ["高速互连", "阻抗与端接", "信号完整性分析"] },
+      { "title": "运算放大器与仿真", "description": "运放设计、SPICE 和电路验证。", "children": ["运放应用", "电路仿真", "模型与收敛"] },
+      { "title": "系统设计、EMC 与失效分析", "description": "从系统方案到兼容性和可靠性。", "children": ["系统设计", "EMC 电磁兼容", "元器件失效分析"] }
+    ]
+  },
+  {
+    "title": "硬件工程师必备",
+    "count": "191 份资料",
+    "description": "面向项目工作的通信、EMC、测试、射频、电机和热设计资料。",
+    "children": [
+      { "title": "电源设计与通讯接口规范", "description": "项目中的供电和接口约束。", "children": ["电源设计", "USB、以太网与串行接口", "接口电气规范"] },
+      { "title": "电磁兼容设计与硬件测试", "description": "EMC 设计、仪器使用和问题定位。", "children": ["EMI/EMC", "示波器与频谱仪", "测试方法与验证"] },
+      { "title": "射频、电机与模拟数据采集", "description": "射频、电机控制和采样链路专题。", "children": ["射频基础", "电机控制", "ADC 与数据采集"] },
+      { "title": "热计算与高速内存", "description": "热设计、DDR 和高速存储器布局。", "children": ["热阻与温升", "DDR 设计", "高速内存约束"] },
+      { "title": "常用仪器", "description": "工程调试和生产验证中的测量工具。", "children": ["示波器", "频谱仪", "万用表与电源"] }
+    ]
+  },
+  {
+    "title": "项目开发模板",
+    "count": "40 份资料",
+    "description": "从需求、方案和原理图到调试、生产导入的项目流程。",
+    "children": [
+      { "title": "需求与总体方案", "description": "把需求、WBS 和系统方案固化下来。", "children": ["团队组建与 WBS", "需求分析和跟踪", "总体方案"] },
+      { "title": "器件、DFX 与原理图", "description": "器件审查、可制造性和原理图评审。", "children": ["器件与电路专题", "硬件 DFX", "BOM 与原理图检视"] },
+      { "title": "仿真、PCB 与投板", "description": "SI/PI、布局布线和投板审查。", "children": ["热仿真与结构", "SI/PI 仿真", "PCB 布局布线与检视"] },
+      { "title": "调试、测试与生命周期", "description": "单板验证、问题闭环和量产维护。", "children": ["单板调试地图", "单元测试与专业实验", "问题闭环、生产导入与生命周期"] }
+    ]
+  },
+  {
+    "title": "单片机电气图集与设计要点",
+    "count": "公开目录",
+    "description": "项目参考图、教程程序和接口设计要点。",
+    "children": [
+      { "title": "单片机电气图集", "description": "电子毕设、教程和程序资料。", "children": ["单片机最小系统", "接口与外设电路", "项目参考图"] },
+      { "title": "以太网设计要点", "description": "以太网 PHY、浪涌和 PCB 设计检查。", "children": ["接口保护", "PHY 与磁性器件", "布局布线与验证"] }
+    ]
+  }
+]

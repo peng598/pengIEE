@@ -2,7 +2,7 @@
 layout: note
 title: "saturn"
 category: "硬件基础与电源"
-level: "进阶"
+level: "核心设计"
 order: 64
 permalink: /notes/saturn/
 summary: "常用于过孔计算与导线载流计算，"

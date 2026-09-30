@@ -2,7 +2,7 @@
 layout: note
 title: "FreeRTOS实时系统"
 category: "嵌入式系统"
-level: "进阶"
+level: "核心设计"
 order: 4
 permalink: /notes/freertos-realtime/
 summary: "任务状态、周期调度、任务栈、堆管理及任务间通信机制。"

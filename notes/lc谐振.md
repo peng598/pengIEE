@@ -2,7 +2,7 @@
 layout: note
 title: "LC谐振"
 category: "硬件基础与电源"
-level: "进阶"
+level: "核心设计"
 order: 57
 permalink: /notes/lc谐振/
 summary: "比喻：钟摆（动能与势能的转换）"

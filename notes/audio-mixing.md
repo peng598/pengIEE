@@ -2,7 +2,7 @@
 layout: note
 title: "音频混合"
 category: "模拟、音频与声学"
-level: "核心"
+level: "核心设计"
 order: 12
 permalink: /notes/audio-mixing/
 summary: "多路音频混合的电阻网络和增益分配。"

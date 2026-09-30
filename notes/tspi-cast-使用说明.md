@@ -2,7 +2,7 @@
 layout: note
 title: "TSPI Cast 使用说明"
 category: "嵌入式系统"
-level: "实战"
+level: "工程实战"
 order: 17
 permalink: /notes/tspi-cast-使用说明/
 summary: "TSPI Cast 用于把 Android 手机画面通过手机热点投到立创泰山派 RK3566 的 HDMI 显示器。"

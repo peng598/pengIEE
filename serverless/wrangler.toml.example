@@ -1,0 +1,11 @@
+name = "pengiee-deepseek-proxy"
+main = "cloudflare-worker.js"
+compatibility_date = "2025-01-01"
+
+[vars]
+DEEPSEEK_API_URL = "https://api.deepseek.com/chat/completions"
+ALLOWED_ORIGIN = "https://peng598.github.io"
+
+# Set secrets with:
+# wrangler secret put DEEPSEEK_API_KEY
+# wrangler secret put DEEPSEEK_MODEL

@@ -2,7 +2,7 @@
 layout: note
 title: "调试、故障与上板流程"
 category: "嵌入式系统"
-level: "实战"
+level: "工程实战"
 order: 11
 permalink: /notes/debug-and-hardware-bringup/
 summary: "嵌入式调试工具、故障定位和分阶段安全上板流程。"

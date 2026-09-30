@@ -2,7 +2,7 @@
 layout: note
 title: "特性阻抗"
 category: "PCB与信号完整性"
-level: "进阶"
+level: "核心设计"
 order: 10
 permalink: /notes/characteristic-impedance/
 summary: "特性阻抗的定义、影响因素和常见误区。"

@@ -2,7 +2,7 @@
 layout: note
 title: "assert函数"
 category: "实时系统与软件"
-level: "进阶"
+level: "核心设计"
 order: 7
 permalink: /notes/software-assert/
 summary: "调试断言与生产环境错误处理的使用边界。"

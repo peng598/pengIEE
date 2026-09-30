@@ -2,7 +2,7 @@
 layout: note
 title: "AVDD VGL VGH 电压作用"
 category: "硬件基础与电源"
-level: "进阶"
+level: "核心设计"
 order: 49
 permalink: /notes/avdd-vgl-vgh-电压作用/
 summary: "好的，这是一个非常经典和重要的TFT屏幕驱动问题。简单来说，AVDD、VGH、VGL是驱动TFT液晶屏幕正常工作的三个关键电压，它们像三个不同职位的“工人”，共同确保每个像素点能正确显示你想要的色彩。"

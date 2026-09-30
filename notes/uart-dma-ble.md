@@ -2,7 +2,7 @@
 layout: note
 title: "串口、DMA与BLE协议"
 category: "嵌入式系统"
-level: "核心"
+level: "核心设计"
 order: 10
 permalink: /notes/uart-dma-ble/
 summary: "UART、DMA 变长接收、BLE 遥控和可靠帧协议设计。"

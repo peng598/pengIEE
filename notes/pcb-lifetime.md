@@ -2,7 +2,7 @@
 layout: note
 title: "增加PCB寿命"
 category: "PCB与信号完整性"
-level: "核心"
+level: "核心设计"
 order: 16
 permalink: /notes/pcb-lifetime/
 summary: "影响 PCB 使用寿命的材料、热和环境因素。"

@@ -2,7 +2,7 @@
 layout: note
 title: "Buck DC-DC 通用设计、计算与调试经验手册"
 category: "测试与工程经验"
-level: "实战"
+level: "工程实战"
 order: 10
 permalink: /notes/dc-dc调试及测试经验/
 summary: "适用范围：非隔离降压型（Buck）开关电源的方案评估、器件计算、原理图检查、PCB 布局、样机测试和故障定位。"

@@ -2,7 +2,7 @@
 layout: note
 title: "工作速率大于8Gbps"
 category: "硬件基础与电源"
-level: "进阶"
+level: "核心设计"
 order: 32
 permalink: /notes/工作速率大于8gbps/
 summary: "布线要注意不要走在焊盘上面，线要有一个完整的参考地"

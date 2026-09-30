@@ -2,7 +2,7 @@
 layout: note
 title: "串型差分放大"
 category: "模拟、音频与声学"
-level: "进阶"
+level: "核心设计"
 order: 10
 permalink: /notes/audio-differential-amplifier/
 summary: "音频差分放大和共模抑制。"

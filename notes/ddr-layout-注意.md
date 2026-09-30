@@ -2,7 +2,7 @@
 layout: note
 title: "DDR layout 注意"
 category: "PCB与信号完整性"
-level: "进阶"
+level: "核心设计"
 order: 28
 permalink: /notes/ddr-layout-注意/
 summary: "布局要放在中间,用连接线观察,确保后续走等长更容易"

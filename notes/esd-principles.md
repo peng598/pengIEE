@@ -2,7 +2,7 @@
 layout: note
 title: "ESD原理及参数"
 category: "硬件基础与电源"
-level: "进阶"
+level: "核心设计"
 order: 3
 permalink: /notes/esd-principles/
 summary: "ESD 防护器件的原理、关键参数与选型思路。"

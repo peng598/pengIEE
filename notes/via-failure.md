@@ -2,7 +2,7 @@
 layout: note
 title: "过孔失效"
 category: "PCB与信号完整性"
-level: "核心"
+level: "核心设计"
 order: 15
 permalink: /notes/via-failure/
 summary: "过孔失效模式、热应力和制造可靠性。"

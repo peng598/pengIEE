@@ -2,7 +2,7 @@
 layout: note
 title: "DC-DC负压拓扑架构"
 category: "硬件基础与电源"
-level: "进阶"
+level: "核心设计"
 order: 52
 permalink: /notes/dc-dc负压拓扑架构/
 summary: "一个DC-DC,要变成负压输出,由原来BUCK,变成BUCK-BOOST结构"

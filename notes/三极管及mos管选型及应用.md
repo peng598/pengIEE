@@ -2,7 +2,7 @@
 layout: note
 title: "MOS 管及三极管开关选型与设计经验指南"
 category: "测试与工程经验"
-level: "实战"
+level: "工程实战"
 order: 13
 permalink: /notes/三极管及mos管选型及应用/
 summary: "本文面向硬件原理图设计、产品调试、器件替代和失效分析。重点不是背参数，而是回答工程中真正会遇到的问题："

@@ -2,7 +2,7 @@
 layout: note
 title: "FOC无刷电机控制"
 category: "嵌入式系统"
-level: "进阶"
+level: "核心设计"
 order: 7
 permalink: /notes/foc-motor-control/
 summary: "无刷电机 FOC 控制链路、坐标变换、电流环与 SVPWM。"

@@ -2,7 +2,7 @@
 layout: note
 title: "振铃"
 category: "PCB与信号完整性"
-level: "进阶"
+level: "核心设计"
 order: 12
 permalink: /notes/ringing/
 summary: "振铃的成因、观测方法和抑制思路。"

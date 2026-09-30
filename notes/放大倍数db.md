@@ -2,7 +2,7 @@
 layout: note
 title: "放大倍数dB"
 category: "硬件基础与电源"
-level: "核心"
+level: "核心设计"
 order: 30
 permalink: /notes/放大倍数db/
 summary: "分贝不是一个绝对单位，而是一个比率的对数表示。它主要用于表示两个数值之间的相对关系，比如输出相对于输入的变化。"

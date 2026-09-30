@@ -2,7 +2,7 @@
 layout: note
 title: "电感Q值"
 category: "硬件基础与电源"
-level: "进阶"
+level: "核心设计"
 order: 21
 permalink: /notes/电感q值/
 summary: "来自 笔记/硬件/02元器件/电感/电感Q值"

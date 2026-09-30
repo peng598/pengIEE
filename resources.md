@@ -15,7 +15,7 @@ permalink: /resources/
 
 <section class="resource-intro" aria-label="资料说明">
   <strong>阅读方式</strong>
-  <span>先看对应方向的基础笔记，再按“核心、进阶、实战”层级打开资料。</span>
+  <span>按一级主题、二级专题和三级内容浏览资料；版权状态不明或付费资料不会直接公开。</span>
 </section>
 
 {% for category in resource_categories %}

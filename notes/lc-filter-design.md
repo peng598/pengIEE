@@ -2,7 +2,7 @@
 layout: note
 title: "LC滤波器"
 category: "硬件基础与电源"
-level: "进阶"
+level: "核心设计"
 order: 15
 permalink: /notes/lc-filter-design/
 summary: "LC 滤波器的结构、谐振与阻尼设计。"

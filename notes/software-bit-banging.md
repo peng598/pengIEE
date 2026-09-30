@@ -2,7 +2,7 @@
 layout: note
 title: "写数据"
 category: "实时系统与软件"
-level: "核心"
+level: "核心设计"
 order: 6
 permalink: /notes/software-bit-banging/
 summary: "OLED I2C 模拟时序的字节发送示例。"

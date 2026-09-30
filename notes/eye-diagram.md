@@ -2,7 +2,7 @@
 layout: note
 title: "眼图"
 category: "测试与工程经验"
-level: "进阶"
+level: "核心设计"
 order: 2
 permalink: /notes/eye-diagram/
 summary: "用眼图观察高速链路抖动、噪声和码间串扰。"

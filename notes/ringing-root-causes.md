@@ -2,7 +2,7 @@
 layout: note
 title: "相位裕度不足导致的振铃与阻抗不匹配引起的振铃区别"
 category: "模拟、音频与声学"
-level: "进阶"
+level: "核心设计"
 order: 4
 permalink: /notes/ringing-root-causes/
 summary: "区分环路相位裕度不足和传输线阻抗不匹配造成的振铃。"

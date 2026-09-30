@@ -21,7 +21,7 @@
     </script>
     <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   </head>
-  <body>
+  <body data-ai-endpoint="{{ site.ai_endpoint | default: '' | escape }}" data-ai-model="{{ site.ai_model | default: 'DeepSeek V4-FLASH' | escape }}" data-ai-title="{{ page.title | default: site.title | escape }}" data-ai-category="{{ page.category | default: '个人知识库' | escape }}">
     <a class="skip-link" href="#main">跳到正文</a>
     {% assign note_pages = site.pages | where_exp: "item", "item.category" | sort: "order" %}
     {% assign nav_categories = note_pages | map: "category" | uniq %}
@@ -29,6 +29,9 @@
       <a class="mobile-brand" href="{{ '/' | relative_url }}">{{ site.title }} <span>学习笔记</span></a>
       <button class="pwa-install" type="button" aria-label="安装 PENGIEE 到手机" title="安装到手机" hidden>
         <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 16v3h14v-3" /></svg>
+      </button>
+      <button class="ai-open ai-open-mobile" type="button" aria-label="打开 AI 学习助手" title="AI 学习助手">
+        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 3.5a7.5 7.5 0 0 0-7.5 7.5c0 2.08.85 3.96 2.22 5.32L6 20.5l4.1-1.03c.6.2 1.24.3 1.9.3a7.5 7.5 0 1 0 0-16.27Z"/><path d="M8.5 11h.01M12 11h.01M15.5 11h.01"/></svg>
       </button>
       <button class="menu-toggle" type="button" aria-label="打开课程目录" aria-expanded="false" aria-controls="course-sidebar">
         <span></span><span></span><span></span>
@@ -45,7 +48,27 @@
           <p class="nav-label">导航</p>
           <a class="nav-link{% if page.url == '/' %} is-active{% endif %}" href="{{ '/' | relative_url }}"><span class="nav-index">⌂</span>笔记首页</a>
           <a class="nav-link{% if page.url == '/resources/' %} is-active{% endif %}" href="{{ '/resources/' | relative_url }}"><span class="nav-index">↗</span>参考资料</a>
+          <a class="nav-link{% if page.url == '/submit/' %} is-active{% endif %}" href="{{ '/submit/' | relative_url }}"><span class="nav-index">＋</span>提交资料</a>
           <a class="nav-link{% if page.url == '/formulas/' %} is-active{% endif %}" href="{{ '/formulas/' | relative_url }}"><span class="nav-index">ƒx</span>公式与计算</a>
+          <button class="nav-link nav-action ai-open" type="button"><span class="nav-index" aria-hidden="true">✦</span>AI 学习助手</button>
+          <p class="nav-label nav-label-course">硬件文档目录</p>
+          <div class="nav-tree">
+            {% for root in site.data.knowledge_tree %}
+              <details class="nav-tree-root">
+                <summary><span class="nav-tree-index">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span><span class="nav-tree-title">{{ root.title }}</span><span class="nav-tree-count">{{ root.count }}</span></summary>
+                <div class="nav-tree-branches">
+                  {% for branch in root.children %}
+                    <details class="nav-tree-branch">
+                      <summary><span>{{ branch.title }}</span><span class="nav-tree-arrow" aria-hidden="true">⌄</span></summary>
+                      <ul>
+                        {% for leaf in branch.children %}<li>{{ leaf }}</li>{% endfor %}
+                      </ul>
+                    </details>
+                  {% endfor %}
+                </div>
+              </details>
+            {% endfor %}
+          </div>
           {% for category in nav_categories %}
             {% assign category_pages = note_pages | where: "category", category | sort: "order" %}
             <p class="nav-label nav-label-course">{{ category }}<span>{{ category_pages.size | prepend: '0' | slice: -2, 2 }}</span></p>
@@ -71,6 +94,33 @@
         </div>
       </main>
     </div>
+    <div class="ai-scrim" data-ai-close></div>
+    <aside class="ai-panel" id="ai-panel" role="dialog" aria-modal="true" aria-labelledby="ai-panel-title" aria-hidden="true" tabindex="-1">
+      <header class="ai-panel-header">
+        <div>
+          <p class="ai-panel-kicker">PENGIEE / 学习助手</p>
+          <h2 id="ai-panel-title">AI 学习助手</h2>
+          <p class="ai-panel-subtitle">围绕当前笔记提问。笔记摘录会发送到你配置的 AI 服务。</p>
+        </div>
+        <button class="ai-close" type="button" aria-label="关闭 AI 学习助手" title="关闭" data-ai-close>×</button>
+      </header>
+      <div class="ai-context" aria-live="polite">
+        <span class="ai-context-label">当前上下文</span>
+        <strong data-ai-context-title>{{ page.title | default: site.title }}</strong>
+        <small data-ai-context-category>{{ page.category | default: '个人知识库' }}</small>
+      </div>
+      <div class="ai-messages" data-ai-messages role="log" aria-live="polite" aria-label="对话内容">
+        <div class="ai-message ai-message-assistant"><p>你好，我可以结合当前笔记回答问题。你可以问我“这篇笔记的核心结论是什么？”或“这个公式如何使用？”</p></div>
+      </div>
+      <form class="ai-composer" data-ai-form>
+        <label class="sr-only" for="ai-input">输入问题</label>
+        <textarea id="ai-input" rows="3" maxlength="4000" placeholder="输入你的问题，例如：如何判断这个滤波器的截止频率？" data-ai-input></textarea>
+        <div class="ai-composer-footer">
+          <span class="ai-status" data-ai-status>模型：{{ site.ai_model | default: 'DeepSeek V4-FLASH' }}</span>
+          <button class="ai-send" type="submit"><span>发送</span><span aria-hidden="true">↗</span></button>
+        </div>
+      </form>
+    </aside>
     <script>
       const sidebar = document.querySelector('.sidebar');
       const toggle = document.querySelector('.menu-toggle');
@@ -134,5 +184,6 @@
         window.addEventListener('load', () => navigator.serviceWorker.register("{{ '/sw.js' | relative_url }}", { scope: "{{ '/' | relative_url }}" }));
       }
     </script>
+    <script defer src="{{ '/assets/ai-assistant.js' | relative_url }}"></script>
   </body>
 </html>
