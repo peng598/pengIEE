@@ -5,7 +5,7 @@ category: "PCB与信号完整性"
 order: 16
 permalink: /notes/pcb-lifetime/
 summary: "影响 PCB 使用寿命的材料、热和环境因素。"
-source: "硬件/PCB工艺及相关问题/增加PCB寿命.md"
+source: "笔记/硬件/PCB工艺及相关问题/增加PCB寿命"
 ---
 
 # 增加PCB寿命

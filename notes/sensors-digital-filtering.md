@@ -5,7 +5,7 @@ category: "嵌入式系统"
 order: 9
 permalink: /notes/sensors-digital-filtering/
 summary: "传感器标定、单位换算、滤波、编码器回绕和数据采样。"
-source: "soft/MCU基础知识/09-传感器与数字滤波.md"
+source: "soft/MCU基础知识/09-传感器与数字滤波"
 ---
 
 # 传感器与数字滤波
@@ -26,7 +26,7 @@ flowchart LR
 
 ## 2. MPU6500寄存器配置
 
-项目在 `MPU6500.c` 中配置：
+项目在 MPU6500.c 中配置：
 
 | 寄存器 | 配置 | 含义 |
 |---|---:|---|

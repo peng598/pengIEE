@@ -5,7 +5,7 @@ category: "模拟、音频与声学"
 order: 17
 permalink: /notes/acoustics-glossary/
 summary: "音频与声学处理中常见专业名词。"
-source: "声学/专业名称.md"
+source: "笔记/声学/专业名称"
 ---
 
 # 专业名称

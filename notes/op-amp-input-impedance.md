@@ -5,7 +5,7 @@ category: "模拟、音频与声学"
 order: 9
 permalink: /notes/op-amp-input-impedance/
 summary: "从电路拓扑判断运放输入阻抗。"
-source: "硬件/运放&模拟/运放设计/运放输入阻抗怎么来判定.md"
+source: "笔记/硬件/运放&模拟/运放设计/运放输入阻抗怎么来判定"
 ---
 
 ## 运放输入阻抗的判定与测量

@@ -5,7 +5,7 @@ category: "硬件基础与电源"
 order: 6
 permalink: /notes/ldo-output-capacitor/
 summary: "LDO 输出电容对环路稳定性、瞬态和纹波的影响。"
-source: "硬件/02元器件/LDO/LDO 输出电容注意点.md"
+source: "笔记/硬件/02元器件/LDO/LDO 输出电容注意点"
 ---
 
 # LDO 输出电容注意点

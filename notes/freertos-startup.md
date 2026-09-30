@@ -5,7 +5,7 @@ category: "实时系统与软件"
 order: 4
 permalink: /notes/freertos-startup/
 summary: "vTaskStartScheduler 与任务调度器启动流程。"
-source: "soft/FreeRTOS/系统启动流程及任务相关函数.md"
+source: "soft/FreeRTOS/系统启动流程及任务相关函数"
 ---
 
 # 系统启动流程及任务相关函数

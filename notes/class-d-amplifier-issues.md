@@ -5,7 +5,7 @@ category: "模拟、音频与声学"
 order: 14
 permalink: /notes/class-d-amplifier-issues/
 summary: "D 类功放的 EMI、死区、滤波和效率问题。"
-source: "硬件/音频/D类功放/D类功放关键问题.md"
+source: "笔记/硬件/音频/D类功放/D类功放关键问题"
 ---
 
 # D类功放关键问题

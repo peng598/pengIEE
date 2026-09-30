@@ -5,7 +5,7 @@ category: "硬件基础与电源"
 order: 13
 permalink: /notes/power-sequencing/
 summary: "多电源系统的上电时序、复位和监控。"
-source: "硬件/05设计/上电时序/多电源上电时序.md"
+source: "笔记/硬件/05设计/上电时序/多电源上电时序"
 ---
 
 # 多电源上电时序

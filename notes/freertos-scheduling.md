@@ -5,7 +5,7 @@ category: "实时系统与软件"
 order: 2
 permalink: /notes/freertos-scheduling/
 summary: "抢占式、时间片和协程式调度的基本区别。"
-source: "soft/FreeRTOS/任务调度方式.md"
+source: "soft/FreeRTOS/任务调度方式"
 ---
 
 # 任务调度方式

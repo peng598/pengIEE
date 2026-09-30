@@ -5,7 +5,7 @@ category: "模拟、音频与声学"
 order: 16
 permalink: /notes/sound-pressure-level/
 summary: "声压级、功率、距离和声场的常用计算。"
-source: "声学/声压级.md"
+source: "笔记/声学/声压级"
 ---
 
 声压级（Sound Pressure Level, SPL）是量化声音强度的常用指标，单位是 **dB**（分贝），它表示声压有效值相对于一个标准参考声压的对数比值。

@@ -5,7 +5,7 @@ category: "嵌入式系统"
 order: 5
 permalink: /notes/realtime-concurrency/
 summary: "从竞态与数据一致性到临界区、快照和实时性评估。"
-source: "soft/MCU基础知识/05-实时并发与数据安全.md"
+source: "soft/MCU基础知识/05-实时并发与数据安全"
 ---
 
 # 实时并发与数据安全

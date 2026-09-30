@@ -5,7 +5,7 @@ category: "嵌入式系统"
 order: 7
 permalink: /notes/foc-motor-control/
 summary: "无刷电机 FOC 控制链路、坐标变换、电流环与 SVPWM。"
-source: "soft/MCU基础知识/07-FOC无刷电机控制.md"
+source: "soft/MCU基础知识/07-FOC无刷电机控制"
 ---
 
 # FOC无刷电机控制
@@ -137,7 +137,7 @@ PID_Adjust(&M1CurrentIqPID, current_target, M1_Foc.Iq);
 M1_Foc.Vq = M1CurrentIqPID.PID_Out;
 ```
 
-位于 `Control.c` 的 `M1Current_ClosedLoop()` 和 `M2Current_ClosedLoop()`。
+位于 Control.c 的 `M1Current_ClosedLoop()` 和 `M2Current_ClosedLoop()`。
 
 ### PI参数意义
 
@@ -258,7 +258,7 @@ data = SPI2_ReadWriteByte(0xFFU) & 0x7FFFU;
 | 2 | 电角度校准 |
 | 3 | 开环强拖旋转 |
 
-接口位于 `AT32F413RC_FOC_LIB.h`。
+接口位于 AT32F413RC_FOC_LIB.h。
 
 ## 13. 完整FOC伪代码
 

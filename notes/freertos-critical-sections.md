@@ -5,7 +5,7 @@ category: "实时系统与软件"
 order: 3
 permalink: /notes/freertos-critical-sections/
 summary: "任务与中断上下文进入、退出临界区的原则。"
-source: "soft/FreeRTOS/进出临界区.md"
+source: "soft/FreeRTOS/进出临界区"
 ---
 
 # 进出临界区

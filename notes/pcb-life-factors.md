@@ -5,7 +5,7 @@ category: "PCB与信号完整性"
 order: 17
 permalink: /notes/pcb-life-factors/
 summary: "从温度、湿度、应力和电迁移分析 PCB 寿命。"
-source: "硬件/PCB工艺及相关问题/PCB寿命影响有哪些原因.md"
+source: "笔记/硬件/PCB工艺及相关问题/PCB寿命影响有哪些原因"
 ---
 
 # PCB寿命影响有哪些原因

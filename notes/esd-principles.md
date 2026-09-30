@@ -5,7 +5,7 @@ category: "硬件基础与电源"
 order: 3
 permalink: /notes/esd-principles/
 summary: "ESD 防护器件的原理、关键参数与选型思路。"
-source: "硬件/02元器件/ESD/ESD原理及参数.md"
+source: "笔记/硬件/02元器件/ESD/ESD原理及参数"
 ---
 
 # ESD原理及参数

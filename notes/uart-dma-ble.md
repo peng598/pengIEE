@@ -5,7 +5,7 @@ category: "嵌入式系统"
 order: 10
 permalink: /notes/uart-dma-ble/
 summary: "UART、DMA 变长接收、BLE 遥控和可靠帧协议设计。"
-source: "soft/MCU基础知识/10-串口-DMA与BLE协议.md"
+source: "soft/MCU基础知识/10-串口-DMA与BLE协议"
 ---
 
 # 串口、DMA与BLE协议
@@ -22,7 +22,7 @@ flowchart LR
     RC --> CTRL["速度/转向目标"]
 ```
 
-ESP32端参考 `ESP32C3_Receiver.ino`，AT32端参考 `usart.c` 和 `RcData.c`。
+ESP32端参考 ESP32C3_Receiver.ino，AT32端参考 usart.c 和 RcData.c。
 
 ## 2. UART帧格式
 

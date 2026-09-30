@@ -5,7 +5,7 @@ category: "PCB与信号完整性"
 order: 10
 permalink: /notes/characteristic-impedance/
 summary: "特性阻抗的定义、影响因素和常见误区。"
-source: "硬件/专业名词/特性阻抗.md"
+source: "笔记/硬件/专业名词/特性阻抗"
 ---
 
 # 特性阻抗

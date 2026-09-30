@@ -5,7 +5,7 @@ category: "硬件基础与电源"
 order: 8
 permalink: /notes/crystal-structure/
 summary: "晶振的等效结构、负载电容与起振条件。"
-source: "硬件/02元器件/晶振/晶振结构.md"
+source: "笔记/硬件/02元器件/晶振/晶振结构"
 ---
 
 # 晶振结构

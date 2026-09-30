@@ -5,7 +5,7 @@ category: "PCB与信号完整性"
 order: 4
 permalink: /notes/signal-integrity-notes/
 summary: "对回流、阻抗和信号完整性的阶段性总结。"
-source: "硬件/01信号完整性/个人结论.md"
+source: "笔记/硬件/01信号完整性/个人结论"
 ---
 
 # 个人结论

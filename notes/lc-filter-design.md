@@ -5,7 +5,7 @@ category: "硬件基础与电源"
 order: 15
 permalink: /notes/lc-filter-design/
 summary: "LC 滤波器的结构、谐振与阻尼设计。"
-source: "硬件/05设计/滤波/LC滤波器.md"
+source: "笔记/硬件/05设计/滤波/LC滤波器"
 ---
 
 # LC滤波器

@@ -5,7 +5,7 @@ category: "嵌入式系统"
 order: 6
 permalink: /notes/pid-digital-control/
 summary: "离散 PID、积分抗饱和、控制环结构与调参实践。"
-source: "soft/MCU基础知识/06-PID与数字控制.md"
+source: "soft/MCU基础知识/06-PID与数字控制"
 ---
 
 # PID与数字控制
@@ -167,7 +167,7 @@ derivative_filtered += alpha *
 
 ## 8. 本项目PID参数
 
-参数位于 `Control.c` 的 `parameters_Init()`。
+参数位于 Control.c 的 `parameters_Init()`。
 
 | 控制器 | Kp | Ki | Kd | 主要输出 |
 |---|---:|---:|---:|---|

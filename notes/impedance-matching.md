@@ -5,7 +5,7 @@ category: "PCB与信号完整性"
 order: 11
 permalink: /notes/impedance-matching/
 summary: "阻抗匹配、功率传输和数字信号端接。"
-source: "硬件/专业名词/阻抗匹配.md"
+source: "笔记/硬件/专业名词/阻抗匹配"
 ---
 
 # 阻抗匹配

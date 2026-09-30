@@ -5,7 +5,7 @@ category: "硬件基础与电源"
 order: 4
 permalink: /notes/esd-failure-analysis/
 summary: "从失效现象反推 ESD 保护路径和布局问题。"
-source: "硬件/02元器件/ESD/ESD失效分析.md"
+source: "笔记/硬件/02元器件/ESD/ESD失效分析"
 ---
 
 # ESD失效分析

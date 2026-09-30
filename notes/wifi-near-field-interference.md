@@ -5,7 +5,7 @@ category: "测试与工程经验"
 order: 3
 permalink: /notes/wifi-near-field-interference/
 summary: "Wi-Fi 近场干扰的来源、耦合路径和排查思路。"
-source: "硬件/经验/WIFI 近场干扰.md"
+source: "笔记/硬件/经验/WIFI 近场干扰"
 ---
 
 # WIFI 近场干扰

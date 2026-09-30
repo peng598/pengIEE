@@ -5,7 +5,7 @@ category: "模拟、音频与声学"
 order: 11
 permalink: /notes/unbalanced-to-balanced/
 summary: "非平衡音频转平衡传输的电路思路。"
-source: "硬件/音频/非平衡转平衡.md"
+source: "笔记/硬件/音频/非平衡转平衡"
 ---
 
 # 非平衡转平衡

@@ -5,7 +5,7 @@ category: "硬件基础与电源"
 order: 2
 permalink: /notes/esd-generation/
 summary: "静电的产生、积累和放电路径。"
-source: "硬件/02元器件/ESD/静电产生.md"
+source: "笔记/硬件/02元器件/ESD/静电产生"
 ---
 
 # 静电产生

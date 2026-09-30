@@ -5,7 +5,7 @@ category: "模拟、音频与声学"
 order: 1
 permalink: /notes/cross-coupling/
 summary: "交叉耦合结构在模拟电路中的作用与分析方法。"
-source: "硬件/运放&模拟/交叉耦合.md"
+source: "笔记/硬件/运放&模拟/交叉耦合"
 ---
 
 # 交叉耦合

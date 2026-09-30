@@ -5,7 +5,7 @@ category: "硬件基础与电源"
 order: 9
 permalink: /notes/crystal-layout/
 summary: "晶振布局、回流路径和走线注意事项。"
-source: "硬件/02元器件/晶振/晶振布局与走线.md"
+source: "笔记/硬件/02元器件/晶振/晶振布局与走线"
 ---
 
 # 晶振布局与走线

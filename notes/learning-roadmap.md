@@ -5,7 +5,7 @@ category: "嵌入式系统"
 order: 0
 permalink: /notes/learning-roadmap/
 summary: "从 C 语言、Cortex-M 和外设，到实时系统、控制算法与整车验证。"
-source: "soft/MCU基础知识/00-教程总览.md"
+source: "soft/MCU基础知识/00-教程总览"
 ---
 
 # 教程总览
@@ -71,11 +71,11 @@ sequenceDiagram
 
 对应源码：
 
-- `main.c`
-- `app.c`
-- `freertos_app.c`
-- `adc.c`
-- `Control.c`
+- main.c
+- app.c
+- freertos_app.c
+- adc.c
+- Control.c
 
 ## 三条必须始终记住的边界
 > **安全警告：硬实时边界**

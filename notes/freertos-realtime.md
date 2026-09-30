@@ -5,7 +5,7 @@ category: "嵌入式系统"
 order: 4
 permalink: /notes/freertos-realtime/
 summary: "任务状态、周期调度、任务栈、堆管理及任务间通信机制。"
-source: "soft/MCU基础知识/04-FreeRTOS实时系统.md"
+source: "soft/MCU基础知识/04-FreeRTOS实时系统"
 ---
 
 # FreeRTOS实时系统
@@ -58,7 +58,7 @@ stateDiagram-v2
 
 ## 3. 创建任务
 
-当前项目的任务创建位于 `freertos_app.c`。
+当前项目的任务创建位于 freertos_app.c。
 
 ```c
 BaseType_t result = xTaskCreate(
@@ -142,7 +142,7 @@ int main(void)
 
 ## 6. 当前配置参数
 
-参考 `FreeRTOSConfig.h`。
+参考 FreeRTOSConfig.h。
 
 | 参数 | 当前值 | 含义 |
 |---|---:|---|

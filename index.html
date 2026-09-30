@@ -1,15 +1,15 @@
 ---
 layout: default
-title: 嵌入式系统
-summary: 从单片机基础到实时系统的课程笔记与学习记录。
+title: 嵌入式与电子技术
+summary: 嵌入式软件、硬件设计、PCB、模拟电路、音频与测试经验笔记。
 ---
 {% assign embedded_notes = site.pages | where_exp: "item", "item.category == '嵌入式系统'" | sort: "order" %}
 {% assign all_notes = site.pages | where_exp: "item", "item.category" | sort: "order" %}
 {% assign categories = all_notes | map: "category" | uniq %}
 <header class="collection-heading">
   <p class="eyebrow">PENGIEE <span class="eyebrow-divider">/</span> 课程笔记</p>
-  <h1>嵌入式系统</h1>
-  <p class="collection-description">从单片机基础、实时系统，到控制算法与整车验证。</p>
+  <h1>嵌入式与电子技术</h1>
+  <p class="collection-description">从单片机与实时系统，到硬件设计、PCB、模拟电路、音频和工程测试。</p>
   <div class="collection-meta"><span>{{ all_notes.size }} 篇整理笔记</span><span>{{ categories.size }} 个知识方向</span><span>持续更新</span></div>
 </header>
 
@@ -37,7 +37,7 @@ summary: 从单片机基础到实时系统的课程笔记与学习记录。
 
 <section class="note-section" aria-labelledby="notes-heading">
   <div class="section-heading">
-    <h2 id="notes-heading">课程内容</h2>
+    <h2 id="notes-heading">嵌入式主线</h2>
     <span>{{ embedded_notes.size }} 篇</span>
   </div>
   <ol class="note-list">

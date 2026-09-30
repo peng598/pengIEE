@@ -5,7 +5,7 @@ category: "PCB与信号完整性"
 order: 13
 permalink: /notes/ground-bounce/
 summary: "地弹噪声及其与封装、回流和同时开关的关系。"
-source: "硬件/专业名词/地弹.md"
+source: "笔记/硬件/专业名词/地弹"
 ---
 
 # 地弹

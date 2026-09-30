@@ -5,7 +5,7 @@ category: "嵌入式系统"
 order: 11
 permalink: /notes/debug-and-hardware-bringup/
 summary: "嵌入式调试工具、故障定位和分阶段安全上板流程。"
-source: "soft/MCU基础知识/11-调试故障与上板流程.md"
+source: "soft/MCU基础知识/11-调试故障与上板流程"
 ---
 
 # 调试、故障与上板流程

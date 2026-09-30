@@ -5,7 +5,7 @@ category: "实时系统与软件"
 order: 6
 permalink: /notes/software-bit-banging/
 summary: "OLED I2C 模拟时序的字节发送示例。"
-source: "soft/软件散装笔记/写数据.md"
+source: "soft/软件散装笔记/写数据"
 ---
 
 # 写数据

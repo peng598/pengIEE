@@ -5,7 +5,7 @@ category: "嵌入式系统"
 order: 1
 permalink: /notes/c-language-memory/
 summary: "固定宽度类型、指针、volatile、链接、结构体和嵌入式内存布局。"
-source: "soft/MCU基础知识/01-C语言与嵌入式内存.md"
+source: "soft/MCU基础知识/01-C语言与嵌入式内存"
 ---
 
 # C语言与嵌入式内存
@@ -41,7 +41,7 @@ count++;
 /* count变成0，这是无符号整数定义良好的回绕。 */
 ```
 
-编码器回绕计算正是利用“差值”和边界判断处理这一问题，参考 `Control.c` 中的 `SpeedCompute()`。
+编码器回绕计算正是利用“差值”和边界判断处理这一问题，参考 Control.c 中的 `SpeedCompute()`。
 
 ## 2. 指针与内存映射寄存器
 
@@ -219,7 +219,7 @@ flowchart LR
 | heap | `xTaskCreate()`分配 | 运行时分配 |
 | stack | 局部变量、返回地址 | 函数调用或任务运行时使用 |
 
-当前FreeRTOS配置使用12 KB堆，参考 `FreeRTOSConfig.h`。
+当前FreeRTOS配置使用12 KB堆，参考 FreeRTOSConfig.h。
 
 ## 8. 宏的常见问题
 

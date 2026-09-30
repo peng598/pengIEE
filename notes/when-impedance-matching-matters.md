@@ -5,7 +5,7 @@ category: "PCB与信号完整性"
 order: 5
 permalink: /notes/when-impedance-matching-matters/
 summary: "判断何时需要阻抗控制，以及边沿速度比时钟频率更重要的原因。"
-source: "硬件/05设计/LAYOUT/什么时候可以不用考虑阻抗匹配.md"
+source: "笔记/硬件/05设计/LAYOUT/什么时候可以不用考虑阻抗匹配"
 ---
 
 # 什么时候可以不用考虑阻抗匹配

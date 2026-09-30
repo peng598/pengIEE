@@ -5,7 +5,7 @@ category: "硬件基础与电源"
 order: 5
 permalink: /notes/ldo-principles/
 summary: "LDO 的基本结构、压差、稳定性与热设计。"
-source: "硬件/02元器件/LDO/LDO原理.md"
+source: "笔记/硬件/02元器件/LDO/LDO原理"
 ---
 
 # LDO原理

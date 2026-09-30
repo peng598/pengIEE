@@ -5,7 +5,7 @@ category: "测试与工程经验"
 order: 2
 permalink: /notes/eye-diagram/
 summary: "用眼图观察高速链路抖动、噪声和码间串扰。"
-source: "硬件/经验/示波器使用/眼图.md"
+source: "笔记/硬件/经验/示波器使用/眼图"
 ---
 
 # 眼图

@@ -5,7 +5,7 @@ category: "模拟、音频与声学"
 order: 10
 permalink: /notes/audio-differential-amplifier/
 summary: "音频差分放大和共模抑制。"
-source: "硬件/音频/串型差分放大.md"
+source: "笔记/硬件/音频/串型差分放大"
 ---
 
 # 串型差分放大

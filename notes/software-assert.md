@@ -5,7 +5,7 @@ category: "实时系统与软件"
 order: 7
 permalink: /notes/software-assert/
 summary: "调试断言与生产环境错误处理的使用边界。"
-source: "soft/软件散装笔记/assert函数.md"
+source: "soft/软件散装笔记/assert函数"
 ---
 
 # assert函数

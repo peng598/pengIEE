@@ -5,7 +5,7 @@ category: "嵌入式系统"
 order: 8
 permalink: /notes/balance-car-cascade-control/
 summary: "姿态融合、平衡车直立环、速度环和转向环的协作。"
-source: "soft/MCU基础知识/08-平衡车姿态与串级控制.md"
+source: "soft/MCU基础知识/08-平衡车姿态与串级控制"
 ---
 
 # 平衡车姿态与串级控制

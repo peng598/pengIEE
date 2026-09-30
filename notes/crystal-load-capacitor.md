@@ -5,7 +5,7 @@ category: "硬件基础与电源"
 order: 10
 permalink: /notes/crystal-load-capacitor/
 summary: "晶振负载电容的计算与调试。"
-source: "硬件/02元器件/晶振/晶振的匹配电容.md"
+source: "笔记/硬件/02元器件/晶振/晶振的匹配电容"
 ---
 
 # 晶振的匹配电容

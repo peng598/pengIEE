@@ -5,7 +5,7 @@ category: "模拟、音频与声学"
 order: 6
 permalink: /notes/op-amp-attenuator/
 summary: "运放衰减器的结构、增益和阻抗。"
-source: "硬件/运放&模拟/运放设计/衰减器.md"
+source: "笔记/硬件/运放&模拟/运放设计/衰减器"
 ---
 
 # 衰减器

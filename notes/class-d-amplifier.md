@@ -5,7 +5,7 @@ category: "模拟、音频与声学"
 order: 13
 permalink: /notes/class-d-amplifier/
 summary: "D 类功放的 PWM、滤波和输出级原理。"
-source: "硬件/音频/D类功放/原理.md"
+source: "笔记/硬件/音频/D类功放/原理"
 ---
 
 # 原理

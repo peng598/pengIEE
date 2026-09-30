@@ -5,7 +5,7 @@ category: "嵌入式系统"
 order: 3
 permalink: /notes/at32-peripherals/
 summary: "AT32 时钟树、GPIO、定时器、ADC、DMA、SPI、UART 与 Flash。"
-source: "soft/MCU基础知识/03-AT32外设驱动基础.md"
+source: "soft/MCU基础知识/03-AT32外设驱动基础"
 ---
 
 # AT32外设驱动基础
@@ -14,7 +14,7 @@ source: "soft/MCU基础知识/03-AT32外设驱动基础.md"
 
 所有外设配置都依赖时钟。计算定时器、串口或ADC参数前，必须先知道时钟来源。
 
-当前工程使用25 MHz外部晶振，经PLL得到200 MHz系统时钟，参考 `at32f413_clock.c`。
+当前工程使用25 MHz外部晶振，经PLL得到200 MHz系统时钟，参考 at32f413_clock.c。
 
 ```text
 HEXT = 25 MHz
@@ -58,7 +58,7 @@ gpio_bits_reset(GPIOB, GPIO_PINS_2);  /* 输出低 */
 flag_status key = gpio_input_data_bit_read(GPIOC, GPIO_PINS_13);
 ```
 
-项目中PB2是电机驱动使能，PC14是电源控制，参考 `Gpio_Config.c`。
+项目中PB2是电机驱动使能，PC14是电源控制，参考 Gpio_Config.c。
 
 ## 3. 定时器基础
 
@@ -162,7 +162,7 @@ adc_preempt_conversion_trigger_set(
     TRUE);
 ```
 
-这样ADC采样点与PWM同步，不受任务调度影响。转换完成后进入 `adc.c` 的 `ADC1_2_IRQHandler()`。
+这样ADC采样点与PWM同步，不受任务调度影响。转换完成后进入 adc.c 的 `ADC1_2_IRQHandler()`。
 
 ```mermaid
 flowchart LR
@@ -202,7 +202,7 @@ dma.loop_mode_enable = FALSE;
 | `data_width` | UART通常为字节，ADC通常为半字 |
 | `loop_mode_enable` | 循环采样时开启；变长帧接收常配合空闲中断重装 |
 
-WS2812则是内存到定时器比较寄存器，参考 `WS2812.c`。
+WS2812则是内存到定时器比较寄存器，参考 WS2812.c。
 
 ## 6. SPI
 
@@ -262,7 +262,7 @@ USART接收 → DMA写入缓冲区 → IDLE中断
                              └─ 重装DMA计数器
 ```
 
-参考 `usart.c` 中的 `USART1_IRQHandler()` 和 `USART2_IRQHandler()`。
+参考 usart.c 中的 `USART1_IRQHandler()` 和 `USART2_IRQHandler()`。
 
 ## 8. Flash
 
@@ -272,7 +272,7 @@ Flash通常只能把位从1写成0；从0恢复为1必须先擦除整个扇区�
 读取 → 检查目标区域 → 必要时备份整扇区 → 擦除 → 重写
 ```
 
-项目把校准数据放在固定地址 `0x0803E800`，参考 `Calibration.c`。
+项目把校准数据放在固定地址 `0x0803E800`，参考 Calibration.c。
 
 Flash参数必须确认：
 

@@ -5,7 +5,7 @@ category: "嵌入式系统"
 order: 2
 permalink: /notes/cortex-m4-interrupts/
 summary: "从复位启动到 NVIC、异常压栈、FreeRTOS 异常和 HardFault 定位。"
-source: "soft/MCU基础知识/02-Cortex-M4与中断系统.md"
+source: "soft/MCU基础知识/02-Cortex-M4与中断系统"
 ---
 
 # Cortex-M4与中断系统
@@ -23,7 +23,7 @@ flowchart TD
     LIB --> MAIN["进入main()"]
 ```
 
-向量表位于启动文件 `startup_at32f413.s`。每个表项保存一个异常或中断处理函数地址。
+向量表位于启动文件 startup_at32f413.s。每个表项保存一个异常或中断处理函数地址。
 
 ## 2. 关键核心寄存器
 
@@ -50,7 +50,7 @@ else
 }
 ```
 
-当前 `delay.c` 正是用它避免在中断中调用 `vTaskDelay()`。
+当前 delay.c 正是用它避免在中断中调用 `vTaskDelay()`。
 
 ## 3. 异常自动压栈
 
@@ -151,7 +151,7 @@ sequenceDiagram
 | PendSV | 执行任务上下文切换 |
 | SysTick | 产生系统节拍、更新延时和超时 |
 
-当前工程通过 `FreeRTOSConfig.h` 将官方端口处理函数映射到启动文件需要的名称。
+当前工程通过 FreeRTOSConfig.h 将官方端口处理函数映射到启动文件需要的名称。
 
 ## 8. DWT周期计数器
 

@@ -5,7 +5,7 @@ category: "PCB与信号完整性"
 order: 7
 permalink: /notes/termination-resistor-placement/
 summary: "串联端接和并联端接的放置位置。"
-source: "硬件/经验/高速信号串接电阻与并联电阻放置.md"
+source: "笔记/硬件/经验/高速信号串接电阻与并联电阻放置"
 ---
 
 # 高速信号串接电阻与并联电阻放置

@@ -5,7 +5,7 @@ category: "硬件基础与电源"
 order: 14
 permalink: /notes/adc-divider-noise/
 summary: "ADC 分压电阻的阻值选择与热噪声权衡。"
-source: "硬件/05设计/ADC设计/常规分压电阻设计---热噪声.md"
+source: "笔记/硬件/05设计/ADC设计/常规分压电阻设计---热噪声"
 ---
 
 # 常规分压电阻设计---热噪声

@@ -5,7 +5,7 @@ category: "PCB与信号完整性"
 order: 14
 permalink: /notes/insertion-loss/
 summary: "插入损耗的含义、频率响应与链路预算。"
-source: "硬件/专业名词/插入损耗.md"
+source: "笔记/硬件/专业名词/插入损耗"
 ---
 
 # 插入损耗

@@ -5,7 +5,7 @@ category: "硬件基础与电源"
 order: 7
 permalink: /notes/power-input-design/
 summary: "电源输入保护、滤波、浪涌与后级供电规划。"
-source: "硬件/04电源/电源输入设计/输入设计.md"
+source: "笔记/硬件/04电源/电源输入设计/输入设计"
 ---
 
 # 输入设计

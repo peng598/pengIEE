@@ -5,7 +5,7 @@ category: "嵌入式系统"
 order: 12
 permalink: /notes/project-code-reading/
 summary: "按信号链阅读平衡车固件，并通过实验验证控制与保护逻辑。"
-source: "soft/MCU基础知识/12-项目源码导读与练习.md"
+source: "soft/MCU基础知识/12-项目源码导读与练习"
 ---
 
 # 项目源码导读与练习
@@ -39,11 +39,11 @@ startup_at32f413.s
 
 文件：
 
-- `startup_at32f413.s`
-- `main.c`
-- `at32f413_clock.c`
-- `freertos_app.c`
-- `app.c`
+- startup_at32f413.s
+- main.c
+- at32f413_clock.c
+- freertos_app.c
+- app.c
 
 阅读问题：
 
@@ -65,9 +65,9 @@ App_1ms
 
 文件：
 
-- `MPU6500.c`
-- `AHRS.c`
-- `Control.c`
+- MPU6500.c
+- AHRS.c
+- Control.c
 
 阅读问题：
 
@@ -93,11 +93,11 @@ TMR1/TMR8中心对齐PWM
 
 文件：
 
-- `timer.c`
-- `adc.c`
-- `Encoder.c`
-- `AT32F413RC_FOC_LIB.h`
-- `Control.c`
+- timer.c
+- adc.c
+- Encoder.c
+- AT32F413RC_FOC_LIB.h
+- Control.c
 
 阅读问题：
 
@@ -121,9 +121,9 @@ BLE手柄Notify
 
 文件：
 
-- `ESP32C3_Receiver.ino`
-- `usart.c`
-- `RcData.c`
+- ESP32C3_Receiver.ino
+- usart.c
+- RcData.c
 
 阅读问题：
 
@@ -145,8 +145,8 @@ USART2校准命令
 
 文件：
 
-- `Calibration.c`
-- `flash.c`
+- Calibration.c
+- flash.c
 
 阅读问题：
 

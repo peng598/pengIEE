@@ -5,7 +5,7 @@ category: "测试与工程经验"
 order: 4
 permalink: /notes/ethernet-magnetics-rc/
 summary: "网络变压器两侧阻容网络的作用。"
-source: "硬件/经验/网络变压器输入端与输出端加电阻电容的作用.md"
+source: "笔记/硬件/经验/网络变压器输入端与输出端加电阻电容的作用"
 ---
 
 # 网络变压器输入端与输出端加电阻电容的作用

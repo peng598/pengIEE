@@ -5,7 +5,7 @@ category: "实时系统与软件"
 order: 1
 permalink: /notes/freertos-task-states/
 summary: "运行、就绪、阻塞和挂起四种任务状态。"
-source: "soft/FreeRTOS/FreeRTOS 任务状态.md"
+source: "soft/FreeRTOS/FreeRTOS 任务状态"
 ---
 
 # FreeRTOS 任务状态

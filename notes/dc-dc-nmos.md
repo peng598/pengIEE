@@ -5,7 +5,7 @@ category: "硬件基础与电源"
 order: 1
 permalink: /notes/dc-dc-nmos/
 summary: "从导通损耗、体二极管和驱动方式理解 DC-DC 常用 NMOS 的原因。"
-source: "硬件/02元器件/DC-DC/为什么大部分DC-DC内部用的是NMOS.md"
+source: "笔记/硬件/02元器件/DC-DC/为什么大部分DC-DC内部用的是NMOS"
 ---
 
 # 为什么大部分DC-DC内部用的是NMOS

@@ -5,7 +5,7 @@ category: "PCB与信号完整性"
 order: 1
 permalink: /notes/return-current-path/
 summary: "高速信号回流路径、最小电感与参考平面的关系。"
-source: "硬件/01信号完整性/传输线速率到多少，回流按最小感抗.md"
+source: "笔记/硬件/01信号完整性/传输线速率到多少，回流按最小感抗"
 ---
 
 # 传输线速率到多少，回流按最小感抗

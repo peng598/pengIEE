@@ -5,7 +5,7 @@ category: "PCB与信号完整性"
 order: 15
 permalink: /notes/via-failure/
 summary: "过孔失效模式、热应力和制造可靠性。"
-source: "硬件/PCB工艺及相关问题/过孔失效.md"
+source: "笔记/硬件/PCB工艺及相关问题/过孔失效"
 ---
 
 # 过孔失效
