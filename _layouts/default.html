@@ -21,7 +21,7 @@
     </script>
     <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   </head>
-  <body data-ai-endpoint="{{ site.ai_endpoint | default: '' | escape }}" data-ai-model="{{ site.ai_model | default: 'DeepSeek V4-FLASH' | escape }}" data-ai-title="{{ page.title | default: site.title | escape }}" data-ai-category="{{ page.category | default: '个人知识库' | escape }}">
+  <body data-ai-endpoint="{{ site.ai_endpoint | default: '' | escape }}" data-ai-model="{{ site.ai_model | default: 'DeepSeek V4-FLASH' | escape }}" data-ai-title="{{ page.title | default: site.title | escape }}" data-ai-category="{{ page.category | default: '个人知识库' | escape }}" data-submission-endpoint="{{ site.submission_endpoint | default: '' | escape }}">
     <a class="skip-link" href="#main">跳到正文</a>
     {% assign note_pages = site.pages | where_exp: "item", "item.category" | sort: "order" %}
     {% assign nav_categories = note_pages | map: "category" | uniq %}
@@ -49,19 +49,26 @@
           <a class="nav-link{% if page.url == '/' %} is-active{% endif %}" href="{{ '/' | relative_url }}"><span class="nav-index">⌂</span>笔记首页</a>
           <a class="nav-link{% if page.url == '/resources/' %} is-active{% endif %}" href="{{ '/resources/' | relative_url }}"><span class="nav-index">↗</span>参考资料</a>
           <a class="nav-link{% if page.url == '/submit/' %} is-active{% endif %}" href="{{ '/submit/' | relative_url }}"><span class="nav-index">＋</span>提交资料</a>
+          <a class="nav-link{% if page.url == '/account/' %} is-active{% endif %}" href="{{ '/account/' | relative_url }}"><span class="nav-index">◎</span>账号登录</a>
           <a class="nav-link{% if page.url == '/formulas/' %} is-active{% endif %}" href="{{ '/formulas/' | relative_url }}"><span class="nav-index">ƒx</span>公式与计算</a>
           <button class="nav-link nav-action ai-open" type="button"><span class="nav-index" aria-hidden="true">✦</span>AI 学习助手</button>
           <p class="nav-label nav-label-course">硬件文档目录</p>
           <div class="nav-tree">
+            {% assign current_topic = site.data.hardware_topics | where: "url", page.url | first %}
             {% for root in site.data.knowledge_tree %}
-              <details class="nav-tree-root">
+              <details class="nav-tree-root"{% if page.topic_root == root.title %} open{% endif %}>
                 <summary><span class="nav-tree-index">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span><span class="nav-tree-title">{{ root.title }}</span><span class="nav-tree-count">{{ root.count }}</span></summary>
                 <div class="nav-tree-branches">
                   {% for branch in root.children %}
-                    <details class="nav-tree-branch">
+                    <details class="nav-tree-branch"{% if page.topic_root == root.title and page.topic_branch == branch.title %} open{% endif %}>
                       <summary><span>{{ branch.title }}</span><span class="nav-tree-arrow" aria-hidden="true">⌄</span></summary>
-                      <ul>
-                        {% for leaf in branch.children %}<li>{{ leaf }}</li>{% endfor %}
+                      <ul class="nav-tree-leaves">
+                        {% assign root_title = root.title %}
+                        {% assign branch_title = branch.title %}
+                        {% for leaf in branch.children %}
+                          {% assign leaf_topic = site.data.hardware_topics | where: "root", root_title | where: "branch", branch_title | where: "leaf", leaf | first %}
+                          <li>{% if leaf_topic %}<a class="nav-tree-leaf{% if page.url == leaf_topic.url %} is-active{% endif %}" href="{{ leaf_topic.url | relative_url }}">{{ leaf }}</a>{% else %}<span>{{ leaf }}</span>{% endif %}</li>
+                        {% endfor %}
                       </ul>
                     </details>
                   {% endfor %}

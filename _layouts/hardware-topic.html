@@ -1,0 +1,46 @@
+---
+layout: default
+---
+{% assign topic = site.data.hardware_topics | where: "url", page.url | first %}
+<article class="hardware-page">
+  <header class="collection-heading hardware-heading">
+    <p class="eyebrow">硬件文档目录 <span class="eyebrow-divider">/</span> {{ topic.root }} <span class="eyebrow-divider">/</span> {{ topic.branch }}</p>
+    <h1>{{ topic.branch }} · {{ topic.leaf }}</h1>
+    <p class="collection-description">{{ topic.summary }}</p>
+    <div class="collection-meta"><span>三级知识页</span><span>{{ topic.notes.size }} 篇关联笔记</span><span>{{ topic.pdfs.size }} 份参考资料</span></div>
+  </header>
+  <div class="hardware-content prose">{{ topic.content | markdownify }}</div>
+  {% if topic.images.size > 0 %}
+    <div class="hardware-images">
+      {% for image in topic.images %}
+        <figure class="note-figure"><img src="{{ image.src | relative_url }}" alt="{{ image.alt | escape }}"><figcaption>{{ image.caption }}</figcaption></figure>
+      {% endfor %}
+    </div>
+  {% endif %}
+  {% assign related_note_count = 0 %}
+  {% for item in topic.notes %}
+    {% assign note_page = site.pages | where: "url", item.url | first %}
+    {% if note_page %}{% assign related_note_count = related_note_count | plus: 1 %}{% endif %}
+  {% endfor %}
+  {% if related_note_count > 0 %}
+    <section class="resource-section hardware-section">
+      <div class="section-heading"><h2>我的相关笔记</h2><span>{{ related_note_count }} 篇</span></div>
+      <div class="resource-list hardware-note-list">
+        {% for item in topic.notes %}
+          {% assign note_page = site.pages | where: "url", item.url | first %}
+          {% if note_page %}<a class="resource-card" href="{{ item.url | relative_url }}"><span class="resource-level">笔记</span><span class="resource-copy"><strong>{{ note_page.title }}</strong><small>{{ note_page.summary }}</small></span><span class="resource-open">阅读 →</span></a>{% endif %}
+        {% endfor %}
+      </div>
+    </section>
+  {% endif %}
+  <section class="resource-section hardware-section">
+    <div class="section-heading"><h2>硬件文档资料</h2><span>{{ topic.pdfs.size }} 份</span></div>
+    <p class="resource-note">资料来自本地“硬件文档”分类索引。未确认公开授权的原始 PDF 不直接上传；如需在线阅读，请先确认版权或使用厂商公开链接。</p>
+    <div class="resource-list hardware-pdf-list">
+      {% for pdf in topic.pdfs %}
+        {% if pdf.url %}<a class="resource-card" href="{{ pdf.url | relative_url }}" target="_blank" rel="noopener"><span class="resource-level">PDF</span><span class="resource-copy"><strong>{{ pdf.title }}</strong><small>{{ pdf.description }}</small></span><span class="resource-open">打开 ↗</span></a>
+        {% else %}<div class="resource-card"><span class="resource-level">PDF</span><span class="resource-copy"><strong>{{ pdf.title }}</strong><small>{{ pdf.description }}</small></span><span class="resource-open">{{ pdf.status }}</span></div>{% endif %}
+      {% endfor %}
+    </div>
+  </section>
+</article>

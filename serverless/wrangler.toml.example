@@ -1,11 +1,23 @@
-name = "pengiee-deepseek-proxy"
+name = "pengiee-private-submissions"
 main = "cloudflare-worker.js"
 compatibility_date = "2025-01-01"
 
 [vars]
 DEEPSEEK_API_URL = "https://api.deepseek.com/chat/completions"
 ALLOWED_ORIGIN = "https://peng598.github.io"
+MAX_UPLOAD_BYTES = "26214400"
+ADMIN_EMAIL = "你的管理员邮箱"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "pengiee-submissions"
+database_id = "部署后填入 D1 数据库 ID"
+
+[[r2_buckets]]
+binding = "UPLOADS"
+bucket_name = "pengiee-private-uploads"
 
 # Set secrets with:
 # wrangler secret put DEEPSEEK_API_KEY
 # wrangler secret put DEEPSEEK_MODEL
+# wrangler secret put AUTH_SECRET

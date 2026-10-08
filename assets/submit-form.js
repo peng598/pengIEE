@@ -1,61 +1,42 @@
 (() => {
-  const form = document.querySelector('[data-submit-form]');
-  if (!form) return;
-
-  const fileInput = form.elements.file;
-  const fileName = form.querySelector('[data-file-name]');
-  const status = form.querySelector('[data-submit-status]');
-
-  fileInput?.addEventListener('change', () => {
-    const file = fileInput.files?.[0];
-    if (!fileName) return;
-    fileName.textContent = file
-      ? `已选择：${file.name}（打开 GitHub 草稿后请再次拖入）`
-      : '未选择文件。打开 GitHub 草稿后，需要再次拖入文件。';
-  });
-
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
-    if (!form.reportValidity()) return;
-
-    const data = new FormData(form);
-    const title = String(data.get('title') || '').trim();
-    const category = String(data.get('category') || '').trim();
-    const level = String(data.get('level') || '').trim();
-    const description = String(data.get('description') || '').trim();
-    const source = String(data.get('source') || '').trim();
-    const file = fileInput?.files?.[0];
-    const fileLabel = file ? file.name : '提交者将在 GitHub 草稿中附加';
-    const issueTitle = `[资料提交] ${title}`;
-    const issueBody = [
-      '## 资料信息',
-      '',
-      `- **标题**：${title}`,
-      `- **知识方向**：${category}`,
-      `- **学习层级**：${level}`,
-      `- **文件名**：${fileLabel}`,
-      '',
-      '## 资料简介',
-      '',
-      description,
-      '',
-      '## 来源与授权说明',
-      '',
-      source,
-      '',
-      '## 提交检查',
-      '',
-      '- [ ] 已在本 Issue 中附加文件',
-      '- [ ] 我确认资料来源清楚，且允许公开分享或由维护者进一步确认授权',
-      '- [ ] 我确认资料中不包含密码、密钥、个人隐私或未公开的项目文件',
-      '',
-      '感谢贡献。请等待维护者审核、分类和发布。'
-    ].join('\n');
-    const issueUrl = 'https://github.com/peng598/PENGIEE/issues/new?title='
-      + encodeURIComponent(issueTitle)
-      + '&body=' + encodeURIComponent(issueBody);
-
-    window.open(issueUrl, '_blank', 'noopener');
-    if (status) status.textContent = '已打开 GitHub 草稿，请在其中附加文件并提交。';
-  });
+  const page = document.querySelector('[data-submission-page]');
+  if (!page) return;
+  const endpoint = (document.body.dataset.submissionEndpoint || '').replace(/\/$/, '');
+  const loginForm = page.querySelector('[data-login-form]');
+  const registerForm = page.querySelector('[data-register-form]');
+  const uploadForm = page.querySelector('[data-submit-form]');
+  const loggedIn = page.querySelector('[data-logged-in]');
+  const authStatus = page.querySelectorAll('[data-auth-status]');
+  const submitStatus = page.querySelector('[data-submit-status]');
+  const tokenKey = 'pengiee-session';
+  let token = localStorage.getItem(tokenKey) || '';
+  const setAuthStatus = (message, error = false) => authStatus.forEach((node) => { node.textContent = message; node.dataset.state = error ? 'error' : 'ok'; });
+  const request = async (path, options = {}) => {
+    if (!endpoint) throw new Error('网站尚未配置提交服务端地址。');
+    const headers = new Headers(options.headers || {});
+    if (token) headers.set('Authorization', `Bearer ${token}`);
+    const response = await fetch(`${endpoint}${path}`, { ...options, headers });
+    const body = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(body.error || `请求失败（${response.status}）`);
+    return body;
+  };
+  const showUpload = (user) => {
+    page.querySelector('[data-auth-title]').textContent = '已登录';
+    page.querySelector('[data-auth-subtitle]').textContent = uploadForm ? '你的提交会进入私有存储，只有维护者可以查看。' : '账号已登录，可以返回提交资料页面。';
+    page.querySelector('[data-user-email]').textContent = user.email;
+    if (loginForm) loginForm.hidden = true;
+    if (registerForm) registerForm.hidden = true;
+    if (loggedIn) loggedIn.hidden = false;
+    if (uploadForm) uploadForm.hidden = false;
+  };
+  const showLogin = () => { if (loginForm) loginForm.hidden = false; if (registerForm) registerForm.hidden = true; if (loggedIn) loggedIn.hidden = true; if (uploadForm) uploadForm.hidden = true; };
+  const loadSession = async () => { if (!token) return showLogin(); try { showUpload((await request('/api/auth/me')).user); } catch { token = ''; localStorage.removeItem(tokenKey); showLogin(); } };
+  page.querySelector('[data-show-register]')?.addEventListener('click', () => { loginForm.hidden = true; registerForm.hidden = false; setAuthStatus(''); });
+  page.querySelector('[data-show-login]')?.addEventListener('click', () => { showLogin(); setAuthStatus(''); });
+  page.querySelector('[data-logout]')?.addEventListener('click', () => { token = ''; localStorage.removeItem(tokenKey); showLogin(); setAuthStatus('已退出登录。'); });
+  loginForm?.addEventListener('submit', async (event) => { event.preventDefault(); if (!loginForm.reportValidity()) return; const data = Object.fromEntries(new FormData(loginForm)); setAuthStatus('正在登录…'); try { const result = await request('/api/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }); token = result.token; localStorage.setItem(tokenKey, token); showUpload(result.user); setAuthStatus(''); } catch (error) { setAuthStatus(error.message, true); } });
+  registerForm?.addEventListener('submit', async (event) => { event.preventDefault(); if (!registerForm.reportValidity()) return; const data = Object.fromEntries(new FormData(registerForm)); if (data.password !== data.passwordConfirm) return setAuthStatus('两次输入的密码不一致。', true); setAuthStatus('正在创建账号…'); try { const result = await request('/api/auth/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: data.email, password: data.password }) }); token = result.token; localStorage.setItem(tokenKey, token); showUpload(result.user); setAuthStatus('账号已创建。'); } catch (error) { setAuthStatus(error.message, true); } });
+  uploadForm?.addEventListener('submit', async (event) => { event.preventDefault(); if (!uploadForm.reportValidity()) return; const data = new FormData(uploadForm); submitStatus.textContent = '正在上传…'; submitStatus.dataset.state = 'ok'; try { const result = await request('/api/submissions', { method: 'POST', body: data }); uploadForm.reset(); page.querySelector('[data-file-name]').textContent = '支持 PDF、Markdown、文本、压缩包和常见图片，单文件大小由服务端限制。'; submitStatus.textContent = `已提交，编号 ${result.submission.id}。等待维护者审核。`; } catch (error) { submitStatus.textContent = error.message; submitStatus.dataset.state = 'error'; } });
+  page.querySelector('input[type="file"]')?.addEventListener('change', (event) => { const file = event.target.files?.[0]; page.querySelector('[data-file-name]').textContent = file ? `已选择：${file.name}` : '支持 PDF、Markdown、文本、压缩包和常见图片，单文件大小由服务端限制。'; });
+  loadSession();
 })();

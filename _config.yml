@@ -4,6 +4,7 @@ url: https://peng598.github.io
 baseurl: /pengIEE
 ai_endpoint: ""
 ai_model: "DeepSeek V4-FLASH"
+submission_endpoint: ""
 markdown: kramdown
 highlighter: rouge
 permalink: pretty
