@@ -1,2 +1,6 @@
 tmp/
 serverless/wrangler.toml
+.env
+.env.*
+!.env.example
+serverless/tencent-scf/*.zip

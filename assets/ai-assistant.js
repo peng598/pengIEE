@@ -57,7 +57,7 @@
     conversation.push({ role: 'user', content: question });
 
     if (!endpoint) {
-      addMessage('error', 'AI 服务尚未配置。请先部署服务端代理，并在 _config.yml 的 ai_endpoint 中填写接口地址。API 密钥不要放进网站前端。');
+      addMessage('error', 'AI 助手暂未开通，请稍后再来。');
       setStatus(`待配置 · ${model}`);
       return;
     }
@@ -65,10 +65,13 @@
     const loading = addMessage('assistant', '正在整理当前笔记…', 'ai-message-loading');
     if (sendButton) sendButton.disabled = true;
     setStatus('正在请求模型…');
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 65000);
     try {
       const recentConversation = conversation.slice(-10);
       const response = await fetch(endpoint, {
         method: 'POST',
+        signal: controller.signal,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           model,
@@ -78,7 +81,7 @@
       });
       const raw = await response.text();
       let data;
-      try { data = JSON.parse(raw); } catch { data = { content: raw }; }
+      try { data = JSON.parse(raw); } catch { throw new Error('AI 服务返回格式异常，请稍后重试'); }
       if (!response.ok) throw new Error(data?.error?.message || data?.error || `服务返回 HTTP ${response.status}`);
       const answer = data?.choices?.[0]?.message?.content || data?.answer || data?.content;
       if (!answer) throw new Error('服务返回内容为空');
@@ -88,9 +91,11 @@
       setStatus(`已连接 · ${model}`);
     } catch (error) {
       loading.remove();
-      addMessage('error', `暂时无法连接 AI：${error.message || '未知错误'}。请检查代理地址、跨域设置和模型 ID。`);
+      const reason = controller.signal.aborted ? '等待回答超时，请缩短问题后重试' : error.message || '请稍后重试';
+      addMessage('error', `暂时无法连接 AI：${reason}`);
       setStatus('连接失败');
     } finally {
+      window.clearTimeout(timeout);
       if (sendButton) sendButton.disabled = false;
       input.focus();
     }

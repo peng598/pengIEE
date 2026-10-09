@@ -2,7 +2,9 @@ title: PENGIEE
 description: 嵌入式与电子技术学习笔记
 url: https://peng598.github.io
 baseurl: /pengIEE
-ai_endpoint: ""
+# 腾讯云 SCF 的完整 HTTPS 访问地址；上线后填写，不要填写 DeepSeek 上游地址或密钥。
+ai_endpoint: "https://1502711662-djho621orf.ap-guangzhou.tencentscf.com"
+# 仅用于网页显示，实际 API 模型 ID 在腾讯云 DEEPSEEK_MODEL 中配置。
 ai_model: "DeepSeek V4-FLASH"
 submission_endpoint: ""
 markdown: kramdown
@@ -22,3 +24,7 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - work
+  - serverless
+  - tests
+  - tools
+  - tmp
