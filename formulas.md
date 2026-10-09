@@ -9,130 +9,162 @@ permalink: /formulas/
   <header class="formula-heading">
     <p class="eyebrow">PENGIEE <span class="eyebrow-divider">/</span> 工程工具</p>
     <h1>公式与计算</h1>
-    <p>把常用的硬件计算集中在一页，输入参数后即可得到结果。每个工具都标注了计算依据，适合快速估算与复核。</p>
-    <div class="formula-summary"><span><strong id="formula-count">34</strong> 个工具</span><span>覆盖基础、模拟、电源与高速信号</span></div>
+    <p>按电子设计领域查公式，也可以直接打开交互计算器估算参数。</p>
+    <div class="formula-summary"><span><strong id="formula-count">34</strong> 个交互计算器</span><span><strong>18</strong> 个领域 · 180 组公式</span></div>
   </header>
 
+  <nav class="formula-section-nav" aria-label="公式页面目录">
+    <a href="#formula-tools">交互计算器</a>
+    <a href="#formula-library">领域公式库</a>
+    <a href="#formula-handbook-heading">推导手册</a>
+  </nav>
+
+  <h2 class="formula-section-title" id="formula-tools">交互计算器</h2>
   <div class="formula-controls">
     <label class="formula-search" for="formula-search"><span aria-hidden="true">⌕</span><input id="formula-search" type="search" placeholder="搜索工具，例如：电阻、滤波、PCB" autocomplete="off"></label>
-    <div class="formula-categories" aria-label="工具分类">
-      <button class="formula-category" type="button" aria-pressed="true" data-category="全部">全部</button>
-      <button class="formula-category" type="button" aria-pressed="false" data-category="基础电路">基础电路</button>
-      <button class="formula-category" type="button" aria-pressed="false" data-category="交流与滤波">交流与滤波</button>
-      <button class="formula-category" type="button" aria-pressed="false" data-category="半导体与放大">半导体与放大</button>
-      <button class="formula-category" type="button" aria-pressed="false" data-category="电源与热">电源与热</button>
-      <button class="formula-category" type="button" aria-pressed="false" data-category="信号与 PCB">信号与 PCB</button>
-    </div>
+    <label class="formula-tool-domain" for="formula-tool-domain"><span>领域</span><select id="formula-tool-domain">
+      <option value="全部">全部领域</option>
+      {% for domain in site.data.formula_catalog %}<option value="{{ domain.name | escape }}">{{ domain.name | escape }}</option>{% endfor %}
+    </select></label>
     <div class="formula-toolbar"><label class="formula-sort" for="formula-sort"><span>排序</span><select id="formula-sort"><option value="default">推荐顺序</option><option value="name">名称</option><option value="category">分类</option></select></label><div class="formula-view" aria-label="显示方式"><button class="formula-view-button is-active" type="button" data-view="grid" aria-pressed="true" title="网格视图" aria-label="网格视图">▦</button><button class="formula-view-button" type="button" data-view="list" aria-pressed="false" title="列表视图" aria-label="列表视图">☷</button></div><button class="formula-reset" type="button" id="formula-reset">清除筛选</button></div>
   </div>
 
-  <div class="formula-result-count" id="formula-visible-count" aria-live="polite">26 个结果</div>
+  <div class="formula-result-count" id="formula-visible-count" aria-live="polite">34 个结果</div>
   <div class="formula-grid" id="formula-grid">
-    <button class="formula-card" type="button" data-tool="resistor" data-category="基础电路" data-search="色环电阻 电阻 阻值">
-      <span class="formula-card-category">基础电路</span><strong>四色环电阻</strong><small>根据四条色环读取阻值、倍率和误差。</small>
+    <button class="formula-card" type="button" data-tool="resistor" data-category="电路基础" data-search="色环电阻 电阻 阻值">
+      <span class="formula-card-category">电路基础</span><strong>四色环电阻</strong><small>根据四条色环读取阻值、倍率和误差。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="ohm" data-category="基础电路" data-search="欧姆定律 电压 电流 电阻">
-      <span class="formula-card-category">基础电路</span><strong>欧姆定律</strong><small>在电压、电流和电阻之间选择一个未知量。</small>
+    <button class="formula-card" type="button" data-tool="ohm" data-category="电路基础" data-search="欧姆定律 电压 电流 电阻">
+      <span class="formula-card-category">电路基础</span><strong>欧姆定律</strong><small>在电压、电流和电阻之间选择一个未知量。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="divider" data-category="基础电路" data-search="电阻分压 分压">
-      <span class="formula-card-category">基础电路</span><strong>电阻分压</strong><small>计算分压输出，以及达到目标电压所需的电阻。</small>
+    <button class="formula-card" type="button" data-tool="divider" data-category="电路基础" data-search="电阻分压 分压">
+      <span class="formula-card-category">电路基础</span><strong>电阻分压</strong><small>计算分压输出，以及达到目标电压所需的电阻。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="led" data-category="基础电路" data-search="LED 限流 电阻 功耗">
-      <span class="formula-card-category">基础电路</span><strong>LED 限流电阻</strong><small>用供电电压、正向压降和目标电流选限流电阻。</small>
+    <button class="formula-card" type="button" data-tool="led" data-category="半导体与开关驱动" data-search="LED 限流 电阻 功耗">
+      <span class="formula-card-category">半导体与开关驱动</span><strong>LED 限流电阻</strong><small>用供电电压、正向压降和目标电流选限流电阻。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="resnet" data-category="基础电路" data-search="串联 并联 电阻 网络 等效">
-      <span class="formula-card-category">基础电路</span><strong>电阻串并联</strong><small>计算多个相等电阻或两只电阻的等效值。</small>
+    <button class="formula-card" type="button" data-tool="resnet" data-category="电路基础" data-search="串联 并联 电阻 网络 等效">
+      <span class="formula-card-category">电路基础</span><strong>电阻串并联</strong><small>计算多个相等电阻或两只电阻的等效值。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="respower" data-category="基础电路" data-search="电阻 功率 电流 发热">
-      <span class="formula-card-category">基础电路</span><strong>电阻功率与电流</strong><small>根据电压、电流和阻值检查电阻耗散功率。</small>
+    <button class="formula-card" type="button" data-tool="respower" data-category="电路基础" data-search="电阻 功率 电流 发热">
+      <span class="formula-card-category">电路基础</span><strong>电阻功率与电流</strong><small>根据电压、电流和阻值检查电阻耗散功率。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="capenergy" data-category="基础电路" data-search="电容 储能 电荷 纹波">
-      <span class="formula-card-category">基础电路</span><strong>电容电荷与储能</strong><small>计算电容储存的电荷、能量和给定电流下的纹波。</small>
+    <button class="formula-card" type="button" data-tool="capenergy" data-category="电容、电感与交流瞬态" data-search="电容 储能 电荷 纹波">
+      <span class="formula-card-category">电容、电感与交流瞬态</span><strong>电容电荷与储能</strong><small>计算电容储存的电荷、能量和给定电流下的纹波。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="indenergy" data-category="基础电路" data-search="电感 储能 电流 能量">
-      <span class="formula-card-category">基础电路</span><strong>电感储能</strong><small>根据电感量和电流估算磁场储能。</small>
+    <button class="formula-card" type="button" data-tool="indenergy" data-category="电容、电感与交流瞬态" data-search="电感 储能 电流 能量">
+      <span class="formula-card-category">电容、电感与交流瞬态</span><strong>电感储能</strong><small>根据电感量和电流估算磁场储能。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="rc" data-category="交流与滤波" data-search="RC 低通 截止频率 滤波">
-      <span class="formula-card-category">交流与滤波</span><strong>RC 截止频率</strong><small>计算一阶 RC 低通或高通的截止频率。</small>
+    <button class="formula-card" type="button" data-tool="rc" data-category="模拟滤波器与频率响应" data-search="RC 低通 截止频率 滤波">
+      <span class="formula-card-category">模拟滤波器与频率响应</span><strong>RC 截止频率</strong><small>计算一阶 RC 低通或高通的截止频率。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="lc" data-category="交流与滤波" data-search="LC 谐振 频率">
-      <span class="formula-card-category">交流与滤波</span><strong>LC 谐振频率</strong><small>根据电感与电容计算理想 LC 谐振点。</small>
+    <button class="formula-card" type="button" data-tool="lc" data-category="电容、电感与交流瞬态" data-search="LC 谐振 频率">
+      <span class="formula-card-category">电容、电感与交流瞬态</span><strong>LC 谐振频率</strong><small>根据电感与电容计算理想 LC 谐振点。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="tau" data-category="交流与滤波" data-search="电容 时间常数 RC 充放电">
-      <span class="formula-card-category">交流与滤波</span><strong>RC 时间常数</strong><small>计算电阻、电容组成电路的时间常数。</small>
+    <button class="formula-card" type="button" data-tool="tau" data-category="电容、电感与交流瞬态" data-search="电容 时间常数 RC 充放电">
+      <span class="formula-card-category">电容、电感与交流瞬态</span><strong>RC 时间常数</strong><small>计算电阻、电容组成电路的时间常数。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="rctime" data-category="交流与滤波" data-search="RC 上升时间 充电 阈值 延时">
-      <span class="formula-card-category">交流与滤波</span><strong>RC 阈值时间</strong><small>计算 RC 充电或放电到指定比例所需的时间。</small>
+    <button class="formula-card" type="button" data-tool="rctime" data-category="电容、电感与交流瞬态" data-search="RC 上升时间 充电 阈值 延时">
+      <span class="formula-card-category">电容、电感与交流瞬态</span><strong>RC 阈值时间</strong><small>计算 RC 充电或放电到指定比例所需的时间。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="reactance" data-category="交流与滤波" data-search="电抗 电容 电感 交流 阻抗">
-      <span class="formula-card-category">交流与滤波</span><strong>电容/电感电抗</strong><small>在指定频率下计算容抗、感抗和相位趋势。</small>
+    <button class="formula-card" type="button" data-tool="reactance" data-category="电容、电感与交流瞬态" data-search="电抗 电容 电感 交流 阻抗">
+      <span class="formula-card-category">电容、电感与交流瞬态</span><strong>电容/电感电抗</strong><small>在指定频率下计算容抗、感抗和相位趋势。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="impedance" data-category="交流与滤波" data-search="RLC 阻抗 相位 交流串联">
-      <span class="formula-card-category">交流与滤波</span><strong>串联 RLC 阻抗</strong><small>计算串联 RLC 的阻抗幅值、相位与电流。</small>
+    <button class="formula-card" type="button" data-tool="impedance" data-category="电容、电感与交流瞬态" data-search="RLC 阻抗 相位 交流串联">
+      <span class="formula-card-category">电容、电感与交流瞬态</span><strong>串联 RLC 阻抗</strong><small>计算串联 RLC 的阻抗幅值、相位与电流。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="rlcq" data-category="交流与滤波" data-search="RLC Q 值 品质因数 带宽">
-      <span class="formula-card-category">交流与滤波</span><strong>RLC 品质因数与带宽</strong><small>估算串联 RLC 的 Q 值和近似带宽。</small>
+    <button class="formula-card" type="button" data-tool="rlcq" data-category="电容、电感与交流瞬态" data-search="RLC Q 值 品质因数 带宽">
+      <span class="formula-card-category">电容、电感与交流瞬态</span><strong>RLC 品质因数与带宽</strong><small>估算串联 RLC 的 Q 值和近似带宽。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="diode" data-category="半导体与放大" data-search="二极管 压降 功耗 电流">
-      <span class="formula-card-category">半导体与放大</span><strong>二极管功耗</strong><small>根据正向压降和工作电流估算二极管耗散。</small>
+    <button class="formula-card" type="button" data-tool="diode" data-category="半导体与开关驱动" data-search="二极管 压降 功耗 电流">
+      <span class="formula-card-category">半导体与开关驱动</span><strong>二极管功耗</strong><small>根据正向压降和工作电流估算二极管耗散。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="bjt" data-category="半导体与放大" data-search="三极管 BJT 基极 电阻 放大倍数">
-      <span class="formula-card-category">半导体与放大</span><strong>BJT 基极电阻</strong><small>按目标集电极电流和强制 β 估算基极驱动电阻。</small>
+    <button class="formula-card" type="button" data-tool="bjt" data-category="半导体与开关驱动" data-search="三极管 BJT 基极 电阻 放大倍数">
+      <span class="formula-card-category">半导体与开关驱动</span><strong>BJT 基极电阻</strong><small>按目标集电极电流和强制 β 估算基极驱动电阻。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="mosfet" data-category="半导体与放大" data-search="MOSFET 导通损耗 RDS 功率">
-      <span class="formula-card-category">半导体与放大</span><strong>MOSFET 导通损耗</strong><small>根据 RMS 电流和 RDS(on) 估算导通发热。</small>
+    <button class="formula-card" type="button" data-tool="mosfet" data-category="半导体与开关驱动" data-search="MOSFET 导通损耗 RDS 功率">
+      <span class="formula-card-category">半导体与开关驱动</span><strong>MOSFET 导通损耗</strong><small>根据 RMS 电流和 RDS(on) 估算导通发热。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="opampbw" data-category="半导体与放大" data-search="运放 GBW 带宽 噪声增益 压摆率">
-      <span class="formula-card-category">半导体与放大</span><strong>运放带宽与压摆率</strong><small>用 GBW、噪声增益和输出幅度检查速度余量。</small>
+    <button class="formula-card" type="button" data-tool="opampbw" data-category="运放、比较器与模拟前端" data-search="运放 GBW 带宽 噪声增益 压摆率">
+      <span class="formula-card-category">运放、比较器与模拟前端</span><strong>运放带宽与压摆率</strong><small>用 GBW、噪声增益和输出幅度检查速度余量。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="dspower" data-category="信号与 PCB" data-search="dBm dBW 功率 分贝">
-      <span class="formula-card-category">信号与 PCB</span><strong>W、dBW、dBm 换算</strong><small>在功率单位之间快速换算，默认参考阻抗为 50 Ω。</small>
+    <button class="formula-card" type="button" data-tool="dspower" data-category="噪声、分贝与信号质量" data-search="dBm dBW 功率 分贝">
+      <span class="formula-card-category">噪声、分贝与信号质量</span><strong>W、dBW、dBm 换算</strong><small>在功率单位之间快速换算，默认参考阻抗为 50 Ω。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="wavelength" data-category="信号与 PCB" data-search="波长 频率 传播速度">
-      <span class="formula-card-category">信号与 PCB</span><strong>频率与波长</strong><small>根据频率和传播速度计算波长。</small>
+    <button class="formula-card" type="button" data-tool="wavelength" data-category="射频、通信与 EMC" data-search="波长 频率 传播速度">
+      <span class="formula-card-category">射频、通信与 EMC</span><strong>频率与波长</strong><small>根据频率和传播速度计算波长。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="trace" data-category="信号与 PCB" data-search="PCB 走线 载流 电流">
-      <span class="formula-card-category">信号与 PCB</span><strong>PCB 走线载流</strong><small>用 IPC-2221 外层近似估算线宽或载流能力。</small>
+    <button class="formula-card" type="button" data-tool="trace" data-category="PCB 与信号完整性" data-search="PCB 走线 载流 电流">
+      <span class="formula-card-category">PCB 与信号完整性</span><strong>PCB 走线载流</strong><small>用 IPC-2221 外层近似估算线宽或载流能力。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="delay" data-category="信号与 PCB" data-search="传输线 延时 走线 长度 高速">
-      <span class="formula-card-category">信号与 PCB</span><strong>走线传播延时</strong><small>根据走线长度和介质传播速度估算飞行时间。</small>
+    <button class="formula-card" type="button" data-tool="delay" data-category="PCB 与信号完整性" data-search="传输线 延时 走线 长度 高速">
+      <span class="formula-card-category">PCB 与信号完整性</span><strong>走线传播延时</strong><small>根据走线长度和介质传播速度估算飞行时间。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="adc" data-category="信号与 PCB" data-search="ADC LSB 分辨率 参考电压 量化">
-      <span class="formula-card-category">信号与 PCB</span><strong>ADC 分辨率与 LSB</strong><small>计算理想步进、量化噪声和输入电压码值。</small>
+    <button class="formula-card" type="button" data-tool="adc" data-category="ADC、DAC 与采样" data-search="ADC LSB 分辨率 参考电压 量化">
+      <span class="formula-card-category">ADC、DAC 与采样</span><strong>ADC 分辨率与 LSB</strong><small>计算理想步进、量化噪声和输入电压码值。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="dbamplitude" data-category="信号与 PCB" data-search="dB 电压 电流 幅度 分贝">
-      <span class="formula-card-category">信号与 PCB</span><strong>电压/电流 dB 换算</strong><small>在幅度比、分贝和增益之间互相换算。</small>
+    <button class="formula-card" type="button" data-tool="dbamplitude" data-category="噪声、分贝与信号质量" data-search="dB 电压 电流 幅度 分贝">
+      <span class="formula-card-category">噪声、分贝与信号质量</span><strong>电压/电流 dB 换算</strong><small>在幅度比、分贝和增益之间互相换算。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="impedancepcb" data-category="信号与 PCB" data-search="PCB 微带 特性阻抗 走线 叠层">
-      <span class="formula-card-category">信号与 PCB</span><strong>微带线特性阻抗</strong><small>用常见微带近似式按线宽、介质厚度和介电常数估算阻抗。</small>
+    <button class="formula-card" type="button" data-tool="impedancepcb" data-category="PCB 与信号完整性" data-search="PCB 微带 特性阻抗 走线 叠层">
+      <span class="formula-card-category">PCB 与信号完整性</span><strong>微带线特性阻抗</strong><small>用常见微带近似式按线宽、介质厚度和介电常数估算阻抗。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="pwm" data-category="信号与 PCB" data-search="PWM 占空比 频率 周期 定时器">
-      <span class="formula-card-category">信号与 PCB</span><strong>PWM 频率与占空比</strong><small>在频率、周期、占空比和高电平时间之间换算。</small>
+    <button class="formula-card" type="button" data-tool="pwm" data-category="数字接口、时钟与时序" data-search="PWM 占空比 频率 周期 定时器">
+      <span class="formula-card-category">数字接口、时钟与时序</span><strong>PWM 频率与占空比</strong><small>在频率、周期、占空比和高电平时间之间换算。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="uart" data-category="信号与 PCB" data-search="UART 波特率 误差 串口 时钟">
-      <span class="formula-card-category">信号与 PCB</span><strong>UART 波特率误差</strong><small>根据实际时钟和分频值检查串口波特率偏差。</small>
+    <button class="formula-card" type="button" data-tool="uart" data-category="数字接口、时钟与时序" data-search="UART 波特率 误差 串口 时钟">
+      <span class="formula-card-category">数字接口、时钟与时序</span><strong>UART 波特率误差</strong><small>根据实际时钟和分频值检查串口波特率偏差。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="battery" data-category="电源与热" data-search="电池 续航 容量 电流">
-      <span class="formula-card-category">电源与热</span><strong>电池续航</strong><small>按容量、负载电流和效率估算运行时间。</small>
+    <button class="formula-card" type="button" data-tool="battery" data-category="电池、续航与系统功耗" data-search="电池 续航 容量 电流">
+      <span class="formula-card-category">电池、续航与系统功耗</span><strong>电池续航</strong><small>按容量、负载电流和效率估算运行时间。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="buck" data-category="电源与热" data-search="Buck 降压 电感 纹波 DC-DC 开关电源">
-      <span class="formula-card-category">电源与热</span><strong>Buck 电感纹波</strong><small>估算降压电源的占空比、电感纹波和峰值电流。</small>
+    <button class="formula-card" type="button" data-tool="buck" data-category="电源设计" data-search="Buck 降压 电感 纹波 DC-DC 开关电源">
+      <span class="formula-card-category">电源设计</span><strong>Buck 电感纹波</strong><small>估算降压电源的占空比、电感纹波和峰值电流。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="ldo" data-category="电源与热" data-search="LDO 压差 功耗 结温 热阻">
-      <span class="formula-card-category">电源与热</span><strong>LDO 功耗与结温</strong><small>检查输入输出压差带来的热耗散和结温。</small>
+    <button class="formula-card" type="button" data-tool="ldo" data-category="电源设计" data-search="LDO 压差 功耗 结温 热阻">
+      <span class="formula-card-category">电源设计</span><strong>LDO 功耗与结温</strong><small>检查输入输出压差带来的热耗散和结温。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="thermal" data-category="电源与热" data-search="热阻 结温 散热 功耗 温升">
-      <span class="formula-card-category">电源与热</span><strong>热阻链与结温</strong><small>按环境温度、功耗和热阻链计算结温。</small>
+    <button class="formula-card" type="button" data-tool="thermal" data-category="热设计与散热" data-search="热阻 结温 散热 功耗 温升">
+      <span class="formula-card-category">热设计与散热</span><strong>热阻链与结温</strong><small>按环境温度、功耗和热阻链计算结温。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="ripple" data-category="电源与热" data-search="电源 输出纹波 电容 ESR 开关电源">
-      <span class="formula-card-category">电源与热</span><strong>电源输出纹波</strong><small>按负载阶跃、开关频率和电容 ESR 估算纹波。</small>
+    <button class="formula-card" type="button" data-tool="ripple" data-category="电源设计" data-search="电源 输出纹波 电容 ESR 开关电源">
+      <span class="formula-card-category">电源设计</span><strong>Buck 输出开关纹波</strong><small>按电感纹波电流、开关频率、电容和 ESR 估算输出纹波。</small>
     </button>
-    <button class="formula-card" type="button" data-tool="opamp" data-category="半导体与放大" data-search="运放 增益 同相 反相">
-      <span class="formula-card-category">半导体与放大</span><strong>运放闭环增益</strong><small>计算同相或反相运放的理想闭环增益。</small>
+    <button class="formula-card" type="button" data-tool="opamp" data-category="运放、比较器与模拟前端" data-search="运放 增益 同相 反相">
+      <span class="formula-card-category">运放、比较器与模拟前端</span><strong>运放闭环增益</strong><small>计算同相或反相运放的理想闭环增益。</small>
     </button>
   </div>
   <p class="formula-empty" id="formula-empty" hidden>没有找到匹配的工具。</p>
   <p class="formula-note">计算结果用于前期估算。器件容差、温升、布局、寄生参数和数据手册限制仍需在设计评审与实测中确认。</p>
+
+  <section class="formula-library" id="formula-library" aria-labelledby="formula-library-heading">
+    <div class="section-heading"><h2 id="formula-library-heading">领域公式库</h2><span>18 个领域 · 180 组公式</span></div>
+    <p class="formula-library-intro">选择领域查看公式、适用条件和专题范围；也可按名称、变量或专题搜索。</p>
+    <label class="formula-search formula-library-search" for="formula-library-search"><span aria-hidden="true">⌕</span><input id="formula-library-search" type="search" placeholder="搜索公式、变量或专题" autocomplete="off"></label>
+    <label class="formula-library-domain" for="formula-library-domain"><span>查看领域</span><select id="formula-library-domain">
+      <option value="全部">全部领域</option>
+      {% for domain in site.data.formula_catalog %}<option value="{{ domain.name | escape }}">{{ domain.id }} · {{ domain.name | escape }}</option>{% endfor %}
+    </select></label>
+    <div class="formula-library-count" id="formula-library-count" aria-live="polite">180 组公式</div>
+    <div class="formula-domain-list">
+      {% for domain in site.data.formula_catalog %}
+      <details class="formula-domain" data-domain="{{ domain.name | escape }}">
+        <summary><span class="formula-domain-number">{{ domain.id }}</span><span class="formula-domain-name">{{ domain.name | escape }}</span><span class="formula-domain-count">{{ domain.formulas.size }} 组</span></summary>
+        <p class="formula-domain-topics">专题：{{ domain.topics | escape }}</p>
+        <div class="formula-entry-list">
+          {% for formula in domain.formulas %}
+          <article class="formula-entry" data-search="{{ formula.id }} {{ formula.title | escape }} {{ formula.expression | escape }} {{ formula.conditions | escape }} {{ domain.name | escape }} {{ domain.topics | escape }}">
+            <div class="formula-entry-heading"><span class="formula-entry-id">{{ formula.id }}</span><h3>{{ formula.title | escape }}</h3></div>
+            <code class="formula-entry-expression">{{ formula.expression | escape }}</code>
+            <p>{{ formula.conditions | escape }}</p>
+          </article>
+          {% endfor %}
+        </div>
+      </details>
+      {% endfor %}
+    </div>
+    <p class="formula-empty" id="formula-library-empty" hidden>没有找到匹配的公式。</p>
+  </section>
 
   <section class="formula-handbook" aria-labelledby="formula-handbook-heading">
     <div class="section-heading"><h2 id="formula-handbook-heading">公式推导手册</h2><span>从公式到工程判断</span></div>
@@ -200,7 +232,7 @@ permalink: /formulas/
     buck: { title: 'Buck 电感纹波', subtitle: 'D ≈ Vout ÷ Vin；ΔIL ≈ (Vin - Vout)D ÷ (Lfs)', fields: [['vin', '输入电压 Vin（V）', 'number'], ['vout', '输出电压 Vout（V）', 'number'], ['l', '电感 L（H）', 'number'], ['fs', '开关频率 fs（Hz）', 'number'], ['iout', '输出电流（A）', 'number']], calc: v => { const duty = v.vout / v.vin; const ripple = (v.vin - v.vout) * duty / (v.l * v.fs); return { value: `D=${(duty * 100).toPrecision(4)}% · ΔIL=${format(ripple, 'A')} · Ipk=${format(v.iout + ripple / 2, 'A')}`, note: '理想 CCM 近似；还需检查最小导通时间、饱和电流、ESR 和环路补偿。' }; } },
     ldo: { title: 'LDO 功耗与结温', subtitle: 'P ≈ (Vin - Vout)Iout；Tj ≈ Ta + PθJA', fields: [['vin', '输入电压 Vin（V）', 'number'], ['vout', '输出电压 Vout（V）', 'number'], ['iout', '输出电流（A）', 'number'], ['theta', '结到环境热阻 θJA（°C/W）', 'number']], calc: v => { const p = (v.vin - v.vout) * v.iout; return { value: `${format(p, 'W')} · T rise ${format(p * v.theta, '°C')}`, note: '输入输出压差越大，LDO 越容易受热限制；还需核对最小压差和限流曲线。' }; } },
     thermal: { title: '热阻链与结温', subtitle: 'Tj = Ta + P × (θJC + θCS + θSA)', fields: [['ta', '环境温度 Ta（°C）', 'number'], ['p', '器件功耗 P（W）', 'number'], ['rjc', 'θJC（°C/W）', 'number'], ['rcs', 'θCS（°C/W）', 'number'], ['rsa', 'θSA（°C/W）', 'number']], calc: v => ({ value: `${(v.ta + v.p * (v.rjc + v.rcs + v.rsa)).toPrecision(5)} °C`, note: `总热阻 ${(v.rjc + v.rcs + v.rsa).toPrecision(4)} °C/W；请与最大结温和降额曲线比较。` }) },
-    ripple: { title: '电源输出纹波', subtitle: 'ΔV ≈ ΔI/(8fC) + ΔI·ESR', fields: [['i', '负载阶跃 ΔI（A）', 'number'], ['f', '开关频率 f（Hz）', 'number'], ['c', '输出电容 C（F）', 'number'], ['esr', '电容 ESR（Ω）', 'number']], calc: v => { const capacitive = v.i / (8 * v.f * v.c); const resistive = v.i * v.esr; return { value: `ΔVcap=${format(capacitive, 'V')} · ΔVESR=${format(resistive, 'V')} · 总计≈${format(capacitive + resistive, 'V')}`, note: '三角纹波近似只用于初估；布局寄生、控制环和电容有效值会改变结果。' }; } },
+    ripple: { title: 'Buck 输出开关纹波', subtitle: 'ΔVC,pp ≈ ΔIL,pp/(8fsC)；ΔVESR,pp ≈ ΔIL,pp·ESR', fields: [['i', '电感纹波电流 ΔIL,pp（A）', 'number'], ['f', '开关频率 fs（Hz）', 'number'], ['c', '输出电容 C（F）', 'number'], ['esr', '电容 ESR（Ω）', 'number']], calc: v => { const capacitive = v.i / (8 * v.f * v.c); const resistive = v.i * v.esr; return { value: `ΔVC,pp=${format(capacitive, 'V')} · ΔVESR,pp=${format(resistive, 'V')}`, note: '这里的 ΔI 是电感三角纹波峰峰值，不是负载阶跃；两项相加可作保守初估，未计 ESL。' }; } },
     opamp: { title: '运放闭环增益', subtitle: '同相：Av = 1 + Rf/Rg；反相：Av = -Rf/Rin', fields: [['mode', '拓扑', 'select', [['同相', 'non'], ['反相', 'inv']]], ['rf', '反馈电阻 Rf（Ω）', 'number'], ['rg', '接地/输入电阻（Ω）', 'number']], calc: v => ({ value: format(v.mode === 'non' ? 1 + v.rf / v.rg : -v.rf / v.rg, '倍'), note: v.mode === 'non' ? '同相输入，理想闭环增益为正。' : '反相输入，理想闭环增益带负号。' }) }
   };
   const dialog = document.querySelector('#formula-dialog');
@@ -257,14 +289,15 @@ permalink: /formulas/
   document.querySelector('.formula-dialog-reset').addEventListener('click', () => { if (activeTool) renderForm(activeTool); });
   document.querySelector('.formula-dialog-copy').addEventListener('click', async () => { const button = document.querySelector('.formula-dialog-copy'); try { await navigator.clipboard.writeText(`${value.textContent}\n${note.textContent}`); button.textContent = '已复制'; setTimeout(() => { button.textContent = '复制结果'; }, 1200); } catch { button.textContent = '复制失败'; setTimeout(() => { button.textContent = '复制结果'; }, 1200); } });
   dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
-  const search = document.querySelector('#formula-search'); const grid = document.querySelector('#formula-grid'); const sort = document.querySelector('#formula-sort'); const count = document.querySelector('#formula-count'); let category = '全部';
+  const search = document.querySelector('#formula-search'); const grid = document.querySelector('#formula-grid'); const sort = document.querySelector('#formula-sort'); const count = document.querySelector('#formula-count'); const categorySelect = document.querySelector('#formula-tool-domain'); let category = categorySelect.value;
   count.textContent = String(cards.length);
   const filter = () => { const query = search.value.trim().toLocaleLowerCase(); let visible = 0; cards.forEach((card) => { const match = (category === '全部' || card.dataset.category === category) && (!query || `${card.dataset.search} ${card.textContent}`.toLocaleLowerCase().includes(query)); card.hidden = !match; if (match) visible += 1; }); document.querySelector('#formula-empty').hidden = visible > 0; document.querySelector('#formula-visible-count').textContent = `${visible} 个结果`; };
   const reorder = () => { const sorted = [...cards].sort((a, b) => { if (sort.value === 'name') return a.querySelector('strong').textContent.localeCompare(b.querySelector('strong').textContent, 'zh-CN'); if (sort.value === 'category') return a.dataset.category.localeCompare(b.dataset.category, 'zh-CN') || Number(a.dataset.order) - Number(b.dataset.order); return Number(a.dataset.order) - Number(b.dataset.order); }); sorted.forEach((card) => grid.appendChild(card)); filter(); };
-  search.addEventListener('input', filter); sort.addEventListener('change', reorder); document.querySelectorAll('.formula-category').forEach((button) => button.addEventListener('click', () => { category = button.dataset.category; document.querySelectorAll('.formula-category').forEach((item) => item.setAttribute('aria-pressed', String(item === button))); filter(); }));
+  search.addEventListener('input', filter); sort.addEventListener('change', reorder); categorySelect.addEventListener('change', () => { category = categorySelect.value; filter(); });
   const savedView = (() => { try { return localStorage.getItem('formula-view'); } catch { return null; } })(); if (savedView === 'grid' || savedView === 'list') { grid.dataset.view = savedView; document.querySelectorAll('.formula-view-button').forEach((item) => { item.classList.toggle('is-active', item.dataset.view === savedView); item.setAttribute('aria-pressed', String(item.dataset.view === savedView)); }); }
   document.querySelectorAll('.formula-view-button').forEach((button) => button.addEventListener('click', () => { const view = button.dataset.view; grid.dataset.view = view; try { localStorage.setItem('formula-view', view); } catch {} document.querySelectorAll('.formula-view-button').forEach((item) => { item.classList.toggle('is-active', item === button); item.setAttribute('aria-pressed', String(item === button)); }); }));
-  document.querySelector('#formula-reset').addEventListener('click', () => { search.value = ''; category = '全部'; sort.value = 'default'; grid.dataset.view = 'grid'; document.querySelectorAll('.formula-category').forEach((item) => item.setAttribute('aria-pressed', String(item.dataset.category === '全部'))); document.querySelectorAll('.formula-view-button').forEach((item) => { item.classList.toggle('is-active', item.dataset.view === 'grid'); item.setAttribute('aria-pressed', String(item.dataset.view === 'grid')); }); reorder(); search.focus(); });
+  document.querySelector('#formula-reset').addEventListener('click', () => { search.value = ''; category = '全部'; categorySelect.value = category; sort.value = 'default'; grid.dataset.view = 'grid'; document.querySelectorAll('.formula-view-button').forEach((item) => { item.classList.toggle('is-active', item.dataset.view === 'grid'); item.setAttribute('aria-pressed', String(item.dataset.view === 'grid')); }); reorder(); search.focus(); });
   filter();
 })();
 </script>
+<script src="{{ '/assets/formula-catalog.js' | relative_url }}" defer></script>

@@ -1,0 +1,1208 @@
+[
+  {
+    "id": "01",
+    "name": "电路基础",
+    "topics": "直流网络、等效模型、功率与单位。",
+    "formulas": [
+      {
+        "id": "01.01",
+        "title": "欧姆定律",
+        "expression": "V=IR",
+        "conditions": "线性电阻；支持任意一个量反算。"
+      },
+      {
+        "id": "01.02",
+        "title": "节点与回路方程",
+        "expression": "ΣI=0；ΣV=0",
+        "conditions": "集总电路；回路内感应电动势需计入。"
+      },
+      {
+        "id": "01.03",
+        "title": "电阻串并联",
+        "expression": "Rs=ΣRi；1/Rp=Σ(1/Ri)",
+        "conditions": "支持多支路，不局限两只电阻。"
+      },
+      {
+        "id": "01.04",
+        "title": "分压与负载效应",
+        "expression": "Vout=Vin·R2/(R1+R2)；带负载时 R2→R2∥RL",
+        "conditions": "输出接 ADC、偏置网络时要检查负载。"
+      },
+      {
+        "id": "01.05",
+        "title": "戴维南与诺顿等效",
+        "expression": "IN=Vth/Rth；RN=Rth",
+        "conditions": "线性二端网络；受控源不能简单关断。"
+      },
+      {
+        "id": "01.06",
+        "title": "电阻功率",
+        "expression": "P=VI=I²R=V²/R",
+        "conditions": "DC 或使用电阻上的 RMS 值。"
+      },
+      {
+        "id": "01.07",
+        "title": "导体阻值与温漂",
+        "expression": "R=ρl/A；R(T)≈R0[1+α(T-T0)]",
+        "conditions": "温度系数在给定范围内近似固定。"
+      },
+      {
+        "id": "01.08",
+        "title": "最大功率传输",
+        "expression": "RL=Rth；Pmax=Vth²/(4Rth)",
+        "conditions": "DC 电阻网络，匹配点效率为 50%。"
+      },
+      {
+        "id": "01.09",
+        "title": "频率、周期与角频率",
+        "expression": "T=1/f；ω=2πf",
+        "conditions": "明确 Hz 与 rad/s。"
+      },
+      {
+        "id": "01.10",
+        "title": "RMS 与波形换算",
+        "expression": "Vrms=√[(1/T)∫v²dt]；正弦 Vrms=Vpk/√2；Vpp=2Vpk",
+        "conditions": "非正弦波使用积分定义；双极方波 RMS 等于幅值。"
+      }
+    ]
+  },
+  {
+    "id": "02",
+    "name": "电容、电感与交流瞬态",
+    "topics": "无源元件、瞬态响应、交流阻抗、谐振。",
+    "formulas": [
+      {
+        "id": "02.01",
+        "title": "电容串并联",
+        "expression": "Cp=ΣCi；1/Cs=Σ(1/Ci)",
+        "conditions": "理想元件；串联耐压分配受漏电和均压影响。"
+      },
+      {
+        "id": "02.02",
+        "title": "电感串并联",
+        "expression": "Ls=ΣLi；1/Lp=Σ(1/Li)",
+        "conditions": "不存在磁耦合时成立。"
+      },
+      {
+        "id": "02.03",
+        "title": "电容电荷与电流",
+        "expression": "Q=CV；i=C·dv/dt",
+        "conditions": "C 近似不随电压变化。"
+      },
+      {
+        "id": "02.04",
+        "title": "电容储能",
+        "expression": "E=CV²/2",
+        "conditions": "用于保持电源、放电与储能估算。"
+      },
+      {
+        "id": "02.05",
+        "title": "电感电压与储能",
+        "expression": "v=L·di/dt；E=LI²/2",
+        "conditions": "线性且未饱和的电感。"
+      },
+      {
+        "id": "02.06",
+        "title": "RC 通用阶跃响应",
+        "expression": "Vc(t)=V∞+(V0-V∞)e^(-t/RC)",
+        "conditions": "R 为电容看到的等效电阻。"
+      },
+      {
+        "id": "02.07",
+        "title": "RC 阈值时间",
+        "expression": "充电 t=-RC·ln(1-a)；放电 t=-RC·ln(a)",
+        "conditions": "充电从 0 开始，放电最终为 0；`0<a<1`。"
+      },
+      {
+        "id": "02.08",
+        "title": "RL 阶跃响应",
+        "expression": "τ=L/R；i(t)=I∞+(I0-I∞)e^(-t/τ)",
+        "conditions": "R 包含绕组和外部串联电阻。"
+      },
+      {
+        "id": "02.09",
+        "title": "交流阻抗与相位",
+        "expression": "ZL=jωL；ZC=1/(jωC)；串联 Z=R+j(ωL-1/ωC)；φ=atan2(ImZ,ReZ)",
+        "conditions": "正弦稳态；电流相量为 `I=V/Z`。"
+      },
+      {
+        "id": "02.10",
+        "title": "串联 RLC 谐振、Q 与带宽",
+        "expression": "f0=1/(2π√LC)；Q=√(L/C)/R；BW=R/(2πL)=f0/Q",
+        "conditions": "带宽指串联电流响应的半功率带宽。"
+      }
+    ]
+  },
+  {
+    "id": "03",
+    "name": "半导体与开关驱动",
+    "topics": "二极管、三极管、MOSFET、光耦。",
+    "formulas": [
+      {
+        "id": "03.01",
+        "title": "二极管电流与动态电阻",
+        "expression": "ID=IS[e^(VD/nVT)-1]；VT=kT/q；正向偏置 rd≈nVT/ID",
+        "conditions": "理想化模型，不覆盖击穿和大电流串联电阻效应。"
+      },
+      {
+        "id": "03.02",
+        "title": "稳压二极管限流",
+        "expression": "Rs=(Vin-VZ)/(IL+IZ)；PZ=VZ·IZ",
+        "conditions": "逐一检查 Vin、IL 和稳压管参数的最坏组合。"
+      },
+      {
+        "id": "03.03",
+        "title": "LED 限流",
+        "expression": "R=(Vs-VF-Vdriver)/IF；PR=IF²R",
+        "conditions": "`Vs>VF+Vdriver`。"
+      },
+      {
+        "id": "03.04",
+        "title": "BJT 小信号参数",
+        "expression": "IC≈βIB；gm=IC/VT；rπ=β/gm",
+        "conditions": "正向放大区的局部模型。"
+      },
+      {
+        "id": "03.05",
+        "title": "BJT 分压偏置",
+        "expression": "Vth=VCC·R2/(R1+R2)；Rth=R1∥R2；IB≈(Vth-VBE)/[Rth+(β+1)RE]",
+        "conditions": "算出工作点后复核 VCE 是否仍在放大区。"
+      },
+      {
+        "id": "03.06",
+        "title": "共射极电压增益",
+        "expression": "Av≈-gm(RC∥RL)/(1+gmRE)",
+        "conditions": "简化模型，忽略 ro 和有限 β；RE 为交流未旁路部分。"
+      },
+      {
+        "id": "03.07",
+        "title": "BJT 开关基极电阻",
+        "expression": "IB=IC/βforced；RB=(Vdrive-VBE)/IB",
+        "conditions": "使用强制 β，核对 GPIO 驱动能力。"
+      },
+      {
+        "id": "03.08",
+        "title": "MOSFET 损耗",
+        "expression": "Pcond=Irms²RDS(on)；Psw≈VDS·ID·(tr+tf)fs/2",
+        "conditions": "Irms 按完整周期定义；硬开关估算，不含反向恢复等损耗。"
+      },
+      {
+        "id": "03.09",
+        "title": "栅极驱动与自举",
+        "expression": "Igate≈Qg/tsw；Pgate≈Qg·Vgate·fs；Cboot≥Qtotal/ΔVboot",
+        "conditions": "Qtotal 包含栅极电荷、驱动器消耗和漏电。"
+      },
+      {
+        "id": "03.10",
+        "title": "光耦 CTR 与上拉",
+        "expression": "CTR=IC/IF；Rin=(Vdrive-VF)/IF；Rpull≥(VCC-VOL)/(CTRmin·IF)",
+        "conditions": "CTR 在此为比值；需按规定 VCE、温度和老化取值，另查速度上限。"
+      }
+    ]
+  },
+  {
+    "id": "04",
+    "name": "运放、比较器与模拟前端",
+    "topics": "放大拓扑、速度、误差、反馈、迟滞。",
+    "formulas": [
+      {
+        "id": "04.01",
+        "title": "反相放大",
+        "expression": "Av=-Rf/Rin",
+        "conditions": "线性负反馈、输入共模和输出摆幅满足要求。"
+      },
+      {
+        "id": "04.02",
+        "title": "同相放大",
+        "expression": "Av=1+Rf/Rg",
+        "conditions": "电压跟随器为增益 1 的特例。"
+      },
+      {
+        "id": "04.03",
+        "title": "差分放大",
+        "expression": "Vout=(R2/R1)(V2-V1)",
+        "conditions": "两侧电阻比必须匹配，实际 CMRR 受匹配误差影响。"
+      },
+      {
+        "id": "04.04",
+        "title": "反相加法器",
+        "expression": "Vout=-Rf·Σ(Vi/Ri)",
+        "conditions": "多通道混音、加权求和。"
+      },
+      {
+        "id": "04.05",
+        "title": "跨阻放大",
+        "expression": "Vout=Vref-IinRf",
+        "conditions": "按电流方向定义符号；输入电容影响稳定性。"
+      },
+      {
+        "id": "04.06",
+        "title": "积分器与微分器",
+        "expression": "积分 H(s)=-1/(sRC)；微分 H(s)=-sRC",
+        "conditions": "理想关系；实际电路需限制 DC 增益和高频噪声。"
+      },
+      {
+        "id": "04.07",
+        "title": "带宽与压摆率",
+        "expression": "fBW≈GBW/NG；SRreq=2πfVpk",
+        "conditions": "单主极点电压反馈运放；SR 常以 V/μs 显示。"
+      },
+      {
+        "id": "04.08",
+        "title": "失调与偏置误差",
+        "expression": "Vout,OS≈NG·Vos；偏置引起的输入误差 Verr≈Ib·Rsource",
+        "conditions": "分别计算两个输入端和反馈网络的偏置贡献。"
+      },
+      {
+        "id": "04.09",
+        "title": "比较器迟滞",
+        "expression": "Vth=(Vref/Rref+Vout/Rfb)/(1/Rref+1/Rfb)；ΔVh=Vth(VOH)-Vth(VOL)",
+        "conditions": "限定为阈值节点接 Vref 与输出、信号接另一输入的拓扑。"
+      },
+      {
+        "id": "04.10",
+        "title": "闭环反馈与灵敏度",
+        "expression": "Acl=A/(1+Aβ)；相对增益灵敏度 SA=1/(1+Aβ)",
+        "conditions": "负反馈符号约定；A、β 可以是复数频率函数。"
+      }
+    ]
+  },
+  {
+    "id": "05",
+    "name": "模拟滤波器与频率响应",
+    "topics": "一阶滤波、二阶滤波、阶数设计、相位与时域。",
+    "formulas": [
+      {
+        "id": "05.01",
+        "title": "RC 低通",
+        "expression": "H(s)=1/(1+sRC)；fc=1/(2πRC)",
+        "conditions": "高阻负载或已计入负载。"
+      },
+      {
+        "id": "05.02",
+        "title": "RC 高通",
+        "expression": "H(s)=sRC/(1+sRC)；fc=1/(2πRC)",
+        "conditions": "常用于交流耦合和隔直。"
+      },
+      {
+        "id": "05.03",
+        "title": "一阶幅频与相频",
+        "expression": "低通 abs(H)=1/√[1+(f/fc)²]；φ=-atan(f/fc)",
+        "conditions": "高通为 `abs(H)=(f/fc)/√[1+(f/fc)²]`。"
+      },
+      {
+        "id": "05.04",
+        "title": "Butterworth 阶数",
+        "expression": "n≥log10[(10^(As/10)-1)/(10^(Ap/10)-1)]/[2log10(fs/fp)]",
+        "conditions": "低通；fs>fp，As>Ap>0，结果向上取整；这里 fs 为阻带频率。"
+      },
+      {
+        "id": "05.05",
+        "title": "二阶低通标准式",
+        "expression": "H(s)=Kω0²/[s²+(ω0/Q)s+ω0²]；Q=1/(2ζ)",
+        "conditions": "指定标准二阶模型；f0 不一定等于 -3 dB 截止频率。"
+      },
+      {
+        "id": "05.06",
+        "title": "等值 Sallen-Key 低通",
+        "expression": "f0=1/(2πRC)；Q=1/(3-K)",
+        "conditions": "标准等 R、等 C 拓扑，K 为同相级增益且 K<3。"
+      },
+      {
+        "id": "05.07",
+        "title": "平衡双 T 陷波",
+        "expression": "fnotch=1/(2πRC)",
+        "conditions": "标准比例：电阻支路 R、R、2C；电容支路 C、C、R/2，需附图。"
+      },
+      {
+        "id": "05.08",
+        "title": "缓冲级联滤波",
+        "expression": "Htotal=∏Hi；GdB,total=ΣGdB,i",
+        "conditions": "级间隔离或每级传递函数已计入负载；不能直接相乘截止频率。"
+      },
+      {
+        "id": "05.09",
+        "title": "群时延",
+        "expression": "τg=-dφ/dω",
+        "conditions": "φ 用弧度，ω 用 rad/s。"
+      },
+      {
+        "id": "05.10",
+        "title": "一阶上升时间",
+        "expression": "tr,10–90≈2.197RC≈0.35/fc",
+        "conditions": "一阶低通的阶跃响应。"
+      }
+    ]
+  },
+  {
+    "id": "06",
+    "name": "电源设计",
+    "topics": "Buck、Boost、反相电源、LDO、反馈、纹波与瞬态。",
+    "formulas": [
+      {
+        "id": "06.01",
+        "title": "Buck 占空比与电感",
+        "expression": "D≈Vo/Vi；ΔILpp≈(Vi-Vo)D/(Lfs)；L≈(Vi-Vo)D/(fsΔILpp)",
+        "conditions": "理想 CCM，Vi>Vo>0。"
+      },
+      {
+        "id": "06.02",
+        "title": "Buck 电感电流应力",
+        "expression": "Ipk=Io+ΔILpp/2；Imin=Io-ΔILpp/2；ILrms=√(Io²+ΔILpp²/12)",
+        "conditions": "三角纹波；Imin≤0 时应重新判断 CCM 是否成立。"
+      },
+      {
+        "id": "06.03",
+        "title": "Buck 输入电容",
+        "expression": "ICin,rms≈Io√[D(1-D)]；ΔVin,pp≈IoD(1-D)/(Cinfs)",
+        "conditions": "忽略电感纹波、ESR 以及输入源在开关周期内的动态响应。"
+      },
+      {
+        "id": "06.04",
+        "title": "Buck 输出开关纹波",
+        "expression": "ΔVC,pp≈ΔILpp/(8fsCout)；ΔVESR,pp≈ΔILpp·ESR",
+        "conditions": "输入是电感纹波峰峰值，不是负载阶跃；两项之和为保守初估，未计 ESL。"
+      },
+      {
+        "id": "06.05",
+        "title": "Boost 升压",
+        "expression": "D≈1-Vi/Vo；ΔILpp≈ViD/(Lfs)；ILavg≈VoIo/(ηVi)",
+        "conditions": "电压比为理想 CCM，电流均值可用效率近似修正。"
+      },
+      {
+        "id": "06.06",
+        "title": "反相 Buck-Boost",
+        "expression": "Vo/Vi=-D/(1-D)；D=abs(Vo)/(Vi+abs(Vo))",
+        "conditions": "经典单电感反相拓扑，理想 CCM。"
+      },
+      {
+        "id": "06.07",
+        "title": "反馈分压",
+        "expression": "Vo=Vref(1+Rtop/Rbot)",
+        "conditions": "忽略反馈引脚偏置电流；具体芯片可能有附加项。"
+      },
+      {
+        "id": "06.08",
+        "title": "LDO 功耗与效率",
+        "expression": "Ploss≈(Vi-Vo)Io+ViIq；η=VoIo/[Vi(Io+Iq)]",
+        "conditions": "用实际静态电流，另查 dropout 与反向电流。"
+      },
+      {
+        "id": "06.09",
+        "title": "电源损耗预算",
+        "expression": "η=Pout/Pin；Ploss=Pin-Pout；Pin=Pout/η",
+        "conditions": "汇总开关、导通、磁性件、驱动等损耗。"
+      },
+      {
+        "id": "06.10",
+        "title": "负载阶跃与保持电容",
+        "expression": "ΔV≈ΔIload·Δt/C+ΔIload·ESR；C≥ΔIload·Δt/ΔVC",
+        "conditions": "Δt 为电容承担电流缺口的时间；与开关周期纹波分开。"
+      }
+    ]
+  },
+  {
+    "id": "07",
+    "name": "电池、续航与系统功耗",
+    "topics": "能量、平均功耗、电池组合、保持与充电。",
+    "formulas": [
+      {
+        "id": "07.01",
+        "title": "容量与能量",
+        "expression": "EWh≈Vnom·CAh；EJ=3600EWh",
+        "conditions": "电池电压变化较大时用实际放电能量。"
+      },
+      {
+        "id": "07.02",
+        "title": "带电压转换的续航",
+        "expression": "t≈Eusable,Wh·η/Pload,W",
+        "conditions": "跨电压域以能量计算；同电压恒流情形可用 `t≈Cusable/I`。"
+      },
+      {
+        "id": "07.03",
+        "title": "多状态平均电流",
+        "expression": "Iavg=Σ(Ii·ti)/Σti",
+        "conditions": "包括运行、睡眠、发射和启动等状态。"
+      },
+      {
+        "id": "07.04",
+        "title": "串并联电池包",
+        "expression": "Vpack=NsVcell；Cpack=NpCcell；Rpack≈NsRcell/Np",
+        "conditions": "同型号、均衡的理想组合；保护与均衡另算。"
+      },
+      {
+        "id": "07.05",
+        "title": "C 倍率",
+        "expression": "I=C-rate·CAh",
+        "conditions": "例如 2 Ah 电池的 1C 为 2 A；不是容量单位 C。"
+      },
+      {
+        "id": "07.06",
+        "title": "内阻压降与发热",
+        "expression": "ΔV≈IRint；P≈I²Rint",
+        "conditions": "Rint 随 SOC、温度、频率和老化变化。"
+      },
+      {
+        "id": "07.07",
+        "title": "恒流阶段充电时间",
+        "expression": "tCC≈ΔQ/Icharge",
+        "conditions": "仅估恒流阶段；完整 CC/CV 充电需计恒压尾段。"
+      },
+      {
+        "id": "07.08",
+        "title": "库仑计 SOC",
+        "expression": "SOC(t)=SOC0-∫Ibatdt/(3600CAh)",
+        "conditions": "SOC 取 0～1、放电电流为正；还需容量校准和充电效率修正。"
+      },
+      {
+        "id": "07.09",
+        "title": "超级电容保持时间",
+        "expression": "Eusable=C(Vhi²-Vlo²)/2；t≈ηEusable/Pload",
+        "conditions": "恒功率负载初估；电容与 DC/DC 耐压和 ESR 另查。"
+      },
+      {
+        "id": "07.10",
+        "title": "多电源轨输入功率",
+        "expression": "Pbat≈Σ(Prail,i/ηi)+Poverhead",
+        "conditions": "明确 η 是否已经包含静态功耗，避免重复计入。"
+      }
+    ]
+  },
+  {
+    "id": "08",
+    "name": "热设计与散热",
+    "topics": "稳态热阻、瞬态温升、散热器、传热模型。",
+    "formulas": [
+      {
+        "id": "08.01",
+        "title": "结温估算",
+        "expression": "Tj≈Ta+PθJA",
+        "conditions": "θJA 强依赖 PCB、铜面积与气流，不能视为纯器件常数。"
+      },
+      {
+        "id": "08.02",
+        "title": "串联热阻链",
+        "expression": "Tj≈Ta+P(θJC+θCS+θSA)",
+        "conditions": "单一主导散热路径；功率近似全部经过该链。"
+      },
+      {
+        "id": "08.03",
+        "title": "并联热路径",
+        "expression": "1/θeq=Σ(1/θi)",
+        "conditions": "各路径必须连接同一对等温节点。"
+      },
+      {
+        "id": "08.04",
+        "title": "散热器热阻要求",
+        "expression": "θSA≤(Tj,limit-Ta)/P-θJC-θCS",
+        "conditions": "右侧为负说明当前热设计目标不可满足。"
+      },
+      {
+        "id": "08.05",
+        "title": "允许稳态功耗",
+        "expression": "Pmax≈(Tj,limit-Ta)/θJA",
+        "conditions": "Tj,limit 取设计限值，另查器件电气额定值。"
+      },
+      {
+        "id": "08.06",
+        "title": "单极点热响应",
+        "expression": "τth=RthCth；ΔT(t)=PRth[1-e^(-t/τth)]",
+        "conditions": "单热 RC、恒定阶跃功耗。"
+      },
+      {
+        "id": "08.07",
+        "title": "瞬态热阻抗",
+        "expression": "ΔTj(t)=P·Zth(t)",
+        "conditions": "单矩形功率脉冲；重复脉冲需用占空比曲线或叠加。"
+      },
+      {
+        "id": "08.08",
+        "title": "平板导热",
+        "expression": "Rth=l/(kthA)",
+        "conditions": "一维稳态导热、导热系数近似固定。"
+      },
+      {
+        "id": "08.09",
+        "title": "对流散热",
+        "expression": "P=hA(Tsurface-Ta)",
+        "conditions": "h 随流速、方向和表面条件变化。"
+      },
+      {
+        "id": "08.10",
+        "title": "辐射散热",
+        "expression": "P=εσA(Tsurface⁴-Tsurround⁴)",
+        "conditions": "温度为 K；大等温包围面近似，σ 为斯忒藩–玻尔兹曼常数。"
+      }
+    ]
+  },
+  {
+    "id": "09",
+    "name": "电磁基础、磁性件与变压器",
+    "topics": "电磁场、磁路、电感、变压器、磁通与损耗。",
+    "formulas": [
+      {
+        "id": "09.01",
+        "title": "麦克斯韦方程组",
+        "expression": "∇·D=ρfree；∇·B=0；∇×E=-∂B/∂t；∇×H=Jfree+∂D/∂t",
+        "conditions": "原理与推导页；D 在此为电位移，不是占空比。"
+      },
+      {
+        "id": "09.02",
+        "title": "洛伦兹力",
+        "expression": "F=q(E+v×B)",
+        "conditions": "带电粒子的电磁力。"
+      },
+      {
+        "id": "09.03",
+        "title": "平行板电容与场强",
+        "expression": "C≈εA/d；E≈V/d；ε=ε0εr",
+        "conditions": "忽略边缘效应，均匀介质。"
+      },
+      {
+        "id": "09.04",
+        "title": "简化磁路",
+        "expression": "H≈NI/le；B=μH；ℜ=le/(μAe)；Φ=NI/ℜ",
+        "conditions": "线性磁材；有气隙时分别相加磁阻。"
+      },
+      {
+        "id": "09.05",
+        "title": "法拉第感应",
+        "expression": "e=-N·dΦ/dt",
+        "conditions": "符号对应楞次定律；与端电压参考方向区分。"
+      },
+      {
+        "id": "09.06",
+        "title": "电感量与匝数",
+        "expression": "L=NΦ/I=N²/ℜ≈ALN²",
+        "conditions": "未饱和小信号条件；AL 取对应气隙与磁芯。"
+      },
+      {
+        "id": "09.07",
+        "title": "理想变压器变换",
+        "expression": "Vp/Vs=Np/Ns；Ip/Is=Ns/Np；Zin=(Np/Ns)²Zload",
+        "conditions": "电流为幅值关系，忽略励磁和漏感。"
+      },
+      {
+        "id": "09.08",
+        "title": "正弦磁通与匝数",
+        "expression": "Vrms=4.44fNAeBpk",
+        "conditions": "正弦磁通；不能套用于任意 PWM 波形。"
+      },
+      {
+        "id": "09.09",
+        "title": "开关磁芯伏秒",
+        "expression": "ΔB=VL·ton/(NAe)",
+        "conditions": "单个恒压区间；完整周期还需满足磁复位。"
+      },
+      {
+        "id": "09.10",
+        "title": "铜损与磁芯损耗",
+        "expression": "Pcu≈Irms²Rac；Pcore≈Kf^aBpk^bVe",
+        "conditions": "后式为指定材料、温度和波形下的 Steinmetz 拟合，系数不能通用。"
+      }
+    ]
+  },
+  {
+    "id": "10",
+    "name": "ADC、DAC 与采样",
+    "topics": "量化、转换精度、采样时钟、输入建立。",
+    "formulas": [
+      {
+        "id": "10.01",
+        "title": "LSB 与量程",
+        "expression": "LSB=VFS/2^N",
+        "conditions": "VFS 为整个输入跨度；不能无条件用 Vref 替代。"
+      },
+      {
+        "id": "10.02",
+        "title": "ADC 码值",
+        "expression": "code=clip(floor[(Vin-Vmin)/LSB],0,2^N-1)",
+        "conditions": "一种理想单极性分箱模型；实际转换阈值依芯片定义。"
+      },
+      {
+        "id": "10.03",
+        "title": "理想 DAC 输出",
+        "expression": "Vout=Vmin+code·VFS/2^N",
+        "conditions": "采用该码值定义的 DAC；最大码通常低于上端量程一个 LSB。"
+      },
+      {
+        "id": "10.04",
+        "title": "量化噪声",
+        "expression": "Vq,rms=LSB/√12",
+        "conditions": "均匀、不相关的量化误差模型。"
+      },
+      {
+        "id": "10.05",
+        "title": "理想 ADC SNR",
+        "expression": "SNR≈6.02N+1.76 dB",
+        "conditions": "满幅正弦、理想量化器、全 Nyquist 带宽。"
+      },
+      {
+        "id": "10.06",
+        "title": "有效位数",
+        "expression": "ENOB=(SINAD-1.76)/6.02",
+        "conditions": "标准满幅正弦条件；非满幅需说明修正。"
+      },
+      {
+        "id": "10.07",
+        "title": "时钟抖动限制",
+        "expression": "SNRjitter≈-20log10(2πfin·σt)",
+        "conditions": "正弦输入；σt 为总 RMS 采样时间抖动。"
+      },
+      {
+        "id": "10.08",
+        "title": "Nyquist 与混叠",
+        "expression": "基带 fs>2fmax；falias=abs(fin-mfs)",
+        "conditions": "选整数 m 使折叠频率落在 `[0,fs/2]`；需抗混叠滤波。"
+      },
+      {
+        "id": "10.09",
+        "title": "ADC 输入建立时间",
+        "expression": "tacq≥ReqCsample·ln(2^(N+1))",
+        "conditions": "满量程阶跃建立至半 LSB，单 RC 模型。"
+      },
+      {
+        "id": "10.10",
+        "title": "过采样收益",
+        "expression": "OSR=fs/(2B)；ΔSNR≈10log10(OSR)；ΔN≈0.5log2(OSR)",
+        "conditions": "白量化噪声、数字滤波与降采样；不修复 INL 和失调。"
+      }
+    ]
+  },
+  {
+    "id": "11",
+    "name": "噪声、分贝与信号质量",
+    "topics": "噪声源、噪声预算、信噪比、级联噪声。",
+    "formulas": [
+      {
+        "id": "11.01",
+        "title": "电阻热噪声",
+        "expression": "en=√(4kTR)；Vn,rms=√(4kTRB)",
+        "conditions": "T 为 K；B 为等效噪声带宽。"
+      },
+      {
+        "id": "11.02",
+        "title": "散粒噪声",
+        "expression": "in=√(2qI)；In,rms=√(2qIB)",
+        "conditions": "理想独立载流子模型，实际器件可能有过剩噪声。"
+      },
+      {
+        "id": "11.03",
+        "title": "运放输入等效噪声",
+        "expression": "en,total≈√[en,op²+(in,opRs)²+4kTRs]",
+        "conditions": "简化白噪声模型；双输入与反馈电阻另计。"
+      },
+      {
+        "id": "11.04",
+        "title": "不相关噪声合成",
+        "expression": "Vn,total=√ΣVn,i²",
+        "conditions": "仅适用于互不相关噪声；相关项需要交叉谱或协方差。"
+      },
+      {
+        "id": "11.05",
+        "title": "等效噪声带宽",
+        "expression": "Bneq=∫₀∞abs(H(f))²df/abs(Href)²；单极点低通 Bneq=πfc/2",
+        "conditions": "Href 为参考通带增益。"
+      },
+      {
+        "id": "11.06",
+        "title": "噪声增益",
+        "expression": "NG=1+Zf/Zg",
+        "conditions": "标准电压反馈拓扑；ZG 为反相端到交流地的阻抗。"
+      },
+      {
+        "id": "11.07",
+        "title": "SNR 与 dB",
+        "expression": "SNR=20log10(Vsig,rms/Vnoise,rms)；功率比 10log10(P2/P1)",
+        "conditions": "幅度形式与功率形式互换需处理阻抗；`dBm=10log10(P/1mW)`。"
+      },
+      {
+        "id": "11.08",
+        "title": "级联噪声因子",
+        "expression": "Ftotal=F1+(F2-1)/G1+(F3-1)/(G1G2)+…",
+        "conditions": "F、G 均为线性值，G 为对应条件的功率增益。"
+      },
+      {
+        "id": "11.09",
+        "title": "接收机噪声底",
+        "expression": "Pn,dBm≈-174+10log10(B/Hz)+NF",
+        "conditions": "约 290 K、匹配系统，NF 以 dB 计。"
+      },
+      {
+        "id": "11.10",
+        "title": "频率相关噪声积分",
+        "expression": "Vout,n²=Σ∫Sn,i(f)·abs(Hi(f))²df",
+        "conditions": "Sn 为单边功率谱密度；覆盖 1/f 噪声和频变噪声增益。"
+      }
+    ]
+  },
+  {
+    "id": "12",
+    "name": "数字接口、时钟与时序",
+    "topics": "定时器、UART、I²C、SPI、I²S、数字功耗、晶振。",
+    "formulas": [
+      {
+        "id": "12.01",
+        "title": "定时器 PWM",
+        "expression": "fPWM=ftimer/[(PSC+1)(ARR+1)]；D≈CCR/(ARR+1)",
+        "conditions": "常见边沿对齐向上计数；中心对齐和极性需按芯片修正。"
+      },
+      {
+        "id": "12.02",
+        "title": "RC 数字边沿",
+        "expression": "t50≈0.693RC；tr,10–90≈2.197RC",
+        "conditions": "一阶 RC 和理想阶跃驱动。"
+      },
+      {
+        "id": "12.03",
+        "title": "I²C 上拉范围",
+        "expression": "Rp,min=(VDD-VOL,max)/IOL；Rp,max=tr,max/(0.8473Cb)",
+        "conditions": "tr 为 30%～70% 上升时间，Cb 为总线总电容。"
+      },
+      {
+        "id": "12.04",
+        "title": "UART 误差与吞吐",
+        "expression": "ε=(Baudactual/Baudtarget-1)×100%；payload≈Baud·Ndata/Nframe",
+        "conditions": "Nframe 含起始、校验与停止位；分频公式按 MCU 类型设置。"
+      },
+      {
+        "id": "12.05",
+        "title": "SPI 传输时间",
+        "expression": "t≈Nbits/fSCK",
+        "conditions": "连续单线传输；片选间隔、等待和软件开销另加。"
+      },
+      {
+        "id": "12.06",
+        "title": "I²S/TDM 位时钟",
+        "expression": "BCLK=fs·Nslots·Nbits,slot",
+        "conditions": "按时隙宽度而非仅有效采样位数计算；标准双声道 I²S 为两时隙。"
+      },
+      {
+        "id": "12.07",
+        "title": "Setup/Hold 约束",
+        "expression": "Tclk≥tCQ,max+tdata,max+tsetup-tskew；tCQ,min+tdata,min≥thold+tskew",
+        "conditions": "tskew 定义为捕获时钟减发射时钟；抖动与不确定度另加。"
+      },
+      {
+        "id": "12.08",
+        "title": "CMOS 动态功耗",
+        "expression": "Pdynamic≈αCLVDD²f",
+        "conditions": "α 为每周期 0→1 充电活动率；另加短路和漏电功耗。"
+      },
+      {
+        "id": "12.09",
+        "title": "晶振负载电容",
+        "expression": "CL≈C1C2/(C1+C2)+Cstray",
+        "conditions": "Cstray 包括引脚和布线寄生；等值时 `C1=C2≈2(CL-Cstray)`。"
+      },
+      {
+        "id": "12.10",
+        "title": "PLL 与时钟精度",
+        "expression": "fout=fref·N/(M·P)；εppm=(factual/fnom-1)×10^6",
+        "conditions": "为整数 PLL 示例；实际倍频、分频及 VCO 范围依器件。"
+      }
+    ]
+  },
+  {
+    "id": "13",
+    "name": "PCB 与信号完整性",
+    "topics": "叠层与阻抗、传播、端接、反射、走线损耗。",
+    "formulas": [
+      {
+        "id": "13.01",
+        "title": "传播速度与等长误差",
+        "expression": "v≈c/√εeff；tpd=l/v；Δt=Δl/v",
+        "conditions": "均匀准 TEM 传输线；εeff 不一定等于基材 εr。"
+      },
+      {
+        "id": "13.02",
+        "title": "分布参数特性阻抗",
+        "expression": "Z0=√[(R′+jωL′)/(G′+jωC′)]；低损耗 Z0≈√(L′/C′)",
+        "conditions": "各参数为单位长度量。"
+      },
+      {
+        "id": "13.03",
+        "title": "微带阻抗初估",
+        "expression": "Z0≈87/√(εr+1.41)·ln[5.98h/(0.8w+t)]",
+        "conditions": "常用经验近似，w/h 与铜厚须在其适用范围；超范围或有阻焊时用场求解器。"
+      },
+      {
+        "id": "13.04",
+        "title": "差分阻抗",
+        "expression": "Zdiff=2Zodd",
+        "conditions": "对称耦合线的奇模阻抗；不能把单根孤立线阻抗直接乘 2。"
+      },
+      {
+        "id": "13.05",
+        "title": "反射系数与驻波比",
+        "expression": "Γ=(ZL-Z0)/(ZL+Z0)；VSWR=(1+absΓ)/(1-absΓ)",
+        "conditions": "VSWR 公式用于无损线、实数 Z0、被动负载。"
+      },
+      {
+        "id": "13.06",
+        "title": "回波损耗与失配损耗",
+        "expression": "RL=-20log10(absΓ)；ML=-10log10(1-absΓ²)",
+        "conditions": "匹配参考条件；Γ=0 时 RL→∞、ML=0。"
+      },
+      {
+        "id": "13.07",
+        "title": "源端串联匹配",
+        "expression": "Rseries≈Z0-Rdriver",
+        "conditions": "初估要求右侧非负；实际驱动阻抗可能随电压和边沿变化。"
+      },
+      {
+        "id": "13.08",
+        "title": "边沿与电气长度",
+        "expression": "tpd=l/v；保守初筛 lcritical≈v·tr/6",
+        "conditions": "tr/6 是经验筛选标准，不是“以下绝不会反射”的边界。"
+      },
+      {
+        "id": "13.09",
+        "title": "铜走线电阻与压降",
+        "expression": "R≈ρCu·l/(w·t)；ΔV=IR；P=I²R",
+        "conditions": "DC 初估；载流温升另用热模型，不能由此直接确定安全线宽。"
+      },
+      {
+        "id": "13.10",
+        "title": "趋肤深度",
+        "expression": "δ=√[2/(ωμσ)]",
+        "conditions": "良导体、高频近似；铜粗糙度和邻近效应另计。"
+      }
+    ]
+  },
+  {
+    "id": "14",
+    "name": "射频、通信与 EMC",
+    "topics": "波传播、链路、调制、耦合、回流与匹配。",
+    "formulas": [
+      {
+        "id": "14.01",
+        "title": "波长与天线初长",
+        "expression": "λ=v/f；四分之一波长 l≈λ/4",
+        "conditions": "天线有效长度还受端效应、介质和结构影响。"
+      },
+      {
+        "id": "14.02",
+        "title": "自由空间损耗",
+        "expression": "FSPLdB=20log10(4πd/λ)",
+        "conditions": "自由空间远场、无遮挡模型。"
+      },
+      {
+        "id": "14.03",
+        "title": "Friis 接收功率",
+        "expression": "Pr=PtGtGr[λ/(4πd)]²",
+        "conditions": "增益取线性值，远场且极化与阻抗匹配。"
+      },
+      {
+        "id": "14.04",
+        "title": "链路预算",
+        "expression": "Pr,dBm=Pt,dBm+Gt,dBi+Gr,dBi-Lpath-Lother",
+        "conditions": "损耗均取 dB；包含馈线、极化和实现损耗。"
+      },
+      {
+        "id": "14.05",
+        "title": "Shannon 容量",
+        "expression": "C=B·log2(1+SNRlinear)",
+        "conditions": "AWGN 信道的理论上限，不等于协议吞吐率。"
+      },
+      {
+        "id": "14.06",
+        "title": "单音 AM 调制",
+        "expression": "s(t)=Ac[1+mcos(ωmt)]cos(ωct)；Ptotal=Pc(1+m²/2)",
+        "conditions": "常规 AM；无过调制包络检波要求 `0≤m≤1`，边带总功率 `Pc·m²/2`。"
+      },
+      {
+        "id": "14.07",
+        "title": "电容性耦合",
+        "expression": "icoupled=Cm·dV/dt",
+        "conditions": "集总互电容模型，边沿速度直接影响耦合。"
+      },
+      {
+        "id": "14.08",
+        "title": "磁耦合电压",
+        "expression": "Vinduced=M·di/dt",
+        "conditions": "符号由绕向和参考方向决定；M 为互感。"
+      },
+      {
+        "id": "14.09",
+        "title": "寄生电感与地弹",
+        "expression": "ΔV≈Lparasitic·di/dt",
+        "conditions": "回流环路的集总初估；不能只看时钟基频。"
+      },
+      {
+        "id": "14.10",
+        "title": "交流最大功率匹配",
+        "expression": "ZL=conj(Zsource)",
+        "conditions": "共轭匹配目标是功率传输；与消除传输线反射的条件区分。"
+      }
+    ]
+  },
+  {
+    "id": "15",
+    "name": "音频、功放与声学",
+    "topics": "电平、功放、麦克风、声压、失真与房间声学。",
+    "formulas": [
+      {
+        "id": "15.01",
+        "title": "dBu、dBV 与电压",
+        "expression": "dBu=20log10(Vrms/0.775V)；dBV=20log10(Vrms/1V)",
+        "conditions": "为电压参考，dBu 不意味着必须接 600 Ω。"
+      },
+      {
+        "id": "15.02",
+        "title": "功放输出功率",
+        "expression": "P=Vrms²/RL=Vpk²/(2RL)",
+        "conditions": "正弦与纯电阻测试负载；实际喇叭需看复阻抗与频率。"
+      },
+      {
+        "id": "15.03",
+        "title": "BTL 桥接功放",
+        "expression": "Vload=Vout+−Vout−；理想反相信号 Vload,pk=2Vleg,pk",
+        "conditions": "同单臂摆幅和同负载时理论功率为单端的 4 倍；两输出均不是地。"
+      },
+      {
+        "id": "15.04",
+        "title": "声压级",
+        "expression": "Lp=20log10(prms/20μPa)",
+        "conditions": "空气声学参考声压；注明计权和频带。"
+      },
+      {
+        "id": "15.05",
+        "title": "灵敏度、功率与距离",
+        "expression": "Lp≈S1W,1m+10log10(P/1W)-20log10(r/1m)",
+        "conditions": "与灵敏度测试相同辐射条件、自由远场；2.83 V 灵敏度需先换算。"
+      },
+      {
+        "id": "15.06",
+        "title": "麦克风输出估算",
+        "expression": "prms=20μPa·10^(Lp/20)；Vrms=S(V/Pa)·prms",
+        "conditions": "结合指定频率和负载下的灵敏度；dBV/Pa 可先换成 V/Pa。"
+      },
+      {
+        "id": "15.07",
+        "title": "多声源声压级合成",
+        "expression": "Ltotal=10log10[Σ10^(Li/10)]",
+        "conditions": "不相关声源；相干声源需按相位叠加声压。"
+      },
+      {
+        "id": "15.08",
+        "title": "Sabine 混响时间",
+        "expression": "RT60≈0.161V/A；A=ΣαiSi",
+        "conditions": "SI 单位、近似扩散声场、吸声不太强。"
+      },
+      {
+        "id": "15.09",
+        "title": "总谐波失真",
+        "expression": "THD=√(V2²+V3²+…)/V1",
+        "conditions": "各谐波用 RMS；百分数乘 100，dB 取 20log10。"
+      },
+      {
+        "id": "15.10",
+        "title": "THD+N",
+        "expression": "THD+N=Vrms,residual/Vrms,reference",
+        "conditions": "去掉基波后的残差含噪声；需注明分母、带宽及计权。"
+      }
+    ]
+  },
+  {
+    "id": "16",
+    "name": "传感器与测量前端",
+    "topics": "电桥、温度、光电、电流、姿态和校准。",
+    "formulas": [
+      {
+        "id": "16.01",
+        "title": "电流采样电阻",
+        "expression": "Vsense=IRshunt；Pshunt=I²Rshunt；I=(Vadc-Voffset)/(GRshunt)",
+        "conditions": "需处理放大器输入范围、失调和分流器温漂。"
+      },
+      {
+        "id": "16.02",
+        "title": "惠斯通电桥",
+        "expression": "Vdiff=Vexc[R2/(R1+R2)-R4/(R3+R4)]",
+        "conditions": "定义左桥臂 R1 上 R2 下，右桥臂 R3 上 R4 下。"
+      },
+      {
+        "id": "16.03",
+        "title": "应变片",
+        "expression": "ΔR/R=GF·ε；单臂小变化 abs(Vdiff)≈Vexc·GF·ε/4",
+        "conditions": "四分之一桥、初始平衡、忽略温漂与引线效应。"
+      },
+      {
+        "id": "16.04",
+        "title": "NTC Beta 模型",
+        "expression": "1/T=1/T0+ln(R/R0)/B",
+        "conditions": "T、T0 为 K；B 模型在给定温度范围内近似。"
+      },
+      {
+        "id": "16.05",
+        "title": "铂电阻 RTD",
+        "expression": "R(T)≈R0[1+AT+BT²]",
+        "conditions": "T 为 °C，此形式用于 T≥0；低温要加入标准修正项。"
+      },
+      {
+        "id": "16.06",
+        "title": "光电二极管",
+        "expression": "Iphoto=Responsivity·Poptical；Vout=Vref-IphotoRf",
+        "conditions": "Responsivity 单位 A/W，取实际波长。"
+      },
+      {
+        "id": "16.07",
+        "title": "热电偶局部灵敏度",
+        "expression": "ΔV≈S(T)·ΔT",
+        "conditions": "小温差局部线性；大范围用分度表/多项式并补偿冷端。"
+      },
+      {
+        "id": "16.08",
+        "title": "加速度计静态倾角",
+        "expression": "roll=atan2(ay,az)；pitch=atan2(-ax,√(ay²+az²))",
+        "conditions": "指定坐标轴与符号；仅重力主导时可信。"
+      },
+      {
+        "id": "16.09",
+        "title": "陀螺积分与互补滤波",
+        "expression": "θgyro,k=θk-1+ωkTs；θk=αθgyro,k+(1-α)θacc,k",
+        "conditions": "小角度单轴简化；α 可按 `τ/(τ+Ts)` 选取。"
+      },
+      {
+        "id": "16.10",
+        "title": "两点线性校准",
+        "expression": "a=(y2-y1)/(x2-x1)；b=y1-ax1；y=ax+b",
+        "conditions": "x2≠x1，适用于近似线性误差。"
+      }
+    ]
+  },
+  {
+    "id": "17",
+    "name": "控制系统与电机驱动",
+    "topics": "PID、环路稳定性、数字滤波、FOC 坐标变换、转矩。",
+    "formulas": [
+      {
+        "id": "17.01",
+        "title": "闭环传递函数",
+        "expression": "T(s)=G(s)C(s)/[1+G(s)C(s)H(s)]",
+        "conditions": "标准负反馈结构；按实际框图定义测量支路 H。"
+      },
+      {
+        "id": "17.02",
+        "title": "离散 PID",
+        "expression": "Ik=Ik-1+KiTs·ek；Dk=Kd(ek-ek-1)/Ts；uk=Kpek+Ik+Dk",
+        "conditions": "固定采样周期；实际加入微分滤波、限幅与积分抗饱和。"
+      },
+      {
+        "id": "17.03",
+        "title": "一阶数字低通",
+        "expression": "yk=ayk-1+(1-a)xk；a=e^(-Ts/τ)",
+        "conditions": "零阶保持等效离散，`τ=1/(2πfc)`，高频形状与连续模型有差别。"
+      },
+      {
+        "id": "17.04",
+        "title": "二阶阻尼与超调",
+        "expression": "Mp=e^[-πζ/√(1-ζ²)]；ts,2%≈4/(ζωn)",
+        "conditions": "0<ζ<1、标准二阶无零点系统；建立时间为工程近似。"
+      },
+      {
+        "id": "17.05",
+        "title": "相位与增益裕量",
+        "expression": "PM=180°+arg L(jωgc)；GMdB=-20log10(abs L(jωpc))",
+        "conditions": "ωgc 处环路增益模为 1，ωpc 处相位为 -180°；多交越需完整分析。"
+      },
+      {
+        "id": "17.06",
+        "title": "Tustin 离散化",
+        "expression": "s≈(2/Ts)(1-z^-1)/(1+z^-1)",
+        "conditions": "频率有翘曲；关键频点可做预畸变。"
+      },
+      {
+        "id": "17.07",
+        "title": "转速与电角度",
+        "expression": "θe=pθm+θoffset；fe=p·n/60；n=60Δcount/(NcountTs)",
+        "conditions": "p 为极对数，n 为 rpm；Ncount 为每机械圈实际计数。"
+      },
+      {
+        "id": "17.08",
+        "title": "Clarke 变换",
+        "expression": "iα=ia；iβ=(ia+2ib)/√3",
+        "conditions": "幅值不变约定，三相无零序，`ia+ib+ic=0`。"
+      },
+      {
+        "id": "17.09",
+        "title": "Park 与反 Park",
+        "expression": "id=iαcosθ+iβsinθ；iq=-iαsinθ+iβcosθ；反变换 iα=idcosθ-iqsinθ，iβ=idsinθ+iqcosθ",
+        "conditions": "与编码器方向、电角度、Clarke 缩放保持一致。"
+      },
+      {
+        "id": "17.10",
+        "title": "PMSM 转矩",
+        "expression": "Te=(3/2)p[ψfiq+(Ld-Lq)idiq]；Pmech=Teωm",
+        "conditions": "幅值不变 dq 约定；表贴近似 Ld=Lq 时磁阻转矩项消失。"
+      }
+    ]
+  },
+  {
+    "id": "18",
+    "name": "测试、频谱、容差与可靠性",
+    "topics": "示波器、FFT、误差预算、温漂和统计寿命。",
+    "formulas": [
+      {
+        "id": "18.01",
+        "title": "示波器带宽与上升时间",
+        "expression": "tr≈K/BW；tr,meas²≈tr,signal²+tr,scope²+tr,probe²",
+        "conditions": "单极点 K≈0.35；其他响应按设备模型，平方和也是近似。"
+      },
+      {
+        "id": "18.02",
+        "title": "DFT 与频率分辨率",
+        "expression": "X[k]=Σx[n]e^(-j2πkn/N)；fk=kfs/N；Δf=fs/N=1/Tobs",
+        "conditions": "N 为实际采样点数；补零只加密频谱显示点。"
+      },
+      {
+        "id": "18.03",
+        "title": "窗函数幅度校准",
+        "expression": "CG=Σw[n]/N；Apeak≈2abs(Xw[k])/(NCG)；ENBWbins=NΣw²/(Σw)²",
+        "conditions": "未归一化 DFT、相干单音；DC/Nyquist 不乘 2，非相干单音需另处理。"
+      },
+      {
+        "id": "18.04",
+        "title": "Parseval 与频域能量",
+        "expression": "Σabs(x[n])²=(1/N)Σabs(X[k])²",
+        "conditions": "配套未归一化正向 DFT；加窗后对应的是加窗信号能量。"
+      },
+      {
+        "id": "18.05",
+        "title": "一阶最坏情况误差",
+        "expression": "Δymax≈Σabs(∂f/∂xi)Δxi,max",
+        "conditions": "小扰动线性化，区分输入参数的上下限。"
+      },
+      {
+        "id": "18.06",
+        "title": "RSS 与不确定度",
+        "expression": "uy=√Σ[(∂f/∂xi)²ui²]",
+        "conditions": "独立标准不确定度；有相关性需加入协方差项。"
+      },
+      {
+        "id": "18.07",
+        "title": "重复测量统计",
+        "expression": "x̄=Σxi/n；s=√[Σ(xi-x̄)²/(n-1)]；u(x̄)=s/√n",
+        "conditions": "独立重复观测；系统误差不会因多次测量自动消失。"
+      },
+      {
+        "id": "18.08",
+        "title": "ppm 与温漂预算",
+        "expression": "Δx/x≈TCppm·ΔT·10^-6",
+        "conditions": "线性温漂近似；初始误差、老化和温漂分别计入。"
+      },
+      {
+        "id": "18.09",
+        "title": "恒定失效率可靠性",
+        "expression": "MTBF=1/λ；R(t)=e^(-λt)",
+        "conditions": "恒定失效率指数模型；MTBF 不等于保修寿命或确定失效时间。"
+      },
+      {
+        "id": "18.10",
+        "title": "Arrhenius 加速因子",
+        "expression": "AF=exp[(Ea/k)(1/Tuse-1/Tstress)]",
+        "conditions": "Ea 与 k 能量单位一致，温度用 K，仅用于对应热激活失效机制。"
+      }
+    ]
+  }
+]
