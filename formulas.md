@@ -140,11 +140,13 @@ permalink: /formulas/
   <section class="formula-library" id="formula-library" aria-labelledby="formula-library-heading">
     <div class="section-heading"><h2 id="formula-library-heading">领域公式库</h2><span>18 个领域 · 180 组公式</span></div>
     <p class="formula-library-intro">选择领域查看公式、适用条件和专题范围；也可按名称、变量或专题搜索。</p>
-    <label class="formula-search formula-library-search" for="formula-library-search"><span aria-hidden="true">⌕</span><input id="formula-library-search" type="search" placeholder="搜索公式、变量或专题" autocomplete="off"></label>
-    <label class="formula-library-domain" for="formula-library-domain"><span>查看领域</span><select id="formula-library-domain">
-      <option value="全部">全部领域</option>
-      {% for domain in site.data.formula_catalog %}<option value="{{ domain.name | escape }}">{{ domain.id }} · {{ domain.name | escape }}</option>{% endfor %}
-    </select></label>
+    <div class="formula-library-controls">
+      <label class="formula-search formula-library-search" for="formula-library-search"><span aria-hidden="true">⌕</span><input id="formula-library-search" type="search" placeholder="搜索公式、变量或专题" autocomplete="off"></label>
+      <label class="formula-library-domain" for="formula-library-domain"><span>查看领域</span><select id="formula-library-domain">
+        <option value="全部">全部领域</option>
+        {% for domain in site.data.formula_catalog %}<option value="{{ domain.name | escape }}">{{ domain.id }} · {{ domain.name | escape }}</option>{% endfor %}
+      </select></label>
+    </div>
     <div class="formula-library-count" id="formula-library-count" aria-live="polite">180 组公式</div>
     <div class="formula-domain-list">
       {% for domain in site.data.formula_catalog %}
