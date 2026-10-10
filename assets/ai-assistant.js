@@ -65,11 +65,11 @@
     const loading = addMessage('assistant', '正在整理当前笔记…', 'ai-message-loading');
     if (sendButton) sendButton.disabled = true;
     setStatus('正在请求模型…');
-    const controller = new AbortController();
-    const timeout = window.setTimeout(() => controller.abort(), 65000);
+      const controller = new AbortController();
+      const timeout = window.setTimeout(() => controller.abort(), 65000);
     try {
       const recentConversation = conversation.slice(-10);
-      const response = await fetch(endpoint, {
+      const request = {
         method: 'POST',
         signal: controller.signal,
         headers: { 'Content-Type': 'application/json' },
@@ -78,11 +78,25 @@
           messages: [{ role: 'system', content: systemPrompt }, ...recentConversation],
           context: { title: contextTitle, category: contextCategory, excerpt: contextText }
         })
-      });
+      };
+      const retryableStatuses = new Set([429, 432, 502, 503, 504]);
+      let response;
+      for (let attempt = 0; attempt < 3; attempt += 1) {
+        response = undefined;
+        try {
+          response = await fetch(endpoint, request);
+        } catch (error) {
+          if (controller.signal.aborted || attempt === 2) throw error;
+        }
+        if (response && (!retryableStatuses.has(response.status) || attempt === 2)) break;
+        await response?.text().catch(() => {});
+        await new Promise((resolve) => window.setTimeout(resolve, 450 * (2 ** attempt)));
+      }
+      if (!response) throw new Error('网络连接暂时不可用');
       const raw = await response.text();
       let data;
       try { data = JSON.parse(raw); } catch { throw new Error('AI 服务返回格式异常，请稍后重试'); }
-      if (!response.ok) throw new Error(data?.error?.message || data?.error || `服务返回 HTTP ${response.status}`);
+      if (!response.ok) throw new Error(data?.error?.message || data?.error || data?.errorMessage || `服务返回 HTTP ${response.status}`);
       const answer = data?.choices?.[0]?.message?.content || data?.answer || data?.content;
       if (!answer) throw new Error('服务返回内容为空');
       loading.remove();
