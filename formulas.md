@@ -139,7 +139,7 @@ permalink: /formulas/
 
   <section class="formula-library" id="formula-library" aria-labelledby="formula-library-heading">
     <div class="section-heading"><h2 id="formula-library-heading">领域公式库</h2><span>18 个领域 · 180 组公式</span></div>
-    <p class="formula-library-intro">选择领域查看公式、适用条件和专题范围；也可按名称、变量或专题搜索。</p>
+    <p class="formula-library-intro">选择领域查看公式的作用、参数、适用场景与使用方法；也可按名称、变量或专题搜索。</p>
     <div class="formula-library-controls">
       <label class="formula-search formula-library-search" for="formula-library-search"><span aria-hidden="true">⌕</span><input id="formula-library-search" type="search" placeholder="搜索公式、变量或专题" autocomplete="off"></label>
       <label class="formula-library-domain" for="formula-library-domain"><span>查看领域</span><select id="formula-library-domain">
@@ -155,10 +155,17 @@ permalink: /formulas/
         <p class="formula-domain-topics">专题：{{ domain.topics | escape }}</p>
         <div class="formula-entry-list">
           {% for formula in domain.formulas %}
+          {% assign guide = site.data.formula_guides[formula.id] %}
           <article class="formula-entry" data-search="{{ formula.id }} {{ formula.title | escape }} {{ formula.expression | escape }} {{ formula.conditions | escape }} {{ domain.name | escape }} {{ domain.topics | escape }}">
             <div class="formula-entry-heading"><span class="formula-entry-id">{{ formula.id }}</span><h3>{{ formula.title | escape }}</h3></div>
             <code class="formula-entry-expression">{{ formula.expression | escape }}</code>
-            <p>{{ formula.conditions | escape }}</p>
+            <dl class="formula-entry-guide">
+              <div><dt>作用</dt><dd>{{ guide[0] | escape }}</dd></div>
+              <div><dt>参数</dt><dd>{{ guide[1] | escape }}</dd></div>
+              <div><dt>场景</dt><dd>{{ guide[2] | escape }}</dd></div>
+              <div><dt>用法</dt><dd>{{ guide[3] | escape }}</dd></div>
+              <div><dt>前提</dt><dd>{{ formula.conditions | escape }}</dd></div>
+            </dl>
           </article>
           {% endfor %}
         </div>
