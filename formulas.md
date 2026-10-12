@@ -5,12 +5,18 @@ summary: 常用电子、电源、PCB 与信号完整性计算工具。
 permalink: /formulas/
 ---
 
+{% assign formula_total = 0 %}
+{% for domain in site.data.formula_catalog %}
+  {% assign extra_domain = site.data.formula_expansion | where: 'id', domain.id | first %}
+  {% assign formula_total = formula_total | plus: domain.formulas.size | plus: extra_domain.formulas.size %}
+{% endfor %}
+
 <div class="formula-page">
   <header class="formula-heading">
     <p class="eyebrow">PENGIEE <span class="eyebrow-divider">/</span> 工程工具</p>
     <h1>公式与计算</h1>
     <p>按电子设计领域查公式，也可以直接打开交互计算器估算参数。</p>
-    <div class="formula-summary"><span><strong id="formula-count">34</strong> 个交互计算器</span><span><strong>18</strong> 个领域 · 180 组公式</span></div>
+    <div class="formula-summary"><span><strong id="formula-count">34</strong> 个交互计算器</span><span><strong>{{ site.data.formula_catalog.size }}</strong> 个领域 · {{ formula_total }} 组公式</span></div>
   </header>
 
   <nav class="formula-section-nav" aria-label="公式页面目录">
@@ -138,34 +144,41 @@ permalink: /formulas/
   <p class="formula-note">计算结果用于前期估算。器件容差、温升、布局、寄生参数和数据手册限制仍需在设计评审与实测中确认。</p>
 
   <section class="formula-library" id="formula-library" aria-labelledby="formula-library-heading">
-    <div class="section-heading"><h2 id="formula-library-heading">领域公式库</h2><span>18 个领域 · 180 组公式</span></div>
-    <p class="formula-library-intro">选择领域查看公式的作用、参数、适用场景与使用方法；也可按名称、变量或专题搜索。</p>
+    <div class="section-heading"><h2 id="formula-library-heading">领域公式库</h2><span>{{ site.data.formula_catalog.size }} 个领域 · {{ formula_total }} 组公式</span></div>
+    <p class="formula-library-intro">按领域查公式。基础关系保持简明；复杂模型补充参数关系、算例与易错点。可按名称、变量或专题搜索。</p>
     <div class="formula-library-controls">
-      <label class="formula-search formula-library-search" for="formula-library-search"><span aria-hidden="true">⌕</span><input id="formula-library-search" type="search" placeholder="搜索公式、变量或专题" autocomplete="off"></label>
+      <label class="formula-search formula-library-search" for="formula-library-search"><span aria-hidden="true">⌕</span><input id="formula-library-search" type="search" placeholder="搜索公式、参数或使用场景" autocomplete="off"></label>
       <label class="formula-library-domain" for="formula-library-domain"><span>查看领域</span><select id="formula-library-domain">
         <option value="全部">全部领域</option>
         {% for domain in site.data.formula_catalog %}<option value="{{ domain.name | escape }}">{{ domain.id }} · {{ domain.name | escape }}</option>{% endfor %}
       </select></label>
     </div>
-    <div class="formula-library-count" id="formula-library-count" aria-live="polite">180 组公式</div>
+    <div class="formula-library-count" id="formula-library-count" aria-live="polite">{{ formula_total }} 组公式</div>
     <div class="formula-domain-list">
       {% for domain in site.data.formula_catalog %}
+      {% assign extra_domain = site.data.formula_expansion | where: 'id', domain.id | first %}
+      {% assign domain_formulas = domain.formulas | concat: extra_domain.formulas %}
       <details class="formula-domain" data-domain="{{ domain.name | escape }}">
-        <summary><span class="formula-domain-number">{{ domain.id }}</span><span class="formula-domain-name">{{ domain.name | escape }}</span><span class="formula-domain-count">{{ domain.formulas.size }} 组</span></summary>
+        <summary><span class="formula-domain-number">{{ domain.id }}</span><span class="formula-domain-name">{{ domain.name | escape }}</span><span class="formula-domain-count">{{ domain_formulas.size }} 组</span></summary>
         <p class="formula-domain-topics">专题：{{ domain.topics | escape }}</p>
         <div class="formula-entry-list">
-          {% for formula in domain.formulas %}
+          {% for formula in domain_formulas %}
           {% assign guide = site.data.formula_guides[formula.id] %}
+          {% if formula.guide %}{% assign guide = formula.guide %}{% endif %}
+          {% assign deeper = site.data.formula_deep[formula.id] %}
+          {% if formula.deep %}{% assign deeper = formula.deep %}{% endif %}
           <article class="formula-entry" data-search="{{ formula.id }} {{ formula.title | escape }} {{ formula.expression | escape }} {{ formula.conditions | escape }} {{ domain.name | escape }} {{ domain.topics | escape }}">
             <div class="formula-entry-heading"><span class="formula-entry-id">{{ formula.id }}</span><h3>{{ formula.title | escape }}</h3></div>
             <code class="formula-entry-expression">{{ formula.expression | escape }}</code>
             <dl class="formula-entry-guide">
-              <div><dt>作用</dt><dd>{{ guide[0] | escape }}</dd></div>
-              <div><dt>参数</dt><dd>{{ guide[1] | escape }}</dd></div>
-              <div><dt>场景</dt><dd>{{ guide[2] | escape }}</dd></div>
-              <div><dt>用法</dt><dd>{{ guide[3] | escape }}</dd></div>
+              {% if guide[0] %}<div><dt>作用</dt><dd>{{ guide[0] | escape }}</dd></div>{% endif %}
+              {% if guide[1] %}<div><dt>参数</dt><dd>{{ guide[1] | escape }}</dd></div>{% endif %}
+              {% if guide[2] %}<div><dt>场景</dt><dd>{{ guide[2] | escape }}</dd></div>{% endif %}
+              {% if guide[3] %}<div><dt>用法</dt><dd>{{ guide[3] | escape }}</dd></div>{% endif %}
+              {% for part in deeper %}<div class="formula-guide-deep"><dt>{{ part[0] | escape }}</dt><dd>{{ part[1] | escape }}</dd></div>{% endfor %}
               <div><dt>前提</dt><dd>{{ formula.conditions | escape }}</dd></div>
             </dl>
+            {% if formula.note %}<a class="formula-entry-note" href="{{ formula.note | relative_url }}">查看相关笔记 ↗</a>{% endif %}
           </article>
           {% endfor %}
         </div>
