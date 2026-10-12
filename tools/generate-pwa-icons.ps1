@@ -1,7 +1,8 @@
 Add-Type -AssemblyName System.Drawing
 
 $iconDirectory = Join-Path $PSScriptRoot '..\assets\pwa'
-$accent = [System.Drawing.ColorTranslator]::FromHtml('#bf4d48')
+$accent = [System.Drawing.ColorTranslator]::FromHtml('#ffd400')
+$background = [System.Drawing.ColorTranslator]::FromHtml('#0b0b0b')
 
 foreach ($size in @(192, 512)) {
   $bitmap = [System.Drawing.Bitmap]::new($size, $size)
@@ -12,7 +13,7 @@ foreach ($size in @(192, 512)) {
 
   try {
     $graphics.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::AntiAlias
-    $graphics.Clear([System.Drawing.Color]::White)
+    $graphics.Clear($background)
     $path.AddLine(47, 38, 107, 38)
     $path.AddBezier(107, 38, 138, 38, 156, 55, 156, 83)
     $path.AddBezier(156, 83, 156, 111, 138, 128, 107, 128)

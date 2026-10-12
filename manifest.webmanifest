@@ -8,8 +8,8 @@
   "scope": "/pengIEE/",
   "display": "standalone",
   "display_override": ["standalone", "minimal-ui"],
-  "background_color": "#ffffff",
-  "theme_color": "#bf4d48",
+  "background_color": "#0b0b0b",
+  "theme_color": "#0b0b0b",
   "orientation": "any",
   "icons": [
     {
