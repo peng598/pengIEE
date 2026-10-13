@@ -1,7 +1,7 @@
 Add-Type -AssemblyName System.Drawing
 
 $iconDirectory = Join-Path $PSScriptRoot '..\assets\pwa'
-$accent = [System.Drawing.ColorTranslator]::FromHtml('#ffd400')
+$accent = [System.Drawing.ColorTranslator]::FromHtml('#ff8c00')
 $background = [System.Drawing.ColorTranslator]::FromHtml('#0b0b0b')
 
 foreach ($size in @(192, 512)) {
