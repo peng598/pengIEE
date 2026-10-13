@@ -12,7 +12,7 @@
 
   const endpoint = (body.dataset.aiEndpoint || '').trim();
   const model = (body.dataset.aiModel || 'DeepSeek V4-FLASH').trim();
-  const contextTitle = body.dataset.aiTitle || 'PENGIEE 学习笔记';
+  const contextTitle = body.dataset.aiTitle || 'PENGIEE 工程笔记';
   const contextCategory = body.dataset.aiCategory || '个人知识库';
   const article = document.querySelector('.prose');
   const fallbackContext = document.querySelector('.collection-heading');

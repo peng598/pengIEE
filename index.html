@@ -1,73 +1,69 @@
 ---
 layout: default
-title: 嵌入式与电子技术
-summary: 嵌入式软件、硬件设计、PCB、模拟电路、音频与测试经验笔记。
+title: 电子与嵌入式工程笔记
+summary: 按技术领域查阅硬件设计、PCB、模拟与音频、嵌入式系统和工程测试笔记。
 ---
-{% assign embedded_notes = site.pages | where_exp: "item", "item.category == '嵌入式系统'" | sort: "order" %}
-{% assign all_notes = site.pages | where_exp: "item", "item.category" | sort: "order" %}
+{% assign all_notes = site.pages | where_exp: "item", "item.category" | where_exp: "item", "item.url contains '/notes/'" %}
 {% assign categories = all_notes | map: "category" | uniq %}
 <header class="collection-heading">
-  <p class="eyebrow">PENGIEE <span class="eyebrow-divider">/</span> 课程笔记</p>
-  <h1>嵌入式与电子技术</h1>
-  <p class="collection-description">从单片机与实时系统，到硬件设计、PCB、模拟电路、音频和工程测试。</p>
-  <div class="collection-meta"><span>{{ all_notes.size }} 篇整理笔记</span><span>{{ categories.size }} 个知识方向</span><span><a href="{{ '/resources/' | relative_url }}">{{ site.data.resources.size }} 份参考资料</a></span></div>
+  <p class="eyebrow">PENGIEE <span class="eyebrow-divider">/</span> 工程笔记</p>
+  <h1>电子与嵌入式工程笔记</h1>
+  <p class="collection-description">汇集硬件设计、PCB 与信号完整性、模拟与音频、嵌入式系统及工程测试笔记。按技术领域查阅设计依据、计算方法、调试记录和常见问题；相关公式、硬件文档与参考资料可从对应入口继续查看。</p>
+  <div class="collection-meta"><span>{{ all_notes.size }} 篇公开笔记</span><span>{{ categories.size }} 个技术领域</span><span><a href="{{ '/resources/' | relative_url }}">{{ site.data.resources.size }} 份在线参考资料</a></span></div>
 </header>
 
-<section class="calculator-launch" aria-label="公式与计算工具">
-  <a href="{{ '/formulas/' | relative_url }}">
-    <span class="calculator-launch-mark" aria-hidden="true">ƒx</span>
-    <span class="calculator-launch-copy"><strong>公式与计算</strong><small>电阻、电源、滤波、PCB 与信号计算</small></span>
-    <span class="calculator-launch-action">打开工具页 <span aria-hidden="true">→</span></span>
-  </a>
-</section>
-
-<section class="submit-launch" aria-label="提交资料">
-  <a href="{{ '/submit/' | relative_url }}">
-    <span class="submit-launch-mark" aria-hidden="true">＋</span>
-    <span class="submit-launch-copy"><strong>提交资料</strong><small>分享你的笔记、数据手册或工程经验</small></span>
-    <span class="submit-launch-action">打开提交页 <span aria-hidden="true">→</span></span>
-  </a>
-</section>
-
-<section class="learning-path" aria-labelledby="path-heading">
-  <div class="section-heading">
-    <h2 id="path-heading">学习路径</h2>
-    <span>基础 → 实时 → 控制</span>
-  </div>
-  <ol class="path-list">
-    <li><span class="path-index">01</span><span><strong><a href="{{ '/notes/c-language-memory/' | relative_url }}">基础与外设</a></strong><small>C、Cortex-M、中断与 AT32 外设</small></span></li>
-    <li><span class="path-index">02</span><span><strong><a href="{{ '/notes/freertos-realtime/' | relative_url }}">实时系统</a></strong><small>任务调度、并发与数据安全</small></span></li>
-    <li><span class="path-index">03</span><span><strong><a href="{{ '/notes/pid-digital-control/' | relative_url }}">控制与验证</a></strong><small>PID、FOC、传感器、通信与调试</small></span></li>
-  </ol>
-</section>
-
-<section class="note-section" aria-labelledby="categories-heading">
-  <div class="section-heading"><h2 id="categories-heading">知识方向</h2><span>按主题浏览</span></div>
+<section class="note-section home-domains" id="knowledge-areas" aria-labelledby="categories-heading">
+  <div class="section-heading"><h2 id="categories-heading">技术领域</h2><span>按主题查阅</span></div>
+  <p class="home-section-intro">按项目涉及的技术领域定位笔记；展开目录后可直接进入文章。</p>
   <div class="category-grid">
-    {% for category in categories %}
-      {% assign category_notes = all_notes | where: "category", category | sort: "order" %}
-      <a class="category-card" href="{{ category_notes[0].url | relative_url }}"><strong>{{ category }}</strong><span>{{ category_notes.size }} 篇笔记</span><small>{{ category_notes[0].summary }}</small></a>
+    {% for entry in site.data.note_categories %}
+      {% assign category_notes = all_notes | where: "category", entry.name | sort: "title" %}
+      {% if category_notes.size > 0 %}
+        <details class="category-card">
+          <summary><strong>{{ entry.name }}</strong><span>{{ category_notes.size }} 篇笔记</span><small>{{ entry.description }}</small></summary>
+          <ul class="category-note-list">
+            {% for item in category_notes %}<li><a href="{{ item.url | relative_url }}">{{ item.title | escape }}</a></li>{% endfor %}
+          </ul>
+        </details>
+      {% endif %}
     {% endfor %}
   </div>
 </section>
 
-<section class="note-section" aria-labelledby="notes-heading">
-  <div class="section-heading">
-    <h2 id="notes-heading">嵌入式主线</h2>
-    <span>{{ embedded_notes.size }} 篇</span>
+<section class="note-section home-access" aria-labelledby="access-heading">
+  <div class="section-heading"><h2 id="access-heading">常用入口</h2><span>文档 · 公式 · 资料</span></div>
+  <div class="home-access-grid">
+    <a href="#hardware-docs"><strong>硬件文档目录</strong><span>按主题、专题和具体内容查看整理的硬件文档。</span><small>查看目录 →</small></a>
+    <a href="{{ '/formulas/' | relative_url }}"><strong>公式与计算</strong><span>按领域查找关系式、参数说明与计算工具。</span><small>打开工具 →</small></a>
+    <a href="{{ '/resources/' | relative_url }}"><strong>参考资料</strong><span>查看已公开的 PDF 与笔记相关附件。</span><small>查看资料 →</small></a>
   </div>
-  <ol class="note-list">
-    {% for item in embedded_notes %}
-      <li>
-        <a class="note-link" href="{{ item.url | relative_url }}">
-          <span class="note-number">{{ item.order | prepend: '0' | slice: -2, 2 }}</span>
-          <span class="note-copy">
-            <strong>{{ item.title }}</strong>
-            <span>{{ item.summary }}</span>
-          </span>
-          <span class="note-open" aria-hidden="true">阅读 →</span>
-        </a>
-      </li>
-    {% endfor %}
-  </ol>
 </section>
+
+<section class="note-section home-hardware" id="hardware-docs" aria-labelledby="hardware-heading">
+  <div class="section-heading"><h2 id="hardware-heading">硬件文档目录</h2><span>主题 → 专题 → 内容</span></div>
+  <p class="home-section-intro">展开对应主题，进入具体文档页面。目录中的资料索引不等于 PDF 均已公开；可在线打开的文件集中列在<a href="{{ '/resources/' | relative_url }}">参考资料</a>。</p>
+  <div class="knowledge-tree">
+    {% for root in site.data.knowledge_tree %}
+      <details class="tree-root">
+        <summary><span class="tree-index">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span><span class="tree-summary"><strong>{{ root.title }}</strong><small>{{ root.description }}</small></span><span class="tree-count">{{ root.count }}</span></summary>
+        <div class="tree-branches">
+          {% for branch in root.children %}
+            <details class="tree-branch">
+              <summary><span class="tree-branch-copy"><strong>{{ branch.title }}</strong><small>{{ branch.description }}</small></span><span class="tree-arrow" aria-hidden="true">⌄</span></summary>
+              <ul class="tree-leaves">
+                {% assign root_title = root.title %}
+                {% assign branch_title = branch.title %}
+                {% for leaf in branch.children %}
+                  {% assign leaf_topic = site.data.hardware_topics | where: "root", root_title | where: "branch", branch_title | where: "leaf", leaf | first %}
+                  <li>{% if leaf_topic %}<a href="{{ leaf_topic.url | relative_url }}">{{ leaf }}</a>{% else %}{{ leaf }}{% endif %}</li>
+                {% endfor %}
+              </ul>
+            </details>
+          {% endfor %}
+        </div>
+      </details>
+    {% endfor %}
+  </div>
+</section>
+
+<aside class="home-editorial-note">这些笔记用于工程查阅。器件参数、适用边界与测试结论请结合数据手册、实际电路和测量条件核对。</aside>

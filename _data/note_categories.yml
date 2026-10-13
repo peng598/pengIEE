@@ -1,0 +1,12 @@
+- name: 硬件基础与电源
+  description: 器件选型、ADC、晶振、保护电路、DC-DC 与电源设计。
+- name: PCB与信号完整性
+  description: 叠层、阻抗匹配、串扰、回流路径与高速信号问题。
+- name: 模拟、音频与声学
+  description: 运放、滤波、音频输入输出、功放及声学概念。
+- name: 嵌入式系统
+  description: 单片机、外设、通信、控制算法与上板调试。
+- name: 实时系统与软件
+  description: 任务调度、并发、数据处理与软件实现。
+- name: 测试与工程经验
+  description: 测量方法、故障定位、设计验证与项目经验。

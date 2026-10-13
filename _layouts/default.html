@@ -23,17 +23,17 @@
   </head>
   <body data-ai-endpoint="{{ site.ai_endpoint | default: '' | escape }}" data-ai-model="{{ site.ai_model | default: 'DeepSeek V4-FLASH' | escape }}" data-ai-title="{{ page.title | default: site.title | escape }}" data-ai-category="{{ page.category | default: '个人知识库' | escape }}" data-submission-endpoint="{{ site.submission_endpoint | default: '' | escape }}">
     <a class="skip-link" href="#main">跳到正文</a>
-    {% assign note_pages = site.pages | where_exp: "item", "item.category" | sort: "order" %}
+    {% assign note_pages = site.pages | where_exp: "item", "item.category" | where_exp: "item", "item.url contains '/notes/'" | sort: "order" %}
     {% assign nav_categories = note_pages | map: "category" | uniq %}
     <div class="mobile-bar">
-      <a class="mobile-brand" href="{{ '/' | relative_url }}">{{ site.title }} <span>学习笔记</span></a>
+      <a class="mobile-brand" href="{{ '/' | relative_url }}">{{ site.title }} <span>工程笔记</span></a>
       <button class="pwa-install" type="button" aria-label="安装 PENGIEE 到手机" title="安装到手机" hidden>
         <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 16v3h14v-3" /></svg>
       </button>
-      <button class="ai-open ai-open-mobile" type="button" aria-label="打开 AI 学习助手" title="AI 学习助手">
+      <button class="ai-open ai-open-mobile" type="button" aria-label="打开 AI 笔记助手" title="AI 笔记助手">
         <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 3.5a7.5 7.5 0 0 0-7.5 7.5c0 2.08.85 3.96 2.22 5.32L6 20.5l4.1-1.03c.6.2 1.24.3 1.9.3a7.5 7.5 0 1 0 0-16.27Z"/><path d="M8.5 11h.01M12 11h.01M15.5 11h.01"/></svg>
       </button>
-      <button class="menu-toggle" type="button" aria-label="打开课程目录" aria-expanded="false" aria-controls="course-sidebar">
+      <button class="menu-toggle" type="button" aria-label="打开网站导航" aria-expanded="false" aria-controls="course-sidebar">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -44,14 +44,17 @@
           <span><strong>{{ site.title }}</strong><small>嵌入式 · 电子 · 软件</small></span>
         </a>
         <div class="sidebar-rule"></div>
-        <nav aria-label="课程目录" class="navigation">
-          <p class="nav-label">导航</p>
+        <nav aria-label="网站导航" class="navigation">
+          <p class="nav-label">查阅</p>
           <a class="nav-link{% if page.url == '/' %} is-active{% endif %}" href="{{ '/' | relative_url }}"><span class="nav-index">⌂</span>笔记首页</a>
+          <a class="nav-link" href="{{ '/' | relative_url }}#knowledge-areas"><span class="nav-index">▦</span>技术领域</a>
+          <a class="nav-link" href="{{ '/' | relative_url }}#hardware-docs"><span class="nav-index">≡</span>硬件文档</a>
+          <a class="nav-link{% if page.url == '/formulas/' %} is-active{% endif %}" href="{{ '/formulas/' | relative_url }}"><span class="nav-index">ƒx</span>公式与计算</a>
           <a class="nav-link{% if page.url == '/resources/' %} is-active{% endif %}" href="{{ '/resources/' | relative_url }}"><span class="nav-index">↗</span>参考资料</a>
+          <p class="nav-label nav-label-course">工具与协作</p>
+          <button class="nav-link nav-action ai-open" type="button"><span class="nav-index" aria-hidden="true">✦</span>AI 笔记助手</button>
           <a class="nav-link{% if page.url == '/submit/' %} is-active{% endif %}" href="{{ '/submit/' | relative_url }}"><span class="nav-index">＋</span>提交资料</a>
           <a class="nav-link{% if page.url == '/account/' %} is-active{% endif %}" href="{{ '/account/' | relative_url }}"><span class="nav-index">◎</span>账号登录</a>
-          <a class="nav-link{% if page.url == '/formulas/' %} is-active{% endif %}" href="{{ '/formulas/' | relative_url }}"><span class="nav-index">ƒx</span>公式与计算</a>
-          <button class="nav-link nav-action ai-open" type="button"><span class="nav-index" aria-hidden="true">✦</span>AI 学习助手</button>
           <p class="nav-label nav-label-course">硬件文档目录</p>
           <div class="nav-tree">
             {% assign current_topic = site.data.hardware_topics | where: "url", page.url | first %}
@@ -76,12 +79,15 @@
               </details>
             {% endfor %}
           </div>
+          <p class="nav-label nav-label-course">笔记目录</p>
           {% for category in nav_categories %}
-            {% assign category_pages = note_pages | where: "category", category | sort: "order" %}
-            <p class="nav-label nav-label-course">{{ category }}<span>{{ category_pages.size | prepend: '0' | slice: -2, 2 }}</span></p>
-            {% for item in category_pages %}
-              <a class="nav-link nav-note{% if page.url == item.url %} is-active{% endif %}" href="{{ item.url | relative_url }}"><span class="nav-index">{{ item.order | prepend: '0' | slice: -2, 2 }}</span>{{ item.title }}</a>
-            {% endfor %}
+            {% assign category_pages = note_pages | where: "category", category | sort: "title" %}
+            <details class="nav-note-group"{% if page.category == category %} open{% endif %}>
+              <summary><span>{{ category }}</span><small>{{ category_pages.size }} 篇</small></summary>
+              <div class="nav-note-links">
+                {% for item in category_pages %}<a class="nav-link nav-note{% if page.url == item.url %} is-active{% endif %}" href="{{ item.url | relative_url }}">{{ item.title }}</a>{% endfor %}
+              </div>
+            </details>
           {% endfor %}
         </nav>
         <div class="sidebar-bottom">
@@ -89,7 +95,7 @@
           <a href="https://github.com/peng598/PENGIEE">GitHub ↗</a>
         </div>
       </aside>
-      <button class="sidebar-scrim" type="button" aria-label="关闭课程目录" tabindex="-1"></button>
+      <button class="sidebar-scrim" type="button" aria-label="关闭网站导航" tabindex="-1"></button>
       <main id="main" class="main-content">
         <div class="content-frame">
           <div class="page-kicker"><span class="kicker-line"></span>{{ page.category | default: '个人知识库' }}</div>
@@ -105,11 +111,11 @@
     <aside class="ai-panel" id="ai-panel" role="dialog" aria-modal="true" aria-labelledby="ai-panel-title" aria-hidden="true" tabindex="-1">
       <header class="ai-panel-header">
         <div>
-          <p class="ai-panel-kicker">PENGIEE / 学习助手</p>
-          <h2 id="ai-panel-title">AI 学习助手</h2>
+          <p class="ai-panel-kicker">PENGIEE / 笔记助手</p>
+          <h2 id="ai-panel-title">AI 笔记助手</h2>
           <p class="ai-panel-subtitle">围绕当前笔记提问。笔记摘录会发送到你配置的 AI 服务。</p>
         </div>
-        <button class="ai-close" type="button" aria-label="关闭 AI 学习助手" title="关闭" data-ai-close>×</button>
+        <button class="ai-close" type="button" aria-label="关闭 AI 笔记助手" title="关闭" data-ai-close>×</button>
       </header>
       <div class="ai-context" aria-live="polite">
         <span class="ai-context-label">当前上下文</span>
@@ -135,7 +141,7 @@
       const setMenu = (open) => {
         document.body.classList.toggle('menu-open', open);
         toggle?.setAttribute('aria-expanded', String(open));
-        toggle?.setAttribute('aria-label', open ? '关闭课程目录' : '打开课程目录');
+        toggle?.setAttribute('aria-label', open ? '关闭网站导航' : '打开网站导航');
       };
       toggle?.addEventListener('click', () => setMenu(!document.body.classList.contains('menu-open')));
       scrim?.addEventListener('click', () => setMenu(false));

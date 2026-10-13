@@ -20,9 +20,9 @@ bundle exec jekyll serve
 
 首次发布前，在仓库的 **Settings → Pages → Build and deployment** 中把来源设为 **GitHub Actions**。之后每次推送到 `main`，Actions 会自动构建并部署网站。
 
-## AI 学习助手
+## AI 笔记助手
 
-网站已加入 AI 学习助手入口。它会把当前文章的标题、分类和正文摘录发送到你配置的服务端接口，用于围绕当前笔记提问。
+网站已加入 AI 笔记助手入口。它会把当前文章的标题、分类和正文摘录发送到你配置的服务端接口，用于围绕当前笔记提问。
 
 GitHub Pages 是静态托管，不能安全保存 DeepSeek API Key。仓库已提供腾讯云云函数（SCF）代理，部署配置完成后网站即可通过它调用 DeepSeek。源码与[完整部署说明](serverless/tencent-scf/README.md)在 `serverless/tencent-scf`；接口使用腾讯云 Web 函数，Node.js 20，监听 9000 端口。
 

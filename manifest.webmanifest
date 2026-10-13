@@ -1,8 +1,8 @@
 {
   "id": "/pengIEE/",
-  "name": "PENGIEE 嵌入式与电子技术笔记",
+  "name": "PENGIEE 电子与嵌入式工程笔记",
   "short_name": "PENGIEE",
-  "description": "嵌入式、电子硬件、PCB、模拟电路与工程经验学习笔记",
+  "description": "电子与嵌入式工程笔记，涵盖硬件设计、PCB、模拟电路与工程经验",
   "lang": "zh-CN",
   "start_url": "/pengIEE/",
   "scope": "/pengIEE/",
