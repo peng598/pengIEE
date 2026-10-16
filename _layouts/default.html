@@ -12,7 +12,7 @@
     <link rel="manifest" href="{{ '/manifest.webmanifest' | relative_url }}">
     <link rel="icon" href="{{ '/assets/pwa/icon-192.svg' | relative_url }}" type="image/svg+xml">
     <link rel="apple-touch-icon" href="{{ '/assets/pwa/icon-192.png' | relative_url }}">
-    <link rel="stylesheet" href="{{ '/assets/site.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/site.css' | relative_url }}?v={{ site.time | date: '%s' }}">
     {% if page.home %}<link rel="stylesheet" href="{{ '/assets/home.css' | relative_url }}?v={{ site.time | date: '%s' }}">{% endif %}
     <script>
       window.MathJax = {

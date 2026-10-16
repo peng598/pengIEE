@@ -6,7 +6,7 @@ permalink: /resources/
 ---
 
 {% assign resource_categories = site.data.resources | map: "category" | uniq %}
-<link rel="stylesheet" href="{{ '/assets/pdf-reader.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/pdf-reader.css' | relative_url }}?v=2">
 <section class="reference-library" data-reference-library data-catalog-url="{{ '/assets/reference-library.json' | relative_url }}" aria-labelledby="reference-title">
   <header class="reference-hero">
     <div class="reference-hero-copy">
