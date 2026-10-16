@@ -8,7 +8,7 @@ ai_endpoint: "https://1502711662-djho621orf.ap-guangzhou.tencentscf.com"
 ai_model: "DeepSeek V4-FLASH"
 # Deploy the Tencent SCF account/storage API and verify /api/health before filling this.
 # May use the same function URL as ai_endpoint; do not add /api to this base URL.
-submission_endpoint: ""
+submission_endpoint: "https://1502711662-djho621orf.ap-guangzhou.tencentscf.com"
 markdown: kramdown
 highlighter: rouge
 permalink: pretty

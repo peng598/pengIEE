@@ -22,11 +22,11 @@ import { createPdfReader } from './pdf-reader.js';
     reader: root.querySelector('[data-reference-reader]')
   };
   const pageSize = 40;
-  const state = { catalog: null, category: '', folder: '', query: '', sort: 'name', page: 1 };
+  const state = { catalog: null, category: '', folder: '', query: '', sort: 'name', page: 1, serviceReady: false };
   const number = new Intl.NumberFormat('zh-CN');
   const referenceEndpoint = (root.dataset.referenceApi || '').trim().replace(/\/+$/, '');
   const api = () => window.PengieeSubmission;
-  const isLive = (file) => Boolean(referenceEndpoint && file.published && file.id);
+  const isLive = (file) => Boolean(referenceEndpoint && state.serviceReady && file.published && file.id);
 
   const reader = createPdfReader(nodes.reader);
   const openReader = async (file) => {
@@ -64,7 +64,7 @@ import { createPdfReader } from './pdf-reader.js';
     const liveCount = state.catalog.files.filter(isLive).length;
     nodes.cloudStatus.textContent = liveCount
       ? `${number.format(liveCount)} 份资料已上线`
-      : referenceEndpoint ? '腾讯云 COS 待接入' : '阅读服务待配置';
+      : referenceEndpoint && state.serviceReady ? '腾讯云 COS 待接入' : '阅读服务待配置';
     root.classList.toggle('has-live-files', liveCount > 0);
   }
 
@@ -254,6 +254,12 @@ import { createPdfReader } from './pdf-reader.js';
       nodes.statPdfs.textContent = number.format(state.catalog.summary.pdfs);
       nodes.statFolders.textContent = number.format(state.catalog.summary.categories);
       nodes.statSize.textContent = formatSize(state.catalog.summary.pdfBytes);
+      if (referenceEndpoint) {
+        try {
+          const health = await fetch(`${referenceEndpoint}/api/health`, { headers: { Origin: location.origin }, cache: 'no-store' });
+          state.serviceReady = health.ok;
+        } catch { state.serviceReady = false; }
+      }
       setCloudStatus();
       nodes.results.setAttribute('aria-busy', 'false');
       render();
