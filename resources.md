@@ -107,7 +107,7 @@ permalink: /resources/
 {% if site.data.resources.size > 0 %}
 <section class="resource-section reference-featured" aria-labelledby="featured-resources-heading">
   <div class="section-heading"><h2 id="featured-resources-heading">精选在线资料</h2><span>{{ site.data.resources.size }} 份</span></div>
-  <p class="resource-note">这些是网站现有的配套资料链接；归档目录内已确认发布的 PDF 通过腾讯云 COS 提供，请遵守原始资料的授权范围。</p>
+      <p class="resource-note">资料通过受保护的阅读接口按需加载；普通用户不会获得原文件下载入口。</p>
   <div class="resource-list">
     {% for resource in site.data.resources %}
       <a class="resource-card" href="{{ resource.file | relative_url }}" data-reader-url="{{ resource.file | relative_url }}" data-reader-name="{{ resource.title | escape }}">

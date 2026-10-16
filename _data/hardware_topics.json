@@ -1290,8 +1290,7 @@
       {
         "title": "保护以太网端口免受浪涌事件的影响",
         "description": "接口浪涌保护和器件布局案例。",
-        "status": "站内公开资料",
-        "url": "/assets/docs/ethernet-surge-protection.pdf"
+        "status": "已移入私有资料库，普通账号不提供下载"
       }
     ]
   },
@@ -1667,8 +1666,7 @@
       {
         "title": "电源轨纹波测量入门",
         "description": "探头、带宽限制和纹波测量方法。",
-        "status": "站内公开资料",
-        "url": "/assets/docs/power-rail-measurements.pdf"
+        "status": "已移入私有资料库，普通账号不提供下载"
       }
     ]
   }
