@@ -27,7 +27,7 @@
    - `private/*` 对象：`name/cos:PutObject`、`name/cos:GetObject`、`name/cos:DeleteObject`；按控制台要求允许写入 private 对象 ACL。权限资源必须限定桶及前缀，不授予整个账户 COS 全权限。
 4. SDK 使用 SCF 自动注入的临时角色凭据 `TENCENTCLOUD_SECRETID`、`TENCENTCLOUD_SECRETKEY`、`TENCENTCLOUD_SESSIONTOKEN`，不向浏览器下发腾讯云密钥，也不需要浏览器到 COS 的 CORS 配置。
 
-上传与下载均通过鉴权后的 SCF，不生成公共或长期签名下载 URL。每个对象显式写为 private。已有参考资料请执行仓库中的 `node tools/lock-reference-library.mjs`，将历史公开对象统一改为 private。健康检查读取桶 ACL/策略，发现公开 ACL 或 Allow 策略就拒绝服务；结果最多缓存 30 秒。还应在腾讯云控制台禁止误改公开权限。
+上传与下载均通过鉴权后的 SCF，不生成公共或长期签名下载 URL。每个对象显式写为 private。已有参考资料请运行 `powershell -ExecutionPolicy Bypass -File tools/lock-reference-library-secure.ps1`，将历史对象统一改为 private；同时在腾讯云控制台删除公共读桶策略。健康检查读取桶 ACL/策略，发现公开 ACL 或 Allow 策略就拒绝服务；结果最多缓存 30 秒。还应在腾讯云控制台禁止误改公开权限。
 
 ## 3. 函数环境变量
 
