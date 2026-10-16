@@ -121,4 +121,4 @@ permalink: /resources/
 {% endif %}
 
 <script defer src="{{ '/assets/submission-api.js' | relative_url }}"></script>
-<script type="module" src="{{ '/assets/reference-library.js' | relative_url }}?v=pdfjs-2"></script>
+<script type="module" src="{{ '/assets/reference-library.js' | relative_url }}?v=pdfjs-3"></script>
