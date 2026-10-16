@@ -1,69 +1,108 @@
 ---
 layout: default
+home: true
 title: 电子与嵌入式工程笔记
-summary: 按技术领域查阅硬件设计、PCB、模拟与音频、嵌入式系统和工程测试笔记。
+summary: 搜索工程笔记，查看最近更新、技术领域与常用资料。
 ---
 {% assign all_notes = site.pages | where_exp: "item", "item.category" | where_exp: "item", "item.url contains '/notes/'" %}
-{% assign categories = all_notes | map: "category" | uniq %}
-<header class="collection-heading">
-  <p class="eyebrow">PENGIEE <span class="eyebrow-divider">/</span> 工程笔记</p>
-  <h1>电子与嵌入式工程笔记</h1>
-  <p class="collection-description">汇集硬件设计、PCB 与信号完整性、模拟与音频、嵌入式系统及工程测试笔记。按技术领域查阅设计依据、计算方法、调试记录和常见问题；相关公式、硬件文档与参考资料可从对应入口继续查看。</p>
-  <div class="collection-meta"><span>{{ all_notes.size }} 篇公开笔记</span><span>{{ categories.size }} 个技术领域</span><span><a href="{{ '/resources/' | relative_url }}">{{ site.data.resources.size }} 份在线参考资料</a></span></div>
-</header>
+<div class="work-home">
+  <header class="work-hero">
+    <p class="eyebrow">PENGIEE <span class="eyebrow-divider">/</span> 工程笔记</p>
+    <h1>查笔记，找答案。</h1>
+    <p>面向已有基础的工程师，集中查阅电路设计、PCB、嵌入式系统与工程测试中的原理、计算和实践记录。</p>
+    <span>{{ all_notes.size }} 篇公开笔记 · {{ site.data.note_categories.size }} 个技术领域</span>
+  </header>
 
-<section class="note-section home-domains" id="knowledge-areas" aria-labelledby="categories-heading">
-  <div class="section-heading"><h2 id="categories-heading">技术领域</h2><span>按主题查阅</span></div>
-  <p class="home-section-intro">按项目涉及的技术领域定位笔记；展开目录后可直接进入文章。</p>
-  <div class="category-grid">
-    {% for entry in site.data.note_categories %}
-      {% assign category_notes = all_notes | where: "category", entry.name | sort: "title" %}
-      {% if category_notes.size > 0 %}
-        <details class="category-card">
-          <summary><strong>{{ entry.name }}</strong><span>{{ category_notes.size }} 篇笔记</span><small>{{ entry.description }}</small></summary>
-          <ul class="category-note-list">
-            {% for item in category_notes %}<li><a href="{{ item.url | relative_url }}">{{ item.title | escape }}</a></li>{% endfor %}
-          </ul>
-        </details>
-      {% endif %}
-    {% endfor %}
+  <section class="work-search" data-note-search data-index-url="{{ '/notes-search.json' | relative_url }}?v={{ site.time | date: '%s' }}" aria-labelledby="home-search-heading">
+    <div class="work-section-heading"><h2 id="home-search-heading">搜索笔记</h2><span>标题、分类与正文</span></div>
+    <form class="work-search-form" role="search" data-search-form>
+      <label class="sr-only" for="home-note-query">搜索笔记</label>
+      <span class="work-search-icon" aria-hidden="true">⌕</span>
+      <input id="home-note-query" name="q" type="search" placeholder="输入关键词，例如：阻抗匹配、Buck、ADC" autocomplete="off" data-search-input>
+      <button type="submit">搜索</button>
+    </form>
+    <p class="work-search-status" data-search-status role="status" aria-live="polite">输入关键词，即可检索已发布的笔记。</p>
+    <ol class="work-search-results" data-search-results hidden></ol>
+  </section>
+
+  <div class="work-dashboard-grid">
+  <section class="work-updates" aria-labelledby="home-updates-heading">
+    <div class="work-updates-heading"><span class="work-status-dot" aria-hidden="true"></span><h2 id="home-updates-heading">最近更新</h2><span>发布后自动同步</span></div>
+    {% if site.data.site_updates and site.data.site_updates.size > 0 %}
+      <ol class="work-update-list">
+        {% for update in site.data.site_updates limit: 4 %}
+          <li><a href="{{ update.url | escape }}" target="_blank" rel="noopener"><time datetime="{{ update.date | escape }}">{{ update.date | escape }}</time><span class="work-update-kind">{{ update.kind | escape }}</span><strong>{{ update.title | escape }}</strong><span class="work-update-arrow" aria-hidden="true">↗</span></a></li>
+        {% endfor %}
+      </ol>
+    {% else %}
+      <p class="work-updates-empty">暂无更新记录。</p>
+    {% endif %}
+  </section>
+
+    <aside class="work-login" data-home-login aria-labelledby="home-login-heading">
+      <div class="work-section-heading"><h2 id="home-login-heading">用户登录</h2>{% if site.submission_endpoint != '' %}<a href="{{ '/account/' | relative_url }}">注册账号 ↗</a>{% else %}<span>暂未开放</span>{% endif %}</div>
+      <p class="work-login-intro">登录后可提交资料；公开笔记无需账号即可阅读。</p>
+      <p class="work-login-status" data-home-auth-status role="status" aria-live="polite">正在检查账号服务…</p>
+      <form class="work-login-form" method="post" action="{{ '/account/' | relative_url }}" data-home-login-form>
+        <label for="home-login-email">邮箱</label><input id="home-login-email" name="email" type="email" autocomplete="email" placeholder="name@example.com" required>
+        <label for="home-login-password">密码</label><input id="home-login-password" name="password" type="password" autocomplete="current-password" minlength="10" maxlength="128" placeholder="输入密码" required>
+        <button type="submit">登录</button>
+      </form>
+      <div class="work-login-user" data-home-user hidden><span>已登录</span><strong data-home-user-email></strong><div><a href="{{ '/submit/' | relative_url }}">提交资料 →</a><button type="button" data-home-logout>退出登录</button></div></div>
+      <noscript><p class="work-login-status">请启用 JavaScript 后登录。</p></noscript>
+    </aside>
   </div>
-</section>
 
-<section class="note-section home-access" aria-labelledby="access-heading">
-  <div class="section-heading"><h2 id="access-heading">常用入口</h2><span>文档 · 公式 · 资料</span></div>
-  <div class="home-access-grid">
-    <a href="#hardware-docs"><strong>硬件文档目录</strong><span>按主题、专题和具体内容查看整理的硬件文档。</span><small>查看目录 →</small></a>
-    <a href="{{ '/formulas/' | relative_url }}"><strong>公式与计算</strong><span>按领域查找关系式、参数说明与计算工具。</span><small>打开工具 →</small></a>
-    <a href="{{ '/resources/' | relative_url }}"><strong>参考资料</strong><span>查看已公开的 PDF 与笔记相关附件。</span><small>查看资料 →</small></a>
-  </div>
-</section>
-
-<section class="note-section home-hardware" id="hardware-docs" aria-labelledby="hardware-heading">
-  <div class="section-heading"><h2 id="hardware-heading">硬件文档目录</h2><span>主题 → 专题 → 内容</span></div>
-  <p class="home-section-intro">展开对应主题，进入具体文档页面。目录中的资料索引不等于 PDF 均已公开；可在线打开的文件集中列在<a href="{{ '/resources/' | relative_url }}">参考资料</a>。</p>
-  <div class="knowledge-tree">
-    {% for root in site.data.knowledge_tree %}
-      <details class="tree-root">
-        <summary><span class="tree-index">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span><span class="tree-summary"><strong>{{ root.title }}</strong><small>{{ root.description }}</small></span><span class="tree-count">{{ root.count }}</span></summary>
-        <div class="tree-branches">
-          {% for branch in root.children %}
-            <details class="tree-branch">
-              <summary><span class="tree-branch-copy"><strong>{{ branch.title }}</strong><small>{{ branch.description }}</small></span><span class="tree-arrow" aria-hidden="true">⌄</span></summary>
-              <ul class="tree-leaves">
-                {% assign root_title = root.title %}
-                {% assign branch_title = branch.title %}
-                {% for leaf in branch.children %}
-                  {% assign leaf_topic = site.data.hardware_topics | where: "root", root_title | where: "branch", branch_title | where: "leaf", leaf | first %}
-                  <li>{% if leaf_topic %}<a href="{{ leaf_topic.url | relative_url }}">{{ leaf }}</a>{% else %}{{ leaf }}{% endif %}</li>
-                {% endfor %}
-              </ul>
+  <section class="work-domains" id="knowledge-areas" aria-labelledby="home-domains-heading">
+      <div class="work-section-heading"><h2 id="home-domains-heading">技术领域</h2><span>按主题展开笔记</span></div>
+      <div class="work-domain-grid">
+        {% for entry in site.data.note_categories %}
+          {% assign category_notes = all_notes | where: "category", entry.name | sort: "title" %}
+          {% if category_notes.size > 0 %}
+            <details class="work-domain">
+              <summary><span><strong>{{ entry.name }}</strong><small>{{ entry.description }}</small></span><em>{{ category_notes.size }} 篇</em></summary>
+              <ul>{% for item in category_notes %}<li><a href="{{ item.url | relative_url }}">{{ item.title | escape }}</a></li>{% endfor %}</ul>
             </details>
-          {% endfor %}
-        </div>
-      </details>
-    {% endfor %}
-  </div>
-</section>
+          {% endif %}
+        {% endfor %}
+      </div>
+  </section>
 
-<aside class="home-editorial-note">这些笔记用于工程查阅。器件参数、适用边界与测试结论请结合数据手册、实际电路和测量条件核对。</aside>
+  <section class="work-links" aria-labelledby="home-links-heading">
+    <div class="work-section-heading"><h2 id="home-links-heading">常用入口</h2></div>
+    <div class="work-link-list">
+      <a href="#hardware-docs"><strong>硬件文档</strong><span>按三级目录查阅器件与设计专题</span><em aria-hidden="true">↗</em></a>
+      <a href="{{ '/formulas/' | relative_url }}"><strong>公式与计算</strong><span>按领域查找公式、参数说明和工具</span><em aria-hidden="true">↗</em></a>
+      <a href="{{ '/resources/' | relative_url }}"><strong>参考资料</strong><span>已公开的 PDF 与笔记附件</span><em aria-hidden="true">↗</em></a>
+    </div>
+  </section>
+
+  <section class="work-docs" id="hardware-docs" aria-label="硬件文档目录">
+    <details class="work-doc-drawer">
+      <summary><span><strong>硬件文档目录</strong><small>{{ site.data.knowledge_tree.size }} 个主题 · 主题 → 专题 → 内容</small></span><span>展开目录 <b aria-hidden="true">⌄</b></span></summary>
+      <p>目录中的资料索引不代表 PDF 均已公开；可在线打开的文件列在<a href="{{ '/resources/' | relative_url }}">参考资料</a>。</p>
+      <div class="knowledge-tree">
+        {% for root in site.data.knowledge_tree %}
+          <details class="tree-root">
+            <summary><span class="tree-index">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span><span class="tree-summary"><strong>{{ root.title }}</strong><small>{{ root.description }}</small></span><span class="tree-count">{{ root.count }}</span></summary>
+            <div class="tree-branches">
+              {% for branch in root.children %}
+                <details class="tree-branch">
+                  <summary><span class="tree-branch-copy"><strong>{{ branch.title }}</strong><small>{{ branch.description }}</small></span><span class="tree-arrow" aria-hidden="true">⌄</span></summary>
+                  <ul class="tree-leaves">
+                    {% assign root_title = root.title %}{% assign branch_title = branch.title %}
+                    {% for leaf in branch.children %}
+                      {% assign leaf_topic = site.data.hardware_topics | where: "root", root_title | where: "branch", branch_title | where: "leaf", leaf | first %}
+                      <li>{% if leaf_topic %}<a href="{{ leaf_topic.url | relative_url }}">{{ leaf }}</a>{% else %}{{ leaf }}{% endif %}</li>
+                    {% endfor %}
+                  </ul>
+                </details>
+              {% endfor %}
+            </div>
+          </details>
+        {% endfor %}
+      </div>
+    </details>
+  </section>
+</div>
+<script defer src="{{ '/assets/home.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>

@@ -13,6 +13,7 @@
     <link rel="icon" href="{{ '/assets/pwa/icon-192.svg' | relative_url }}" type="image/svg+xml">
     <link rel="apple-touch-icon" href="{{ '/assets/pwa/icon-192.png' | relative_url }}">
     <link rel="stylesheet" href="{{ '/assets/site.css' | relative_url }}">
+    {% if page.home %}<link rel="stylesheet" href="{{ '/assets/home.css' | relative_url }}?v={{ site.time | date: '%s' }}">{% endif %}
     <script>
       window.MathJax = {
         tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -21,7 +22,7 @@
     </script>
     <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   </head>
-  <body data-ai-endpoint="{{ site.ai_endpoint | default: '' | escape }}" data-ai-model="{{ site.ai_model | default: 'DeepSeek V4-FLASH' | escape }}" data-ai-title="{{ page.title | default: site.title | escape }}" data-ai-category="{{ page.category | default: '个人知识库' | escape }}" data-submission-endpoint="{{ site.submission_endpoint | default: '' | escape }}">
+  <body class="{% if page.home %}is-home{% endif %}" data-ai-endpoint="{{ site.ai_endpoint | default: '' | escape }}" data-ai-model="{{ site.ai_model | default: 'DeepSeek V4-FLASH' | escape }}" data-ai-title="{{ page.title | default: site.title | escape }}" data-ai-category="{{ page.category | default: '个人知识库' | escape }}" data-submission-endpoint="{{ site.submission_endpoint | default: '' | escape }}">
     <a class="skip-link" href="#main">跳到正文</a>
     {% assign note_pages = site.pages | where_exp: "item", "item.category" | where_exp: "item", "item.url contains '/notes/'" | sort: "order" %}
     {% assign nav_categories = note_pages | map: "category" | uniq %}
@@ -54,7 +55,6 @@
           <p class="nav-label nav-label-course">工具与协作</p>
           <button class="nav-link nav-action ai-open" type="button"><span class="nav-index" aria-hidden="true">✦</span>AI 笔记助手</button>
           <a class="nav-link{% if page.url == '/submit/' %} is-active{% endif %}" href="{{ '/submit/' | relative_url }}"><span class="nav-index">＋</span>提交资料</a>
-          <a class="nav-link{% if page.url == '/account/' %} is-active{% endif %}" href="{{ '/account/' | relative_url }}"><span class="nav-index">◎</span>账号登录</a>
           <p class="nav-label nav-label-course">硬件文档目录</p>
           <div class="nav-tree">
             {% assign current_topic = site.data.hardware_topics | where: "url", page.url | first %}

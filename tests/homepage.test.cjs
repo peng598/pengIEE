@@ -24,7 +24,7 @@ test('every public note category is available from the homepage', () => {
   assert.match(homepage, /site\.data\.note_categories/);
   assert.match(homepage, /item\.url contains '\/notes\/'/);
   assert.match(layout, /item\.url contains '\/notes\/'/);
-  assert.match(homepage, /<details class="category-card">/);
+  assert.match(homepage, /<details class="work-domain">/);
   assert.match(homepage, /href="\{\{ item\.url \| relative_url \}\}"/);
 });
 
@@ -36,4 +36,26 @@ test('navigation targets real homepage sections, without a prescribed learning p
   assert.match(homepage, /site\.data\.knowledge_tree/);
   assert.match(homepage, /leaf_topic\.url \| relative_url/);
   assert.doesNotMatch(homepage, /学习路径|嵌入式主线|课程笔记/);
+});
+
+test('homepage search covers the published notes without indexing hardware pages', () => {
+  const index = JSON.parse(read('notes-search.json'));
+  assert.match(homepage, /data-note-search/);
+  assert.match(homepage, /data-search-results/);
+  assert.equal(index.length, notes.length);
+  assert.ok(index.every(item => item.title && item.category && item.url.startsWith('/pengIEE/notes/') && item.content));
+  assert.match(read('.github/workflows/pages.yml'), /node tools\/generate-note-search\.mjs/);
+  assert.match(read('assets/home.js'), /fetch\(search\.dataset\.indexUrl/);
+});
+
+test('updates are generated at build time and login is on the homepage', () => {
+  const workflow = read('.github/workflows/pages.yml');
+  const updates = JSON.parse(read('_data/site_updates.json'));
+  assert.match(workflow, /node tools\/generate-site-updates\.mjs/);
+  assert.ok(updates.length > 0);
+  assert.ok(updates.every(item => item.date && item.kind && item.title && item.url.startsWith('https://github.com/peng598/pengIEE/commit/')));
+  assert.match(homepage, /data-home-login-form/);
+  assert.match(homepage, /data-home-auth-status/);
+  assert.doesNotMatch(layout, /<a[^>]+>账号登录<\/a>/);
+  assert.match(read('assets/home.js'), /账号服务暂未开通/);
 });

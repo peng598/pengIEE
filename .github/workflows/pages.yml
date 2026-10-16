@@ -19,6 +19,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 80
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: node tools/generate-site-updates.mjs
+      - run: node tools/generate-note-search.mjs
+      - run: node --test tests/homepage.test.cjs
       - uses: actions/configure-pages@v5
       - uses: actions/jekyll-build-pages@v1
         with:

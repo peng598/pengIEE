@@ -1,0 +1,26 @@
+[
+  {
+    "date": "2026-10-13",
+    "kind": "首页",
+    "title": "将首页改为工程师技术查阅入口",
+    "url": "https://github.com/peng598/pengIEE/commit/c7b1998c21d68b00508d7dde7946b3278e3fcdf8"
+  },
+  {
+    "date": "2026-10-12",
+    "kind": "公式",
+    "title": "扩展公式库并按复杂度补充说明",
+    "url": "https://github.com/peng598/pengIEE/commit/439de1e23139ca2dc7e7807b864e981f434ce909"
+  },
+  {
+    "date": "2026-10-12",
+    "kind": "公式",
+    "title": "为全部公式补充参数与使用说明",
+    "url": "https://github.com/peng598/pengIEE/commit/dabd699b172015a10779f50d03ddc8b68286c7a1"
+  },
+  {
+    "date": "2026-10-09",
+    "kind": "公式",
+    "title": "优化公式页排版与响应式布局",
+    "url": "https://github.com/peng598/pengIEE/commit/361fe8085df4ea3199538babcd2ce3ed2ceca026"
+  }
+]
