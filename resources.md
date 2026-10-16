@@ -7,7 +7,7 @@ permalink: /resources/
 
 {% assign resource_categories = site.data.resources | map: "category" | uniq %}
 <link rel="stylesheet" href="{{ '/assets/pdf-reader.css' | relative_url }}?v=2">
-<section class="reference-library" data-reference-library data-catalog-url="{{ '/assets/reference-library.json' | relative_url }}" data-reference-api="{{ site.submission_endpoint | default: '' | escape }}" aria-labelledby="reference-title">
+<section class="reference-library" data-reference-library data-catalog-url="{{ '/assets/reference-library.json' | relative_url }}?v=2" data-reference-api="{{ site.submission_endpoint | default: '' | escape }}" aria-labelledby="reference-title">
   <header class="reference-hero">
     <div class="reference-hero-copy">
       <p class="eyebrow">PENGIEE <span class="eyebrow-divider">/</span> REFERENCE ARCHIVE</p>
