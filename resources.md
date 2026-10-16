@@ -60,6 +60,25 @@ permalink: /resources/
       <p class="reference-empty" data-reference-error hidden>目录索引暂时无法读取，请稍后刷新页面。</p>
     </div>
   </div>
+
+  <dialog class="reference-reader" data-reference-reader aria-labelledby="reference-reader-title">
+    <div class="reference-reader-shell">
+      <header class="reference-reader-header">
+        <div class="reference-reader-heading">
+          <p>PDF READER</p>
+          <h2 id="reference-reader-title" data-reader-title>在线阅读</h2>
+        </div>
+        <div class="reference-reader-actions">
+          <a data-reader-open target="_blank" rel="noopener">新标签页打开</a>
+          <button type="button" data-reader-close aria-label="关闭阅读器">×</button>
+        </div>
+      </header>
+      <p class="reference-reader-hint">PDF 在网页中加载，不会自动保存到设备；页码、缩放和保存等操作请使用浏览器 PDF 工具栏。</p>
+      <div class="reference-reader-frame">
+        <iframe data-reader-frame title="PDF 文档阅读器" src="about:blank" loading="lazy" allow="fullscreen"></iframe>
+      </div>
+    </div>
+  </dialog>
 </section>
 
 {% if site.data.resources.size > 0 %}

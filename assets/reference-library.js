@@ -16,11 +16,35 @@
     statPdfs: root.querySelector('[data-stat-pdfs]'),
     statFolders: root.querySelector('[data-stat-folders]'),
     statSize: root.querySelector('[data-stat-size]'),
-    clearCategory: root.querySelector('[data-clear-category]')
+    clearCategory: root.querySelector('[data-clear-category]'),
+    reader: root.querySelector('[data-reference-reader]'),
+    readerTitle: root.querySelector('[data-reader-title]'),
+    readerFrame: root.querySelector('[data-reader-frame]'),
+    readerOpen: root.querySelector('[data-reader-open]'),
+    readerClose: root.querySelector('[data-reader-close]')
   };
   const pageSize = 40;
   const state = { catalog: null, category: '', folder: '', query: '', sort: 'name', page: 1 };
   const number = new Intl.NumberFormat('zh-CN');
+
+  function openReader(file) {
+    if (typeof nodes.reader.showModal !== 'function') {
+      window.open(file.cosUrl, '_blank', 'noopener');
+      return;
+    }
+    nodes.readerTitle.textContent = file.title;
+    nodes.readerOpen.href = file.cosUrl;
+    nodes.reader.showModal();
+    nodes.readerFrame.src = file.cosUrl;
+  }
+
+  nodes.readerClose.addEventListener('click', () => nodes.reader.close());
+  nodes.reader.addEventListener('click', (event) => {
+    if (event.target === nodes.reader) nodes.reader.close();
+  });
+  nodes.reader.addEventListener('close', () => {
+    nodes.readerFrame.src = 'about:blank';
+  });
 
   const formatSize = (bytes) => {
     if (bytes >= 1024 ** 3) return `${(bytes / 1024 ** 3).toFixed(2)} GiB`;
@@ -137,14 +161,13 @@
     const meta = document.createElement('span');
     meta.className = 'reference-file-size';
     meta.textContent = formatSize(file.bytes);
-    const action = file.cosUrl ? document.createElement('a') : document.createElement('span');
+    const action = file.cosUrl ? document.createElement('button') : document.createElement('span');
     action.className = `reference-file-action${file.cosUrl ? ' is-live' : ''}`;
-    action.textContent = file.cosUrl ? '在线阅读 ↗' : '待上架';
+    action.textContent = file.cosUrl ? '在线阅读' : '待上架';
     if (file.cosUrl) {
-      action.href = file.cosUrl;
-      action.target = '_blank';
-      action.rel = 'noopener';
+      action.type = 'button';
       action.setAttribute('aria-label', `在线阅读：${file.title}`);
+      action.addEventListener('click', () => openReader(file));
     } else {
       action.title = file.publicationStatus || '完成公开来源确认并上传到 COS 后开放';
     }
