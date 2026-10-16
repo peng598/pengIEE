@@ -50,7 +50,7 @@ test('preflight succeeds without a configured key; other and missing origins can
     method: 'OPTIONS', headers: { Origin: origin, 'Access-Control-Request-Method': 'POST' }
   });
   assert.equal(preflight.status, 204);
-  assert.equal(preflight.headers.get('access-control-allow-headers'), 'Content-Type');
+  assert.equal(preflight.headers.get('access-control-allow-headers'), 'Content-Type, Authorization, Range, If-Range');
   for (const headers of [{ Origin: 'https://evil.example' }, {}]) {
     const response = await app.post(payload, { headers });
     assert.equal(response.status, 403);

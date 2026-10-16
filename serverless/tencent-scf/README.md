@@ -1,11 +1,11 @@
 # PENGIEE 腾讯云 AI 代理
 
-这是一个无第三方依赖的腾讯云 SCF Web 函数。它把网站的 OpenAI 兼容聊天请求转发到 DeepSeek，并将 API Key 保留在腾讯云函数环境变量中。
+这是一个腾讯云 SCF Web 函数，现支持可选的 MySQL/COS 私密资料模块。它把网站的 OpenAI 兼容聊天请求转发到 DeepSeek，并将 API Key 保留在腾讯云函数环境变量中。
 
 ## 控制台部署
 
 1. 新建 **Web 函数**，运行环境选择 **Node.js 20**。
-2. 在仓库根目录运行 `python serverless/tencent-scf/package.py`，上传生成的 `tmp/pengiee-tencent-scf.zip`。包中仅含 `server.js` 和 `scf_bootstrap`，没有密钥或依赖。打包器会保留 Linux 执行权限和 LF 换行；不要用 Windows 普通压缩工具重新打包启动文件。
+2. 在仓库根目录运行 `python serverless/tencent-scf/package.py`，上传生成的 `tmp/pengiee-tencent-scf.zip`。先执行 `pnpm --dir serverless/tencent-scf install --prod --frozen-lockfile --config.node-linker=hoisted --ignore-scripts` 安装锁定的运行依赖；包中包含源码、依赖和 `scf_bootstrap`，没有真实配置或密钥。打包器会保留 Linux 执行权限和 LF 换行；不要用 Windows 普通压缩工具重新打包启动文件。
 3. 启动文件选择 `scf_bootstrap`；Web 函数端口固定为 9000。
 4. 在函数配置的环境变量中填写：
 
@@ -45,7 +45,7 @@ Invoke-RestMethod -Uri $aiFunctionUrl -Method Post -ContentType 'application/jso
 
 返回 `choices[0].message.content` 后，将 `_config.yml` 的 `ai_endpoint` 填为该完整 URL，推送 GitHub 并等待 Pages 部署成功，然后从网页 AI 助手验证跨域请求。`ai_endpoint` 不是 DeepSeek 官方地址，也不是腾讯云控制台网址。网页 `ai_model` 仅作显示，真实模型由后端 `DEEPSEEK_MODEL` 决定。
 
-当前只迁移 AI 代理；Cloudflare 的账号、私密上传接口不在此函数中。仓库和部署包准备好不表示云端已创建函数或网站已接通。
+账号与私密上传也已实现腾讯云版本，详见 [MySQL/COS 部署说明](PRIVATE_UPLOADS.md)。参考资料阅读接口也使用同一个函数：`GET /api/reference/{id}/read` 支持 PDF.js 的 `Range` 请求；只有管理员会话可以调用 `GET /api/admin/reference/{id}/download`。部署前必须把 COS 桶和对象 ACL 改为 private，并把 `reference-library.json` 一起打包。不开启 `SUBMISSIONS_ENABLED` 时，AI 代理仍独立工作。仓库和部署包准备好不表示数据库、COS 或云端函数已配置完成。
 
 ## 本地测试
 

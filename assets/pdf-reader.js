@@ -129,8 +129,8 @@ export function createPdfReader(dialog) {
     rotation = 0;
     const activeSession = session;
     ui.title.textContent = file.title;
-    ui.download.href = file.cosUrl;
-    ui.download.setAttribute('download', `${file.title}.pdf`);
+    ui.download.hidden = typeof file.download !== 'function';
+    ui.download.disabled = false;
     ui.notice.hidden = true;
     ui.zoom.value = 'fit';
     controls();
@@ -152,7 +152,7 @@ export function createPdfReader(dialog) {
       const engine = await loadEngine();
       if (activeSession !== session) return;
       documentTask = engine.getDocument({
-        url: file.cosUrl,
+        url: file.readUrl,
         withCredentials: false,
         cMapUrl: new URL('cmaps/', vendor).href,
         cMapPacked: true,
@@ -217,6 +217,23 @@ export function createPdfReader(dialog) {
   });
   ui.zoom.addEventListener('change', renderPage);
   ui.rotate.addEventListener('click', () => { rotation = (rotation + 90) % 360; renderPage(); });
+  ui.download.addEventListener('click', async () => {
+    if (typeof currentFile?.download !== 'function') return;
+    ui.download.disabled = true;
+    try {
+      const blob = await currentFile.download();
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = `${currentFile.title}.pdf`;
+      document.body.append(anchor);
+      anchor.click();
+      anchor.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 60000);
+    } catch (error) {
+      ui.status.textContent = error?.message || '管理员下载失败，请稍后重试。';
+    } finally { ui.download.disabled = false; }
+  });
   ui.retry.addEventListener('click', () => open(currentFile));
   dialog.addEventListener('keydown', (event) => {
     if (['INPUT', 'SELECT', 'TEXTAREA'].includes(event.target.tagName)) return;

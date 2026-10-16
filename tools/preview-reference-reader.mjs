@@ -9,9 +9,9 @@ import { pipeline } from 'node:stream/promises';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const catalog = JSON.parse(await readFile(resolve(root, 'assets/reference-library.json'), 'utf8'));
-const published = new Map(catalog.files.map((file, index) => [String(index), file.cosUrl]));
+const published = new Map(catalog.files.map((file, index) => [String(index), file.published]));
 const previewCatalog = { ...catalog, files: catalog.files.map((file, index) => ({
-  ...file, cosUrl: file.cosUrl ? `/__cos/${index}` : null
+  ...file, published: file.published ? true : false, readUrl: file.published ? `/__cos/${index}` : null
 })) };
 const types = { '.js': 'text/javascript', '.mjs': 'text/javascript', '.css': 'text/css',
   '.json': 'application/json', '.wasm': 'application/wasm', '.pdf': 'application/pdf' };
@@ -32,8 +32,10 @@ createServer(async (req, res) => {
       return res.end(JSON.stringify(previewCatalog));
     }
     if (pathname.startsWith('/__cos/')) {
-      const url = published.get(pathname.slice('/__cos/'.length));
-      if (!url) { res.writeHead(404); return res.end(); }
+      const index = pathname.slice('/__cos/'.length);
+      const file = catalog.files[Number(index)];
+      const url = file?.cosUrl;
+      if (!url || !published.get(index)) { res.writeHead(404); return res.end(); }
       const aborter = new AbortController();
       res.on('close', () => aborter.abort());
       const upstream = await fetch(url, { headers: {

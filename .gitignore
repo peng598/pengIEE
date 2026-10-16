@@ -4,3 +4,4 @@ serverless/wrangler.toml
 .env.*
 !.env.example
 serverless/tencent-scf/*.zip
+node_modules/

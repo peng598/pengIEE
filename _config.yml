@@ -6,6 +6,8 @@ baseurl: /pengIEE
 ai_endpoint: "https://1502711662-djho621orf.ap-guangzhou.tencentscf.com"
 # 仅用于网页显示，实际 API 模型 ID 在腾讯云 DEEPSEEK_MODEL 中配置。
 ai_model: "DeepSeek V4-FLASH"
+# Deploy the Tencent SCF account/storage API and verify /api/health before filling this.
+# May use the same function URL as ai_endpoint; do not add /api to this base URL.
 submission_endpoint: ""
 markdown: kramdown
 highlighter: rouge

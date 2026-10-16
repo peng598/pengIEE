@@ -24,13 +24,32 @@ import { createPdfReader } from './pdf-reader.js';
   const pageSize = 40;
   const state = { catalog: null, category: '', folder: '', query: '', sort: 'name', page: 1 };
   const number = new Intl.NumberFormat('zh-CN');
+  const referenceEndpoint = (root.dataset.referenceApi || '').trim().replace(/\/+$/, '');
+  const api = () => window.PengieeSubmission;
+  const isLive = (file) => Boolean(referenceEndpoint && file.published && file.id);
 
   const reader = createPdfReader(nodes.reader);
-  const openReader = (file) => reader.open(file);
+  const openReader = async (file) => {
+    const readUrl = isLive(file)
+      ? `${referenceEndpoint}/api/reference/${encodeURIComponent(file.id)}/read`
+      : file.readUrl;
+    if (!readUrl) return;
+    let download;
+    const submissionApi = api();
+    if (isLive(file) && submissionApi?.hasToken()) {
+      try {
+        const identity = await submissionApi.request('/api/auth/me');
+        if (identity.user?.role === 'admin') {
+          download = () => submissionApi.request(`/api/admin/reference/${encodeURIComponent(file.id)}/download`, { binary: true });
+        }
+      } catch { /* A normal reader remains available when the session is not an admin session. */ }
+    }
+    reader.open({ ...file, readUrl, download });
+  };
   document.querySelectorAll('[data-reader-url]').forEach((link) => {
     link.addEventListener('click', (event) => {
       event.preventDefault();
-      openReader({ title: link.dataset.readerName, cosUrl: link.href });
+      openReader({ title: link.dataset.readerName, readUrl: link.dataset.readerUrl || link.href });
     });
   });
 
@@ -42,10 +61,10 @@ import { createPdfReader } from './pdf-reader.js';
   };
 
   function setCloudStatus() {
-    const liveCount = state.catalog.files.filter((file) => file.cosUrl).length;
+    const liveCount = state.catalog.files.filter(isLive).length;
     nodes.cloudStatus.textContent = liveCount
       ? `${number.format(liveCount)} 份资料已上线`
-      : '腾讯云 COS 待接入';
+      : referenceEndpoint ? '腾讯云 COS 待接入' : '阅读服务待配置';
     root.classList.toggle('has-live-files', liveCount > 0);
   }
 
@@ -149,15 +168,17 @@ import { createPdfReader } from './pdf-reader.js';
     const meta = document.createElement('span');
     meta.className = 'reference-file-size';
     meta.textContent = formatSize(file.bytes);
-    const action = file.cosUrl ? document.createElement('button') : document.createElement('span');
-    action.className = `reference-file-action${file.cosUrl ? ' is-live' : ''}`;
-    action.textContent = file.cosUrl ? '在线阅读' : '待上架';
-    if (file.cosUrl) {
+    const action = isLive(file) ? document.createElement('button') : document.createElement('span');
+    action.className = `reference-file-action${isLive(file) ? ' is-live' : ''}`;
+    action.textContent = isLive(file) ? '在线阅读' : (file.published ? '阅读服务待配置' : '待上架');
+    if (isLive(file)) {
       action.type = 'button';
       action.setAttribute('aria-label', `在线阅读：${file.title}`);
       action.addEventListener('click', () => openReader(file));
     } else {
-      action.title = file.publicationStatus || '完成公开来源确认并上传到 COS 后开放';
+      action.title = file.published
+        ? '网站维护者尚未配置受保护阅读服务。'
+        : (file.publicationStatus || '完成公开来源确认并上传到 COS 后开放');
     }
     card.append(icon, body, meta, action);
     return card;
@@ -207,7 +228,7 @@ import { createPdfReader } from './pdf-reader.js';
     const files = filteredFiles();
     const pageCount = Math.max(1, Math.ceil(files.length / pageSize));
     state.page = Math.min(state.page, pageCount);
-    nodes.count.textContent = `${number.format(files.length)} 份 PDF${files.some((file) => file.cosUrl) ? ' · 含在线资料' : ''}`;
+    nodes.count.textContent = `${number.format(files.length)} 份 PDF${files.some(isLive) ? ' · 含在线资料' : ''}`;
     nodes.results.replaceChildren();
     if (!files.length) {
       const empty = document.createElement('div');

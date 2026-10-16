@@ -1,0 +1,11 @@
+{
+  "name": "pengiee-tencent-backend",
+  "private": true,
+  "version": "1.0.0",
+  "engines": { "node": ">=20.19" },
+  "scripts": { "start": "node server.js", "test": "node --test ../../tests/tencent-*.test.cjs" },
+  "dependencies": {
+    "cos-nodejs-sdk-v5": "3.0.0",
+    "mysql2": "3.24.5"
+  }
+}

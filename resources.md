@@ -7,7 +7,7 @@ permalink: /resources/
 
 {% assign resource_categories = site.data.resources | map: "category" | uniq %}
 <link rel="stylesheet" href="{{ '/assets/pdf-reader.css' | relative_url }}?v=2">
-<section class="reference-library" data-reference-library data-catalog-url="{{ '/assets/reference-library.json' | relative_url }}" aria-labelledby="reference-title">
+<section class="reference-library" data-reference-library data-catalog-url="{{ '/assets/reference-library.json' | relative_url }}" data-reference-api="{{ site.submission_endpoint | default: '' | escape }}" aria-labelledby="reference-title">
   <header class="reference-hero">
     <div class="reference-hero-copy">
       <p class="eyebrow">PENGIEE <span class="eyebrow-divider">/</span> REFERENCE ARCHIVE</p>
@@ -70,7 +70,7 @@ permalink: /resources/
           <h2 id="reference-reader-title" data-reader-title>在线阅读</h2>
         </div>
         <div class="reference-reader-actions">
-          <a data-reader-download target="_blank" rel="noopener" download>下载原文件 ↗</a>
+          <button type="button" data-reader-download hidden>管理员下载</button>
           <button type="button" data-reader-close aria-label="关闭阅读器">×</button>
         </div>
       </header>
@@ -120,4 +120,5 @@ permalink: /resources/
 </section>
 {% endif %}
 
-<script type="module" src="{{ '/assets/reference-library.js' | relative_url }}?v=pdfjs-1"></script>
+<script defer src="{{ '/assets/submission-api.js' | relative_url }}"></script>
+<script type="module" src="{{ '/assets/reference-library.js' | relative_url }}?v=pdfjs-2"></script>

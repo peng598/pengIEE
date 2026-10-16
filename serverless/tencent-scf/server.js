@@ -1,6 +1,7 @@
 'use strict';
 
 const http = require('node:http');
+const { createSubmissionHandler } = require('./submissions');
 
 const MAX_BODY_BYTES = 180000;
 const MAX_RESPONSE_BYTES = 1024 * 1024;
@@ -129,7 +130,8 @@ async function readAnswer(response) {
   return { choices: [{ message: { role: 'assistant', content: answer } }] };
 }
 
-function createServer({ env = process.env, fetchImpl = globalThis.fetch } = {}) {
+function createServer({ env = process.env, fetchImpl = globalThis.fetch, submissionStore, now } = {}) {
+  const submissions = createSubmissionHandler({ env, store: submissionStore, now });
   const origins = new Set((env.ALLOWED_ORIGINS || env.ALLOWED_ORIGIN || DEFAULT_ORIGIN)
     .split(',').map((origin) => origin.trim()).filter(Boolean));
   let config;
@@ -156,12 +158,14 @@ function createServer({ env = process.env, fetchImpl = globalThis.fetch } = {}) 
     if (origin) {
       res.setHeader('Access-Control-Allow-Origin', origin);
       res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
-      res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, Range, If-Range');
       res.setHeader('Access-Control-Max-Age', '600');
     }
 
     try {
-      const pathname = new URL(req.url, 'http://localhost').pathname;
+      const url = new URL(req.url, 'http://localhost');
+      const pathname = url.pathname;
+      if (await submissions(req, res, send, url)) return;
       if (pathname === '/health' && req.method === 'GET') {
         return send(config ? 200 : 503, { status: config ? 'ready' : 'configuration_required' });
       }
@@ -216,6 +220,7 @@ function createServer({ env = process.env, fetchImpl = globalThis.fetch } = {}) 
   });
   server.requestTimeout = 15000;
   server.headersTimeout = 10000;
+  server.on('close', () => { submissions.close().catch(() => {}); });
   return server;
 }
 

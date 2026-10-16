@@ -61,16 +61,15 @@ ai_model: "网页显示的模型名称"
 
 ## 私密账号与资料提交
 
-本次腾讯云版本只处理 AI 问答。以下账号、上传功能仍是原 Cloudflare 实现，尚未迁移至腾讯云；`submission_endpoint` 与 `ai_endpoint` 分别配置。
+账号与上传功能现已实现腾讯云版本：SCF + MySQL 8 + COS 私有桶。包含邮箱账号注册、登录、服务端会话注销、密码修改、私密上传，以及管理员分页查阅和下载。参考资料也通过 SCF 从私有 COS 分段读取，普通用户只能在线阅读，管理员才有原文件下载接口。所有注册默认普通用户，管理员只能在数据库后台按核实的账号 ID 指定；没有自动公开发布功能。
 
-提交页现在支持注册、登录和私密上传。GitHub Pages 只负责网页，账号、提交记录和文件由 `serverless/cloudflare-worker.js` 处理：Cloudflare D1 保存账号/元数据，R2 保存文件。R2 桶不要开启公开访问，Worker 只给管理员角色提供提交列表和下载接口。
+详见 [腾讯云私密资料部署说明](serverless/tencent-scf/PRIVATE_UPLOADS.md)。尚未配置云端数据库和存储时，页面会禁用注册/上传并提示待开通。`submission_endpoint` 必须在云端验收后单独填写，不能仅凭现有 AI 可用就认为注册上传也已可用。
 
-部署步骤：
+部署包现在包含运行依赖，打包前先安装：
 
-1. 在 Cloudflare 创建 D1 数据库和 R2 桶，把 `serverless/schema.sql` 导入 D1。
-2. 复制 `serverless/wrangler.toml.example` 为 `wrangler.toml`，填写 D1 的 `database_id`、R2 桶名、`ADMIN_EMAIL` 和 `ALLOWED_ORIGINS`（正式域名以及本地调试地址用逗号分隔）。
-3. 设置密钥：`wrangler secret put AUTH_SECRET`。它必须是随机长字符串；AI 单独使用腾讯云，无需在此配置 DeepSeek 密钥。
-4. 部署 Worker，并把 `_config.yml` 的 `submission_endpoint` 改为 Worker 地址，例如 `https://pengiee-private-submissions.<账号>.workers.dev`。
-5. 管理员首次使用 `ADMIN_EMAIL` 注册。只有该邮箱对应的账号会获得 `admin` 角色；普通账号不能查看其他用户的提交。
+```powershell
+pnpm --dir serverless/tencent-scf install --prod --frozen-lockfile --config.node-linker=hoisted --ignore-scripts
+python serverless/tencent-scf/package.py
+```
 
-文件大小默认限制为 25 MB，可用 `MAX_UPLOAD_BYTES` 调整。不要把生成的 `wrangler.toml`、密钥、D1 凭据或 R2 公钥写入 GitHub 仓库。
+当前单文件最多 4 MiB，每用户默认 100 MiB / 100 份资料。文件和提交记录仅管理员可读取，普通用户只有提交权限。邮箱暂作为登录名，未启用邮件验证或邮件找回密码。旧 Cloudflare 实现留作历史参考，不用于本次部署。

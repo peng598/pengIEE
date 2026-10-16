@@ -12,24 +12,26 @@ permalink: /submit/
     <p>注册并登录后上传。资料会进入私有存储，其他用户不能查看，只有维护者可以审核。</p>
   </header>
 
+  <p class="submit-status" data-service-status role="status">账号服务检查中，请启用 JavaScript。</p>
+  <noscript><p>请启用 JavaScript 后注册、登录或上传。文件不会通过公开 Issue 提交。</p></noscript>
   <section class="account-panel" data-auth-panel>
     <div class="account-panel-heading"><div><strong data-auth-title>登录后提交</strong><span data-auth-subtitle>已有账号？登录后即可上传资料。</span></div><a href="{{ '/account/' | relative_url }}">账号页面 →</a></div>
     <form class="auth-form" data-login-form>
       <label class="submit-field"><span>邮箱</span><input name="email" type="email" autocomplete="email" required placeholder="name@example.com"></label>
-      <label class="submit-field"><span>密码</span><input name="password" type="password" autocomplete="current-password" minlength="8" required placeholder="至少 8 位"></label>
+      <label class="submit-field"><span>密码</span><input name="password" type="password" autocomplete="current-password" minlength="10" maxlength="128" required placeholder="至少 10 位"></label>
       <div class="submit-actions"><button class="submit-button" type="submit">登录</button><button class="text-button" type="button" data-show-register>注册新账号</button><span class="submit-status" data-auth-status aria-live="polite"></span></div>
     </form>
     <form class="auth-form" data-register-form hidden>
       <label class="submit-field"><span>邮箱</span><input name="email" type="email" autocomplete="email" required placeholder="name@example.com"></label>
-      <label class="submit-field"><span>密码</span><input name="password" type="password" autocomplete="new-password" minlength="8" required placeholder="至少 8 位"></label>
-      <label class="submit-field"><span>确认密码</span><input name="passwordConfirm" type="password" autocomplete="new-password" minlength="8" required placeholder="再次输入密码"></label>
+      <label class="submit-field"><span>密码</span><input name="password" type="password" autocomplete="new-password" minlength="10" maxlength="128" required placeholder="至少 10 位"></label>
+      <label class="submit-field"><span>确认密码</span><input name="passwordConfirm" type="password" autocomplete="new-password" minlength="10" maxlength="128" required placeholder="再次输入密码"></label>
       <div class="submit-actions"><button class="submit-button" type="submit">创建账号</button><button class="text-button" type="button" data-show-login>返回登录</button><span class="submit-status" data-auth-status aria-live="polite"></span></div>
     </form>
-    <div class="account-logged-in" data-logged-in hidden><span>已登录：<strong data-user-email></strong></span><button class="text-button" type="button" data-logout>退出登录</button></div>
+    <div class="account-logged-in" data-logged-in hidden><span>已登录：<strong data-user-email></strong></span><a class="text-button" href="{{ '/admin/' | relative_url }}" data-admin-link hidden>管理提交</a><button class="text-button" type="button" data-logout>退出登录</button></div>
   </section>
 
   <form class="submit-form" data-submit-form hidden>
-    <div class="submit-intro"><strong>私有存储</strong><span>文件只对你和维护者可见，不会生成公开 Issue，也不会出现在 GitHub 仓库。</span></div>
+    <div class="submit-intro"><strong>私有存储</strong><span>上传后仅站长可以查看和下载，不会生成公开 Issue，也不会出现在 GitHub 仓库。</span></div>
     <label class="submit-field"><span>资料标题 <b aria-hidden="true">*</b></span><input name="title" type="text" maxlength="120" required placeholder="例如：USB 2.0 高速信号完整性设计指南"></label>
     <div class="submit-field-grid"><label class="submit-field"><span>知识方向 <b aria-hidden="true">*</b></span><select name="category" required><option value="">请选择方向</option><option>嵌入式系统</option><option>实时系统与软件</option><option>硬件基础与电源</option><option>PCB 与信号完整性</option><option>模拟、音频与声学</option><option>测试与工程经验</option><option>其他</option></select></label><label class="submit-field"><span>学习层级 <b aria-hidden="true">*</b></span><select name="level" required><option value="">请选择层级</option><option>基础</option><option>核心设计</option><option>工程实战</option></select></label></div>
     <label class="submit-field"><span>资料简介 <b aria-hidden="true">*</b></span><textarea name="description" rows="5" maxlength="1000" required placeholder="说明资料解决什么问题、适合谁阅读，以及与现有笔记的关联。"></textarea></label>
@@ -38,6 +40,7 @@ permalink: /submit/
     <div class="submit-actions"><button class="submit-button" type="submit">私密提交资料 <span aria-hidden="true">↗</span></button><span class="submit-status" data-submit-status aria-live="polite"></span></div>
   </form>
 
-  <section class="submit-steps" aria-labelledby="submit-steps-heading"><div class="section-heading"><h2 id="submit-steps-heading">提交流程</h2><span>登录 → 上传 → 审核</span></div><ol><li><strong>注册并登录</strong><span>账号只用于识别提交者，不会公开显示密码。</span></li><li><strong>上传资料</strong><span>文件和表单内容传到私有后端存储。</span></li><li><strong>等待审核</strong><span>只有维护者能在管理入口查看并下载提交。</span></li></ol></section>
+  <section class="submit-steps" aria-labelledby="submit-steps-heading"><div class="section-heading"><h2 id="submit-steps-heading">提交流程</h2><span>登录 → 上传 → 审核</span></div><ol><li><strong>注册并登录</strong><span>账号只用于识别提交者，服务端不保存明文密码。</span></li><li><strong>上传资料</strong><span>文件和表单内容传到私有后端存储。</span></li><li><strong>等待审核</strong><span>只有维护者能在管理入口查看并下载提交。</span></li></ol></section>
 </article>
+<script defer src="{{ '/assets/submission-api.js' | relative_url }}"></script>
 <script defer src="{{ '/assets/submit-form.js' | relative_url }}"></script>
