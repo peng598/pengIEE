@@ -1,43 +1,81 @@
 ---
 layout: default
 title: 参考资料
-summary: 与笔记主题配套的硬件设计、模拟电路、电源、接口和测试资料。
+summary: 按本地硬件文档目录浏览 PDF 资料、搜索文件，并打开已发布到腾讯云 COS 的文档。
 permalink: /resources/
 ---
 
 {% assign resource_categories = site.data.resources | map: "category" | uniq %}
-<header class="collection-heading">
-  <p class="eyebrow">PENGIEE <span class="eyebrow-divider">/</span> 资料库</p>
-  <h1>参考资料</h1>
-  <p class="collection-description">把原始笔记中的附件和硬件资料按方向、层级整理，作为文章的延伸阅读。</p>
-  <div class="collection-meta"><span>{{ site.data.resources.size }} 份在线资料</span><span>{{ resource_categories.size }} 个知识方向</span><span>PDF 可直接打开</span></div>
-</header>
+<section class="reference-library" data-reference-library data-catalog-url="{{ '/assets/reference-library.json' | relative_url }}" aria-labelledby="reference-title">
+  <header class="reference-hero">
+    <div class="reference-hero-copy">
+      <p class="eyebrow">PENGIEE <span class="eyebrow-divider">/</span> REFERENCE ARCHIVE</p>
+      <h1 id="reference-title">硬件资料库</h1>
+      <p>按原始目录整理的工程资料索引。浏览专题、搜索文件；已上架的 PDF 可直接在浏览器中打开。</p>
+    </div>
+    <div class="reference-hero-mark" aria-hidden="true"><span>R</span><i></i><i></i><i></i></div>
+  </header>
 
-<section class="resource-intro" aria-label="资料说明">
-  <strong>阅读方式</strong>
-  <span>按一级主题、二级专题和三级内容浏览资料；版权状态不明或付费资料不会直接公开。</span>
+  <div class="reference-stats" data-reference-stats aria-live="polite">
+    <div><strong data-stat-pdfs>—</strong><span>本地 PDF</span></div>
+    <div><strong data-stat-folders>—</strong><span>资料目录</span></div>
+    <div><strong data-stat-size>—</strong><span>PDF 体量</span></div>
+    <div class="reference-cloud-status"><span class="reference-status-dot"></span><span data-cloud-status>云端链接待接入</span></div>
+  </div>
+
+  <div class="reference-browser">
+    <aside class="reference-sidebar" aria-label="资料目录">
+      <div class="reference-sidebar-heading"><span>目录</span><button type="button" data-clear-category>全部资料</button></div>
+      <nav class="reference-category-list" data-category-list aria-label="按资料目录筛选"></nav>
+      <div class="reference-privacy-note">
+        <span class="reference-privacy-icon" aria-hidden="true">↗</span>
+        <strong>发布说明</strong>
+        <p>按你确认的 01–04 目录整理；文件上传 COS 后才会显示打开链接。付费 VIP 专辑不公开。</p>
+      </div>
+    </aside>
+
+    <div class="reference-main">
+      <div class="reference-toolbar">
+        <label class="reference-search">
+          <span class="sr-only">搜索资料名称或目录</span>
+          <span class="reference-search-icon" aria-hidden="true">⌕</span>
+          <input type="search" data-reference-search placeholder="搜索元器件、专题或文件名…" autocomplete="off">
+          <kbd>/</kbd>
+        </label>
+        <label class="reference-sort-label"><span class="sr-only">排序方式</span>
+          <select data-reference-sort aria-label="资料排序">
+            <option value="name">按名称</option>
+            <option value="size-desc">体积由大到小</option>
+            <option value="folder">按目录</option>
+          </select>
+        </label>
+      </div>
+      <div class="reference-context">
+        <div><p class="reference-overline">DOCUMENT INDEX</p><h2 data-current-category>全部资料</h2></div>
+        <span data-result-count>正在读取本地目录索引…</span>
+      </div>
+      <div class="reference-subfolders" data-subfolders aria-label="当前目录的子目录"></div>
+      <div class="reference-results" data-reference-results aria-live="polite" aria-busy="true"></div>
+      <div class="reference-pagination" data-reference-pagination></div>
+      <p class="reference-empty" data-reference-error hidden>目录索引暂时无法读取，请稍后刷新页面。</p>
+    </div>
+  </div>
 </section>
 
-{% for category in resource_categories %}
-  {% assign category_resources = site.data.resources | where: "category", category %}
-  <section class="resource-section" aria-labelledby="resource-{{ forloop.index }}">
-    <div class="section-heading">
-      <h2 id="resource-{{ forloop.index }}">{{ category }}</h2>
-      <span>{{ category_resources.size }} 份</span>
-    </div>
-    <div class="resource-list">
-      {% for resource in category_resources %}
-        <a class="resource-card" href="{{ resource.file | relative_url }}" target="_blank" rel="noopener">
-          <span class="resource-level">{{ resource.level }}</span>
-          <span class="resource-copy"><strong>{{ resource.title }}</strong><small>{{ resource.description }}</small></span>
-          <span class="resource-open" aria-hidden="true">打开 PDF ↗</span>
-        </a>
-      {% endfor %}
-    </div>
-  </section>
-{% endfor %}
-
-<section class="resource-section" aria-labelledby="attachments-heading">
-  <div class="section-heading"><h2 id="attachments-heading">笔记附件</h2><span>已恢复正文引用</span></div>
-  <p class="resource-note">文章中的图片和原始 PDF 附件已经随页面发布，并会在对应笔记正文中显示或提供下载链接。</p>
+{% if site.data.resources.size > 0 %}
+<section class="resource-section reference-featured" aria-labelledby="featured-resources-heading">
+  <div class="section-heading"><h2 id="featured-resources-heading">精选在线资料</h2><span>{{ site.data.resources.size }} 份</span></div>
+  <p class="resource-note">这些是网站现有的配套资料链接；归档目录内已确认发布的 PDF 通过腾讯云 COS 提供，请遵守原始资料的授权范围。</p>
+  <div class="resource-list">
+    {% for resource in site.data.resources %}
+      <a class="resource-card" href="{{ resource.file | relative_url }}" target="_blank" rel="noopener">
+        <span class="resource-level">{{ resource.level }}</span>
+        <span class="resource-copy"><strong>{{ resource.title }}</strong><small>{{ resource.description }}</small></span>
+        <span class="resource-open" aria-hidden="true">打开 PDF ↗</span>
+      </a>
+    {% endfor %}
+  </div>
 </section>
+{% endif %}
+
+<script defer src="{{ '/assets/reference-library.js' | relative_url }}"></script>

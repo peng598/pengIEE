@@ -1,5 +1,5 @@
 const CACHE_PREFIX = 'pengiee-shell-';
-const CACHE_NAME = `${CACHE_PREFIX}v6`;
+const CACHE_NAME = `${CACHE_PREFIX}v8`;
 const APP_ROOT = new URL(self.registration.scope).pathname;
 const APP_SHELL = [
   APP_ROOT,
@@ -27,6 +27,7 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
+  if (request.headers.has('Authorization') || url.pathname.includes('/api/')) return;
   if (request.method !== 'GET' || url.origin !== self.location.origin) return;
 
   if (request.mode === 'navigate') {
