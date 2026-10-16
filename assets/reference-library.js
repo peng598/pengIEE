@@ -1,3 +1,5 @@
+import { createPdfReader } from './pdf-reader.js';
+
 (() => {
   const root = document.querySelector('[data-reference-library]');
   if (!root) return;
@@ -17,33 +19,19 @@
     statFolders: root.querySelector('[data-stat-folders]'),
     statSize: root.querySelector('[data-stat-size]'),
     clearCategory: root.querySelector('[data-clear-category]'),
-    reader: root.querySelector('[data-reference-reader]'),
-    readerTitle: root.querySelector('[data-reader-title]'),
-    readerFrame: root.querySelector('[data-reader-frame]'),
-    readerOpen: root.querySelector('[data-reader-open]'),
-    readerClose: root.querySelector('[data-reader-close]')
+    reader: root.querySelector('[data-reference-reader]')
   };
   const pageSize = 40;
   const state = { catalog: null, category: '', folder: '', query: '', sort: 'name', page: 1 };
   const number = new Intl.NumberFormat('zh-CN');
 
-  function openReader(file) {
-    if (typeof nodes.reader.showModal !== 'function') {
-      window.open(file.cosUrl, '_blank', 'noopener');
-      return;
-    }
-    nodes.readerTitle.textContent = file.title;
-    nodes.readerOpen.href = file.cosUrl;
-    nodes.reader.showModal();
-    nodes.readerFrame.src = file.cosUrl;
-  }
-
-  nodes.readerClose.addEventListener('click', () => nodes.reader.close());
-  nodes.reader.addEventListener('click', (event) => {
-    if (event.target === nodes.reader) nodes.reader.close();
-  });
-  nodes.reader.addEventListener('close', () => {
-    nodes.readerFrame.src = 'about:blank';
+  const reader = createPdfReader(nodes.reader);
+  const openReader = (file) => reader.open(file);
+  document.querySelectorAll('[data-reader-url]').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      openReader({ title: link.dataset.readerName, cosUrl: link.href });
+    });
   });
 
   const formatSize = (bytes) => {
@@ -259,6 +247,7 @@
   nodes.sort.addEventListener('change', () => { state.sort = nodes.sort.value; state.page = 1; render(); });
   nodes.clearCategory.addEventListener('click', () => { state.category = ''; state.folder = ''; state.page = 1; render(); });
   document.addEventListener('keydown', (event) => {
+    if (nodes.reader.open) return;
     if (event.key === '/' && !event.ctrlKey && !event.metaKey && !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName)) {
       event.preventDefault();
       nodes.search.focus();

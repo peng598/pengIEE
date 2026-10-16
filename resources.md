@@ -6,6 +6,7 @@ permalink: /resources/
 ---
 
 {% assign resource_categories = site.data.resources | map: "category" | uniq %}
+<link rel="stylesheet" href="{{ '/assets/pdf-reader.css' | relative_url }}">
 <section class="reference-library" data-reference-library data-catalog-url="{{ '/assets/reference-library.json' | relative_url }}" aria-labelledby="reference-title">
   <header class="reference-hero">
     <div class="reference-hero-copy">
@@ -69,14 +70,36 @@ permalink: /resources/
           <h2 id="reference-reader-title" data-reader-title>在线阅读</h2>
         </div>
         <div class="reference-reader-actions">
-          <a data-reader-open target="_blank" rel="noopener">新标签页打开</a>
+          <a data-reader-download target="_blank" rel="noopener" download>下载原文件 ↗</a>
           <button type="button" data-reader-close aria-label="关闭阅读器">×</button>
         </div>
       </header>
-      <p class="reference-reader-hint">PDF 在网页中加载，不会自动保存到设备；页码、缩放和保存等操作请使用浏览器 PDF 工具栏。</p>
-      <div class="reference-reader-frame">
-        <iframe data-reader-frame title="PDF 文档阅读器" src="about:blank" loading="lazy" allow="fullscreen"></iframe>
+      <div class="pdf-toolbar" role="group" aria-label="PDF 阅读操作">
+        <div class="pdf-page-controls">
+          <button type="button" data-reader-prev aria-label="上一页" disabled>←</button>
+          <label>第 <input type="number" data-reader-number aria-label="页码" min="1" value="1" inputmode="numeric" disabled> / <span data-reader-total>—</span> 页</label>
+          <button type="button" data-reader-next aria-label="下一页" disabled>→</button>
+        </div>
+        <label class="pdf-zoom-label"><span>缩放</span><select data-reader-zoom aria-label="PDF 缩放" disabled>
+          <option value="fit">适合宽度</option>
+          <option value="0.75">75%</option>
+          <option value="1">100%</option>
+          <option value="1.25">125%</option>
+          <option value="1.5">150%</option>
+          <option value="2">200%</option>
+        </select></label>
+        <button type="button" data-reader-rotate aria-label="顺时针旋转页面" disabled>旋转 ↻</button>
       </div>
+      <p class="reference-reader-hint">直接在网页中阅读，无需另存文件。阅读会消耗网络流量，大文档按需加载。</p>
+      <div class="pdf-stage" data-reader-stage tabindex="0" aria-label="PDF 阅读区域" aria-busy="false">
+        <div class="pdf-notice" data-reader-notice hidden>
+          <strong data-reader-error-title>文档暂时无法显示</strong>
+          <p data-reader-error></p>
+          <button type="button" data-reader-retry>重新加载</button>
+        </div>
+        <div class="pdf-page" data-reader-page hidden></div>
+      </div>
+      <div class="pdf-status" data-reader-status role="status" aria-live="polite">等待打开文档</div>
     </div>
   </dialog>
 </section>
@@ -87,14 +110,14 @@ permalink: /resources/
   <p class="resource-note">这些是网站现有的配套资料链接；归档目录内已确认发布的 PDF 通过腾讯云 COS 提供，请遵守原始资料的授权范围。</p>
   <div class="resource-list">
     {% for resource in site.data.resources %}
-      <a class="resource-card" href="{{ resource.file | relative_url }}" target="_blank" rel="noopener">
+      <a class="resource-card" href="{{ resource.file | relative_url }}" data-reader-url="{{ resource.file | relative_url }}" data-reader-name="{{ resource.title | escape }}">
         <span class="resource-level">{{ resource.level }}</span>
         <span class="resource-copy"><strong>{{ resource.title }}</strong><small>{{ resource.description }}</small></span>
-        <span class="resource-open" aria-hidden="true">打开 PDF ↗</span>
+        <span class="resource-open" aria-hidden="true">在线阅读 →</span>
       </a>
     {% endfor %}
   </div>
 </section>
 {% endif %}
 
-<script defer src="{{ '/assets/reference-library.js' | relative_url }}"></script>
+<script type="module" src="{{ '/assets/reference-library.js' | relative_url }}?v=pdfjs-1"></script>
