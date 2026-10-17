@@ -1,6 +1,7 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const { createServer } = require('../serverless/tencent-scf/server');
+const { createReferenceStore } = require('../serverless/tencent-scf/reference-store');
 
 const origin = 'https://peng598.github.io';
 const file = require('../assets/reference-library.json').files.find(item => item.published);
@@ -40,11 +41,13 @@ test('anonymous visitors can read private references in bounded ranges without a
   assert.equal(read.status, 206);
   assert.equal(read.headers.get('content-type'), 'application/pdf');
   assert.match(read.headers.get('content-disposition'), /^inline/);
+  assert.equal(read.headers.get('content-range'), `bytes 0-5/${file.bytes}`);
   assert.equal(await read.text(), '%PDF-1');
   assert.deepEqual(app.calls[0], { key: file.key, range: 'bytes=0-5' });
   const initial = await app.request(path);
   assert.equal(initial.status, 206);
   assert.equal(initial.headers.get('accept-ranges'), 'bytes');
+  assert.equal(initial.headers.get('content-range'), `bytes 0-262143/${file.bytes}`);
   assert.equal(app.calls[1].range, 'bytes=0-262143');
   assert.equal((await app.request(path, { method: 'HEAD' })).status, 200);
   assert.equal((await app.request('/api/admin/reference/' + file.id + '/download')).status, 503);
@@ -67,4 +70,16 @@ test('reader remains unavailable until private COS health succeeds', async t => 
   const unsafe = await fixture(t, { store: { health: async () => { throw new Error('public bucket'); } } });
   assert.equal((await unsafe.request('/api/reference/health')).status, 503);
   assert.equal((await unsafe.request(path)).status, 503);
+});
+
+test('missing COS bucket policy may be reported as numeric 404', async () => {
+  let policyError = Object.assign(new Error('missing policy'), { code: 404, statusCode: 404 });
+  class COS {
+    async getBucketAcl() { return { Grants: [] }; }
+    async getBucketPolicy() { throw policyError; }
+  }
+  const store = createReferenceStore({ COS_BUCKET: 'pengiee-1502711662', COS_REGION: 'ap-guangzhou' }, { COS });
+  await store.health();
+  policyError = Object.assign(new Error('denied'), { code: 403, statusCode: 403 });
+  await assert.rejects(() => store.health(), /denied/);
 });

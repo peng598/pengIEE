@@ -30,7 +30,10 @@ function createReferenceStore(env, dependencies = {}) {
         if (statements.some(statement => String(statement.Effect || statement.effect).toLowerCase() === 'allow')) {
           throw new Error('Bucket policy must not grant access');
         }
-      } catch (error) { if (error.code !== 'NoSuchBucketPolicy') throw error; }
+      } catch (error) {
+        // COS returns either the SDK error name or numeric 404 when no bucket policy exists.
+        if (error.code !== 'NoSuchBucketPolicy' && String(error.code) !== '404' && error.statusCode !== 404) throw error;
+      }
     },
     async getReferenceObject(key, range) {
       const result = await cos.getObject({ ...bucket, Key: key, ...(range ? { Range: range } : {}) });

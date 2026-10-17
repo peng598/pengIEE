@@ -70,7 +70,6 @@ permalink: /resources/
           <h2 id="reference-reader-title" data-reader-title>在线阅读</h2>
         </div>
         <div class="reference-reader-actions">
-          <button type="button" data-reader-download hidden>管理员下载</button>
           <button type="button" data-reader-close aria-label="关闭阅读器">×</button>
         </div>
       </header>
@@ -121,4 +120,4 @@ permalink: /resources/
 {% endif %}
 
 <script defer src="{{ '/assets/submission-api.js' | relative_url }}"></script>
-<script type="module" src="{{ '/assets/reference-library.js' | relative_url }}?v=pdfjs-4"></script>
+<script type="module" src="{{ '/assets/reference-library.js' | relative_url }}?v=protected-range-1"></script>

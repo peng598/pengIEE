@@ -54,7 +54,10 @@ function createReferenceHandler({ env = process.env, store: providedStore, now =
       res.setHeader('Cache-Control', 'private, no-store');
       res.setHeader('Accept-Ranges', 'bytes');
       res.setHeader('Access-Control-Expose-Headers', 'Accept-Ranges, Content-Length, Content-Range, Content-Type, ETag');
-      if (object.contentRange) res.setHeader('Content-Range', object.contentRange);
+      if (range) {
+        const [, start, end] = /^bytes=(\d+)-(\d+)$/.exec(range);
+        res.setHeader('Content-Range', `bytes ${start}-${end}/${file.bytes}`);
+      }
       if (object.etag) res.setHeader('ETag', object.etag);
       if (object.contentLength) res.setHeader('Content-Length', String(object.contentLength));
       if (req.method === 'HEAD') res.end(); else res.end(object.body);

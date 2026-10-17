@@ -25,7 +25,6 @@ import { createPdfReader } from './pdf-reader.js';
   const state = { catalog: null, category: '', folder: '', query: '', sort: 'name', page: 1, serviceReady: false };
   const number = new Intl.NumberFormat('zh-CN');
   const referenceEndpoint = (root.dataset.referenceApi || '').trim().replace(/\/+$/, '');
-  const api = () => window.PengieeSubmission;
   const isLive = (file) => Boolean(referenceEndpoint && state.serviceReady && file.published && file.id);
 
   const reader = createPdfReader(nodes.reader);
@@ -34,17 +33,7 @@ import { createPdfReader } from './pdf-reader.js';
       ? `${referenceEndpoint}/api/reference/${encodeURIComponent(file.id)}/read`
       : file.readUrl;
     if (!readUrl) return;
-    let download;
-    const submissionApi = api();
-    if (isLive(file) && submissionApi?.hasToken()) {
-      try {
-        const identity = await submissionApi.request('/api/auth/me');
-        if (identity.user?.role === 'admin') {
-          download = () => submissionApi.request(`/api/admin/reference/${encodeURIComponent(file.id)}/download`, { binary: true });
-        }
-      } catch { /* A normal reader remains available when the session is not an admin session. */ }
-    }
-    reader.open({ ...file, readUrl, download });
+    reader.open({ ...file, readUrl });
   };
   document.querySelectorAll('[data-reader-url]').forEach((link) => {
     link.addEventListener('click', (event) => {

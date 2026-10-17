@@ -16,9 +16,41 @@ function loadEngine() {
   return enginePromise;
 }
 
+async function protectedTransport(engine, file, onFailure) {
+  const chunkSize = 262144;
+  const controllers = new Set();
+  async function request(begin, end) {
+    const controller = new AbortController();
+    controllers.add(controller);
+    try {
+      const response = await fetch(file.readUrl, {
+        headers: { Range: `bytes=${begin}-${end - 1}` },
+        signal: controller.signal,
+        cache: 'no-store'
+      });
+      if (response.status !== 206 ||
+          response.headers.get('Content-Range') !== `bytes ${begin}-${end - 1}/${file.bytes}`) {
+        throw new Error(`PDF range request failed: ${response.status}`);
+      }
+      const data = new Uint8Array(await response.arrayBuffer());
+      if (data.length !== end - begin) throw new Error('PDF range length mismatch');
+      return data;
+    } finally { controllers.delete(controller); }
+  }
+  const initialEnd = Math.min(chunkSize, file.bytes);
+  const initialData = await request(0, initialEnd);
+  class ReferenceTransport extends engine.PDFDataRangeTransport {
+    requestDataRange(begin, end) {
+      request(begin, end).then((data) => this.onDataRange(begin, data)).catch(onFailure);
+    }
+    abort() { for (const controller of controllers) controller.abort(); }
+  }
+  return new ReferenceTransport(file.bytes, initialData, initialEnd === file.bytes);
+}
+
 export function createPdfReader(dialog) {
   const get = (name) => dialog.querySelector(`[data-reader-${name}]`);
-  const ui = Object.fromEntries(['title', 'download', 'close', 'prev', 'next', 'number',
+  const ui = Object.fromEntries(['title', 'close', 'prev', 'next', 'number',
     'total', 'zoom', 'rotate', 'stage', 'page', 'notice', 'error-title', 'error',
     'retry', 'status'].map((name) => [name, get(name)]));
   let documentTask, pdf, renderTask, currentFile, opener, previousPage;
@@ -129,8 +161,6 @@ export function createPdfReader(dialog) {
     rotation = 0;
     const activeSession = session;
     ui.title.textContent = file.title;
-    ui.download.hidden = typeof file.download !== 'function';
-    ui.download.disabled = false;
     ui.notice.hidden = true;
     ui.zoom.value = 'fit';
     controls();
@@ -151,8 +181,18 @@ export function createPdfReader(dialog) {
     try {
       const engine = await loadEngine();
       if (activeSession !== session) return;
+      const protectedFile = /\/api\/reference\/[a-f0-9]{32}\/read$/.test(new URL(file.readUrl).pathname) &&
+        Number.isSafeInteger(file.bytes) && file.bytes > 0;
+      const transport = protectedFile
+        ? await protectedTransport(engine, file, (error) => {
+          if (activeSession !== session) return;
+          stop();
+          showError(error);
+        })
+        : null;
+      if (activeSession !== session) { transport?.abort(); return; }
       documentTask = engine.getDocument({
-        url: file.readUrl,
+        ...(transport ? { range: transport } : { url: file.readUrl }),
         withCredentials: false,
         cMapUrl: new URL('cmaps/', vendor).href,
         cMapPacked: true,
@@ -217,23 +257,6 @@ export function createPdfReader(dialog) {
   });
   ui.zoom.addEventListener('change', renderPage);
   ui.rotate.addEventListener('click', () => { rotation = (rotation + 90) % 360; renderPage(); });
-  ui.download.addEventListener('click', async () => {
-    if (typeof currentFile?.download !== 'function') return;
-    ui.download.disabled = true;
-    try {
-      const blob = await currentFile.download();
-      const url = URL.createObjectURL(blob);
-      const anchor = document.createElement('a');
-      anchor.href = url;
-      anchor.download = `${currentFile.title}.pdf`;
-      document.body.append(anchor);
-      anchor.click();
-      anchor.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 60000);
-    } catch (error) {
-      ui.status.textContent = error?.message || '管理员下载失败，请稍后重试。';
-    } finally { ui.download.disabled = false; }
-  });
   ui.retry.addEventListener('click', () => open(currentFile));
   dialog.addEventListener('keydown', (event) => {
     if (['INPUT', 'SELECT', 'TEXTAREA'].includes(event.target.tagName)) return;
