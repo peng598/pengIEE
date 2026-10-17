@@ -45,7 +45,7 @@ Invoke-RestMethod -Uri $aiFunctionUrl -Method Post -ContentType 'application/jso
 
 返回 `choices[0].message.content` 后，将 `_config.yml` 的 `ai_endpoint` 填为该完整 URL，推送 GitHub 并等待 Pages 部署成功，然后从网页 AI 助手验证跨域请求。`ai_endpoint` 不是 DeepSeek 官方地址，也不是腾讯云控制台网址。网页 `ai_model` 仅作显示，真实模型由后端 `DEEPSEEK_MODEL` 决定。
 
-账号与私密上传也已实现腾讯云版本，详见 [MySQL/COS 部署说明](PRIVATE_UPLOADS.md)。参考资料阅读接口也使用同一个函数：`GET /api/reference/{id}/read` 支持 PDF.js 的 `Range` 请求；只有管理员会话可以调用 `GET /api/admin/reference/{id}/download`。部署前必须把 COS 桶和对象 ACL 改为 private，并把 `reference-library.json` 一起打包。不开启 `SUBMISSIONS_ENABLED` 时，AI 代理仍独立工作。仓库和部署包准备好不表示数据库、COS 或云端函数已配置完成。
+参考资料可按 [无数据库阅读模式](REFERENCE_READ_ONLY.md) 部署：访客匿名在线阅读，站长在腾讯云 COS 控制台下载。账号与私密上传另见 [MySQL/COS 部署说明](PRIVATE_UPLOADS.md)，那一模式需要数据库。部署前必须把 COS 桶和对象 ACL 改为 private，并把 `reference-library.json` 一起打包。不开启 `SUBMISSIONS_ENABLED` 时，AI 代理仍独立工作。仓库和部署包准备好不表示腾讯云函数及角色已配置完成。
 
 ## 本地测试
 

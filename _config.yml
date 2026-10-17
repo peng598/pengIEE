@@ -3,12 +3,12 @@ description: 电子与嵌入式工程笔记
 url: https://peng598.github.io
 baseurl: /pengIEE
 # 腾讯云 SCF 的完整 HTTPS 访问地址；上线后填写，不要填写 DeepSeek 上游地址或密钥。
-ai_endpoint: "https://1502711662-djho621orf.ap-guangzhou.tencentscf.com"
+ai_endpoint: "https://1502711662-g020w0n31t.ap-guangzhou.tencentscf.com"
 # 仅用于网页显示，实际 API 模型 ID 在腾讯云 DEEPSEEK_MODEL 中配置。
 ai_model: "DeepSeek V4-FLASH"
 # Deploy the Tencent SCF account/storage API and verify /api/health before filling this.
 # May use the same function URL as ai_endpoint; do not add /api to this base URL.
-submission_endpoint: "https://1502711662-djho621orf.ap-guangzhou.tencentscf.com"
+submission_endpoint: "https://1502711662-g020w0n31t.ap-guangzhou.tencentscf.com"
 markdown: kramdown
 highlighter: rouge
 permalink: pretty

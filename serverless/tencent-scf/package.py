@@ -12,6 +12,8 @@ files = {
     "submissions.js": 0o100644,
     "submission-store.js": 0o100644,
     "reference-catalog.js": 0o100644,
+    "reference-api.js": 0o100644,
+    "reference-store.js": 0o100644,
     "reference-library.json": 0o100644,
     "package.json": 0o100644,
     "scf_bootstrap": 0o100755,

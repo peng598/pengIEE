@@ -256,7 +256,7 @@ import { createPdfReader } from './pdf-reader.js';
       nodes.statSize.textContent = formatSize(state.catalog.summary.pdfBytes);
       if (referenceEndpoint) {
         try {
-          const health = await fetch(`${referenceEndpoint}/api/health`, { cache: 'no-store' });
+          const health = await fetch(`${referenceEndpoint}/api/reference/health`, { cache: 'no-store' });
           state.serviceReady = health.ok;
         } catch { state.serviceReady = false; }
       }

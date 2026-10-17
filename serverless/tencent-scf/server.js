@@ -2,6 +2,7 @@
 
 const http = require('node:http');
 const { createSubmissionHandler } = require('./submissions');
+const { createReferenceHandler } = require('./reference-api');
 
 const MAX_BODY_BYTES = 180000;
 const MAX_RESPONSE_BYTES = 1024 * 1024;
@@ -130,8 +131,9 @@ async function readAnswer(response) {
   return { choices: [{ message: { role: 'assistant', content: answer } }] };
 }
 
-function createServer({ env = process.env, fetchImpl = globalThis.fetch, submissionStore, now } = {}) {
+function createServer({ env = process.env, fetchImpl = globalThis.fetch, submissionStore, referenceStore, now } = {}) {
   const submissions = createSubmissionHandler({ env, store: submissionStore, now });
+  const references = createReferenceHandler({ env, store: referenceStore, now });
   const origins = new Set((env.ALLOWED_ORIGINS || env.ALLOWED_ORIGIN || DEFAULT_ORIGIN)
     .split(',').map((origin) => origin.trim()).filter(Boolean));
   let config;
@@ -165,6 +167,7 @@ function createServer({ env = process.env, fetchImpl = globalThis.fetch, submiss
     try {
       const url = new URL(req.url, 'http://localhost');
       const pathname = url.pathname;
+      if (await references(req, res, send, url)) return;
       if (await submissions(req, res, send, url)) return;
       if (pathname === '/health' && req.method === 'GET') {
         return send(config ? 200 : 503, { status: config ? 'ready' : 'configuration_required' });
