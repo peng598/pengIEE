@@ -120,4 +120,4 @@ permalink: /resources/
 {% endif %}
 
 <script defer src="{{ '/assets/submission-api.js' | relative_url }}"></script>
-<script type="module" src="{{ '/assets/reference-library.js' | relative_url }}?v=protected-range-1"></script>
+<script type="module" src="{{ '/assets/reference-library.js' | relative_url }}?v=protected-range-2"></script>

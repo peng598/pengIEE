@@ -1,4 +1,4 @@
-import { createPdfReader } from './pdf-reader.js';
+import { createPdfReader } from './pdf-reader.js?v=protected-range-2';
 
 (() => {
   const root = document.querySelector('[data-reference-library]');
