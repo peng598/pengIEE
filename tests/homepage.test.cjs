@@ -38,6 +38,13 @@ test('navigation targets real homepage sections, without a prescribed learning p
   assert.doesNotMatch(homepage, /学习路径|嵌入式主线|课程笔记/);
 });
 
+test('hardware sidebar shows only the first two directory groups without deleting their content', () => {
+  const tree = JSON.parse(read('_data/knowledge_tree.json'));
+  assert.deepEqual(tree.slice(0, 2).map((root) => root.title), ['电子基础知识', '电源设计']);
+  assert.equal(tree.length, 7, 'the full hardware directory must remain available to other pages');
+  assert.match(layout, /for root in site\.data\.knowledge_tree limit:2/);
+});
+
 test('homepage search covers the published notes without indexing hardware pages', () => {
   const index = JSON.parse(read('notes-search.json'));
   assert.match(homepage, /data-note-search/);

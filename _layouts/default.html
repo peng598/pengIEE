@@ -58,7 +58,7 @@
           <p class="nav-label nav-label-course">硬件文档目录</p>
           <div class="nav-tree">
             {% assign current_topic = site.data.hardware_topics | where: "url", page.url | first %}
-            {% for root in site.data.knowledge_tree %}
+            {% for root in site.data.knowledge_tree limit:2 %}
               <details class="nav-tree-root"{% if page.topic_root == root.title %} open{% endif %}>
                 <summary><span class="nav-tree-index">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span><span class="nav-tree-title">{{ root.title }}</span><span class="nav-tree-count">{{ root.count }}</span></summary>
                 <div class="nav-tree-branches">
