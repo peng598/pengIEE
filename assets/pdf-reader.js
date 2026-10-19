@@ -16,26 +16,63 @@ function loadEngine() {
   return enginePromise;
 }
 
-async function protectedTransport(engine, file, onFailure) {
+export async function protectedTransport(engine, file, onFailure, onChunk = () => {}) {
   const chunkSize = 262144;
+  // Non-linearized PDFs can request most chunks at once. Keep SCF/COS traffic
+  // bounded; otherwise a burst of range requests can fail before page one.
+  const maxConcurrent = 2;
   const controllers = new Set();
+  const waiting = [];
+  let active = 0, stopped = false;
+  const aborted = () => new DOMException('Reading stopped', 'AbortError');
+  function acquire() {
+    if (stopped) return Promise.reject(aborted());
+    if (active < maxConcurrent) { active += 1; return Promise.resolve(); }
+    return new Promise((resolve, reject) => waiting.push({ resolve, reject }));
+  }
+  function release() {
+    active -= 1;
+    const next = waiting.shift();
+    if (next) { active += 1; next.resolve(); }
+  }
+  function abort() {
+    stopped = true;
+    for (const controller of controllers) controller.abort();
+    for (const waiter of waiting.splice(0)) waiter.reject(aborted());
+  }
   async function request(begin, end) {
-    const controller = new AbortController();
-    controllers.add(controller);
+    await acquire();
     try {
-      const response = await fetch(file.readUrl, {
-        headers: { Range: `bytes=${begin}-${end - 1}` },
-        signal: controller.signal,
-        cache: 'no-store'
-      });
-      if (response.status !== 206 ||
-          response.headers.get('Content-Range') !== `bytes ${begin}-${end - 1}/${file.bytes}`) {
-        throw new Error(`PDF range request failed: ${response.status}`);
+      for (let attempt = 0; attempt < 3; attempt += 1) {
+        if (stopped) throw aborted();
+        const controller = new AbortController();
+        controllers.add(controller);
+        try {
+          const response = await fetch(file.readUrl, {
+            headers: { Range: `bytes=${begin}-${end - 1}` },
+            signal: controller.signal,
+            cache: 'no-store'
+          });
+          if (response.status !== 206 ||
+              response.headers.get('Content-Range') !== `bytes ${begin}-${end - 1}/${file.bytes}`) {
+            if (response.status === 429 || response.status >= 500) {
+              const error = new Error(`PDF range request failed: ${response.status}`);
+              error.retryable = true;
+              throw error;
+            }
+            throw new Error(`PDF range request failed: ${response.status}`);
+          }
+          const data = new Uint8Array(await response.arrayBuffer());
+          if (data.length !== end - begin) throw new Error('PDF range length mismatch');
+          onChunk(data.length);
+          return data;
+        } catch (error) {
+          if (stopped || error?.name === 'AbortError' || attempt === 2 ||
+              !(error instanceof TypeError || error?.retryable)) throw error;
+          await new Promise((resolve) => setTimeout(resolve, 300 * (attempt + 1)));
+        } finally { controllers.delete(controller); }
       }
-      const data = new Uint8Array(await response.arrayBuffer());
-      if (data.length !== end - begin) throw new Error('PDF range length mismatch');
-      return data;
-    } finally { controllers.delete(controller); }
+    } finally { release(); }
   }
   const initialEnd = Math.min(chunkSize, file.bytes);
   const initialData = await request(0, initialEnd);
@@ -43,7 +80,7 @@ async function protectedTransport(engine, file, onFailure) {
     requestDataRange(begin, end) {
       request(begin, end).then((data) => this.onDataRange(begin, data)).catch(onFailure);
     }
-    abort() { for (const controller of controllers) controller.abort(); }
+    abort() { abort(); }
   }
   return new ReferenceTransport(file.bytes, initialData, initialEnd === file.bytes);
 }
@@ -388,11 +425,24 @@ export function createPdfReader(dialog) {
     ui.stage.setAttribute('aria-busy', 'true');
     ui.status.textContent = '正在连接文档…';
     stageWidth = ui.stage.clientWidth;
-    loadTimer = setTimeout(() => {
+    let receivedBytes = 0;
+    const progressText = (bytes) => bytes >= 1048576
+      ? `${(bytes / 1048576).toFixed(1)} MiB` : `${Math.ceil(bytes / 1024)} KiB`;
+    const showProgress = () => {
       if (activeSession !== session || pdf) return;
-      stop();
-      showError({ name: 'TimeoutError' });
-    }, 90000);
+      ui.status.textContent = file.bytes
+        ? `正在准备文档… ${progressText(receivedBytes)} / ${progressText(file.bytes)}`
+        : `正在读取文档… 已接收 ${progressText(receivedBytes)}`;
+    };
+    const armLoadTimer = () => {
+      clearTimeout(loadTimer);
+      loadTimer = setTimeout(() => {
+        if (activeSession !== session || pdf) return;
+        stop();
+        showError({ name: 'TimeoutError' });
+      }, 90000);
+    };
+    armLoadTimer();
     try {
       const engine = await loadEngine();
       if (activeSession !== session) return;
@@ -403,6 +453,11 @@ export function createPdfReader(dialog) {
           if (activeSession !== session) return;
           stop();
           showError(error);
+        }, (bytes) => {
+          if (activeSession !== session || pdf) return;
+          receivedBytes = Math.min(file.bytes, receivedBytes + bytes);
+          armLoadTimer();
+          showProgress();
         })
         : null;
       if (activeSession !== session) { transport?.abort(); return; }
@@ -421,8 +476,8 @@ export function createPdfReader(dialog) {
       });
       documentTask.onProgress = ({ loaded }) => {
         if (activeSession !== session || pdf) return;
-        const amount = loaded >= 1048576 ? `${(loaded / 1048576).toFixed(1)} MB` : `${Math.ceil(loaded / 1024)} KB`;
-        ui.status.textContent = `正在读取文档… 已接收 ${amount}`;
+        receivedBytes = Math.max(receivedBytes, loaded);
+        showProgress();
       };
       documentTask.onPassword = () => {
         if (activeSession !== session) return;
