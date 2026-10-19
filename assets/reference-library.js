@@ -22,8 +22,10 @@ import { createPdfReader } from './pdf-reader.js?v=range-queue-1';
     reader: root.querySelector('[data-reference-reader]')
   };
   const pageSize = 40;
+  const technicalCategory = '03.大厂技术资料';
   const state = { catalog: null, category: '', folder: '', query: '', sort: 'name', page: 1, serviceReady: false };
   const number = new Intl.NumberFormat('zh-CN');
+  const categoryName = (title) => title === technicalCategory ? '技术资料' : title.replace(/^\d+[.、]?/, '');
   const referenceEndpoint = (root.dataset.referenceApi || '').trim().replace(/\/+$/, '');
   const isLive = (file) => Boolean(referenceEndpoint && state.serviceReady && file.published && file.id);
 
@@ -59,7 +61,10 @@ import { createPdfReader } from './pdf-reader.js?v=range-queue-1';
 
   function renderCategories() {
     nodes.categories.replaceChildren();
+    nodes.categories.classList.toggle('has-directory-tree', state.category === technicalCategory);
     for (const category of state.catalog.categories) {
+      const group = document.createElement('div');
+      group.className = 'reference-category-group';
       const button = document.createElement('button');
       button.type = 'button';
       button.className = 'reference-category';
@@ -71,7 +76,7 @@ import { createPdfReader } from './pdf-reader.js?v=range-queue-1';
       const label = document.createElement('span');
       label.className = 'reference-category-label';
       const name = document.createElement('strong');
-      name.textContent = category.title.replace(/^\d+[.、]?/, '');
+      name.textContent = categoryName(category.title);
       const subline = document.createElement('small');
       subline.textContent = category.withheld
         ? `${number.format(category.pdfs)} 份 · 未公开`
@@ -89,8 +94,68 @@ import { createPdfReader } from './pdf-reader.js?v=range-queue-1';
         state.page = 1;
         render();
       });
-      nodes.categories.append(button);
+      group.append(button);
+      if (category.title === technicalCategory && state.category === technicalCategory) {
+        group.append(renderTechnicalDirectory(state.catalog.files.filter((file) => file.category === technicalCategory)));
+      }
+      nodes.categories.append(group);
     }
+  }
+
+  function renderTechnicalDirectory(files) {
+    const directory = document.createElement('div');
+    directory.className = 'reference-directory-tree';
+    directory.setAttribute('role', 'group');
+    directory.setAttribute('aria-label', '技术资料原始文件夹');
+    const all = document.createElement('button');
+    all.type = 'button';
+    all.className = 'reference-directory-all';
+    all.classList.toggle('is-active', !state.folder);
+    all.textContent = `全部 PDF · ${number.format(files.length)}`;
+    all.addEventListener('click', () => { state.folder = ''; state.page = 1; render(); });
+    directory.append(all);
+
+    const folders = new Map();
+    for (const file of files) {
+      let children = folders;
+      let path = '';
+      for (const name of file.folder.split('/').filter(Boolean)) {
+        path = path ? `${path}/${name}` : name;
+        if (!children.has(name)) children.set(name, { name, path, count: 0, children: new Map() });
+        const folder = children.get(name);
+        folder.count += 1;
+        children = folder.children;
+      }
+    }
+
+    function appendFolders(children, parent) {
+      for (const folder of [...children.values()].sort((a, b) => a.name.localeCompare(b.name, 'zh-CN', { numeric: true }))) {
+        const item = document.createElement('div');
+        item.className = 'reference-directory-item';
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'reference-directory-folder';
+        button.classList.toggle('is-active', state.folder === folder.path);
+        button.setAttribute('aria-pressed', String(state.folder === folder.path));
+        button.title = folder.path;
+        const label = document.createElement('span');
+        label.textContent = folder.name;
+        const count = document.createElement('small');
+        count.textContent = number.format(folder.count);
+        button.append(label, count);
+        button.addEventListener('click', () => { state.folder = folder.path; state.page = 1; render(); });
+        item.append(button);
+        if (folder.children.size && (state.folder === folder.path || state.folder.startsWith(`${folder.path}/`))) {
+          const nested = document.createElement('div');
+          nested.className = 'reference-directory-children';
+          appendFolders(folder.children, nested);
+          item.append(nested);
+        }
+        parent.append(item);
+      }
+    }
+    appendFolders(folders, directory);
+    return directory;
   }
 
   function renderFolders(categoryFiles) {
@@ -152,7 +217,7 @@ import { createPdfReader } from './pdf-reader.js?v=range-queue-1';
     title.textContent = file.title;
     const path = document.createElement('small');
     path.className = 'reference-file-path';
-    path.textContent = [file.category.replace(/^\d+[.、]?/, ''), file.folder].filter(Boolean).join(' / ');
+    path.textContent = [categoryName(file.category), file.folder].filter(Boolean).join(' / ');
     body.append(title, path);
     const meta = document.createElement('span');
     meta.className = 'reference-file-size';
@@ -213,7 +278,7 @@ import { createPdfReader } from './pdf-reader.js?v=range-queue-1';
     const category = state.catalog.categories.find((item) => item.title === state.category);
     const categoryFiles = state.category ? state.catalog.files.filter((file) => file.category === state.category) : [];
     renderFolders(categoryFiles);
-    nodes.categoryTitle.textContent = state.folder.split('/').at(-1) || category?.title.replace(/^\d+[.、]?/, '') || '全部资料';
+    nodes.categoryTitle.textContent = state.folder.split('/').at(-1) || (category && categoryName(category.title)) || '全部资料';
     const files = filteredFiles();
     const pageCount = Math.max(1, Math.ceil(files.length / pageSize));
     state.page = Math.min(state.page, pageCount);

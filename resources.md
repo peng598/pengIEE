@@ -28,11 +28,6 @@ permalink: /resources/
     <aside class="reference-sidebar" aria-label="资料目录">
       <div class="reference-sidebar-heading"><span>目录</span><button type="button" data-clear-category>全部资料</button></div>
       <nav class="reference-category-list" data-category-list aria-label="按资料目录筛选"></nav>
-      <div class="reference-privacy-note">
-        <span class="reference-privacy-icon" aria-hidden="true">↗</span>
-        <strong>发布说明</strong>
-        <p>按你确认的 01–04 目录整理；文件上传 COS 后才会显示打开链接。付费 VIP 专辑不公开。</p>
-      </div>
     </aside>
 
     <div class="reference-main">
@@ -126,4 +121,4 @@ permalink: /resources/
 {% endif %}
 
 <script defer src="{{ '/assets/submission-api.js' | relative_url }}"></script>
-<script type="module" src="{{ '/assets/reference-library.js' | relative_url }}?v=range-queue-1"></script>
+<script type="module" src="{{ '/assets/reference-library.js' | relative_url }}?v=folders-1"></script>
