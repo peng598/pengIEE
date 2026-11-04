@@ -9,7 +9,12 @@ layout: default
     <p class="collection-description">{{ topic.summary }}</p>
     <div class="collection-meta"><span>三级知识页</span><span>{{ topic.notes.size }} 篇关联笔记</span><span>{{ topic.pdfs.size }} 份参考资料</span></div>
   </header>
-  <div class="hardware-content prose">{{ topic.content | markdownify }}</div>
+  {% assign siblings = site.data.hardware_topics | where: "root", topic.root | where: "branch", topic.branch %}
+  <nav class="hardware-sibling-nav" aria-label="{{ topic.branch | escape }}专题内容">
+    {% for sibling in siblings %}<a href="{{ sibling.url | relative_url }}"{% if sibling.url == page.url %} aria-current="page"{% endif %}>{{ sibling.leaf }}</a>{% endfor %}
+  </nav>
+  {% assign engineering = site.data.hardware_engineering[topic.branch][topic.leaf] %}
+  <div class="hardware-content prose">{{ topic.content | markdownify }}{% if engineering %}{{ engineering | markdownify }}{% endif %}{{ content }}</div>
   {% if topic.images.size > 0 %}
     <div class="hardware-images">
       {% for image in topic.images %}
@@ -35,11 +40,11 @@ layout: default
   {% endif %}
   <section class="resource-section hardware-section">
     <div class="section-heading"><h2>硬件文档资料</h2><span>{{ topic.pdfs.size }} 份</span></div>
-    <p class="resource-note">资料来自本地“硬件文档”分类索引。未确认公开授权的原始 PDF 不直接上传；如需在线阅读，请先确认版权或使用厂商公开链接。</p>
+    <p class="resource-note">按文档名称检索资料库；器件型号、修订版本与测试条件请对照原文确认。</p>
     <div class="resource-list hardware-pdf-list">
       {% for pdf in topic.pdfs %}
         {% if pdf.url %}<a class="resource-card" href="{{ pdf.url | relative_url }}" target="_blank" rel="noopener"><span class="resource-level">PDF</span><span class="resource-copy"><strong>{{ pdf.title }}</strong><small>{{ pdf.description }}</small></span><span class="resource-open">打开 ↗</span></a>
-        {% else %}<div class="resource-card"><span class="resource-level">PDF</span><span class="resource-copy"><strong>{{ pdf.title }}</strong><small>{{ pdf.description }}</small></span><span class="resource-open">{{ pdf.status }}</span></div>{% endif %}
+        {% else %}<a class="resource-card" href="{{ '/resources/' | relative_url }}?q={{ pdf.title | remove: '.pdf' | remove: '.PDF' | cgi_escape }}"><span class="resource-level">资料</span><span class="resource-copy"><strong>{{ pdf.title }}</strong><small>{{ pdf.description }}</small></span><span class="resource-open">检索 →</span></a>{% endif %}
       {% endfor %}
     </div>
   </section>

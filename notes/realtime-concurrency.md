@@ -2,7 +2,7 @@
 layout: note
 title: "实时并发与数据安全"
 category: "嵌入式系统"
-level: "基础"
+level: "核心设计"
 order: 5
 permalink: /notes/realtime-concurrency/
 summary: "从竞态与数据一致性到临界区、快照和实时性评估。"
@@ -139,72 +139,21 @@ FreeRTOS临界区通过BASEPRI屏蔽数值5及更低紧迫度的中断，优先�
 - 适合保护任务之间或RTOS管理范围内的中断共享数据。
 - 不足以保护被FOC高优先级中断访问的数据。
 
-## 8. 序列锁快照
+## 8. 序列锁的抢占方向限制
 
-不希望关闭中断时，可使用序列号检测读取期间是否发生更新。
+序列锁用奇数表示写入中，偶数表示稳定版本；读者比较前后序列号，不一致便重读。但若任务写到一半后被高优先级 ADC ISR 抢占，ISR 发现奇数并无限重试，写者永远不能恢复，系统会死锁。原先“在 ISR 内循环直到稳定”的简化做法不能用于这种执行关系。
 
-```c
-typedef struct
-{
-    float left;
-    float right;
-} MotorTarget_t;
+高优先级读者应使用有界尝试，失败则沿用上一份已验证快照并增加陈旧计数，或采用第 6 节极短 PRIMASK 发布。即便改成有界重试，也必须证明载荷读取的原子性、编译器与 CPU 顺序、版本号回绕边界；标准 C 中的多线程数据竞争不能仅靠 volatile 合法化。
 
-static volatile uint32_t target_sequence;
-static volatile MotorTarget_t target;
+若读者是可被写者 ISR 抢占的普通任务，单写者序列锁才有不同的进展条件。仍要限制重试次数，避免高频写入让低优先级读者饥饿。应在文档中画出“谁能抢占谁”，再选择算法，而非只比较是否关中断。
 
-void Target_Write(float left, float right)
-{
-    target_sequence++;
-    target.left = left;
-    target.right = right;
-    target_sequence++;
-}
+## 9. 双缓冲的所有权与重用
 
-MotorTarget_t Target_Read(void)
-{
-    MotorTarget_t copy;
-    uint32_t before;
-    uint32_t after;
+双缓冲的正确性来自“读者使用期间，写者不会重写该缓冲区”，不是来自索引切换本身。两个任务异步运行时，写者可能连续发布两次，在慢读者尚未完成时再次覆盖旧缓冲；索引是原子的也无法保护载荷。
 
-    do
-    {
-        before = target_sequence;
-        copy.left = target.left;
-        copy.right = target.right;
-        after = target_sequence;
-    }
-    while((before != after) || ((before & 1U) != 0U));
+对本文特定的单核关系——唯一写者是任务，唯一读者是更高优先级 ISR，读者在 ISR 内完成整个快照复制，写者不被其他写者重入——写后备缓冲再发布索引可以成立，因为 ISR 执行期间任务不会再次写入。发布前要有编译器/处理器所需的顺序保证，ISR 只读一次活动索引；DMA 或另一处理器不受此证明约束。
 
-    return copy;
-}
-```
-
-写入开始时序列号变奇数，完成后变偶数。读取者只有在前后序列号相同且为偶数时才接受快照。
-> **说明：> 这是简化示例。严格实现还要考虑编译器和CPU内存屏障；Cortex-M单核环境较简单，但不能把示例盲目移植到多核系统。**
-## 9. 双缓冲
-
-适合较大的配置或采样数据：
-
-```text
-任务写后备缓冲区
-任务完成后原子切换活动索引
-中断始终读取当前活动缓冲区
-```
-
-```c
-static MotorTarget_t buffers[2];
-static volatile uint32_t active_index;
-
-void Target_Publish(const MotorTarget_t *new_target)
-{
-    uint32_t next = active_index ^ 1U;
-    buffers[next] = *new_target;
-    active_index = next;
-}
-```
-
-活动索引必须是原子可读写的对齐32位值。
+对于更一般场景，采用 FreeRTOS 队列复制小型结构，或为缓冲区建立 FREE → FILLING → READY → READING → FREE 的所有权状态，只有读者显式归还后才能重用。队列里传指针不等于复制载荷，指针指向的生命周期也要一起管理。
 
 ## 10. 优先级反转
 
@@ -286,19 +235,27 @@ FOC中断每100us执行20us → 20%
 
 真实系统需要把中断嵌套、最坏情况和缓存/Flash等待考虑进去。
 
-## 本章练习
+## 15. 共享数据的发布协议与验收
+
+为每个共享对象记录写者、读者、更新周期、最大读时长、允许陈旧时间和丢弃策略。对“只要最新值”的遥控目标，可使用长度为 1 的覆盖队列；对必须逐条执行的校准命令，则使用有界消息队列并报告满队列。两者不能混用。
+
+若生产者每 $1\,ms$ 发布一次，消费者可能因总线占用停顿 $8\,ms$，逐条保存至少需要覆盖该期间的到达量并加上边界裕量；无论队列多大，长期平均服务率低于到达率都会最终溢出。把满队列策略写成丢旧、丢新或拒绝命令，而非静默覆盖。
+
+测试时在两个字段之间插入可控延迟，随机增加 ISR 负载，检查左右目标版本号是否相同、是否出现奇数版本长期停留。进一步用工具链原子实现或明确屏蔽方案验证 C 语言层和硬件层的同步；读取 DWT 得到的是观测最大耗时，仍需覆盖冷启动、Flash 等待、异常分支和最大中断负载才能支撑 WCET 结论。
+
+## 设计复核
 
 1. 列出 `ControlOut_L/R`、`M1_Foc/M2_Foc`、USART标志分别由谁读写。
 2. 给左右电机目标增加一个一致性发布函数。
 3. 使用DWT测量普通运行、串口打印和Flash保存时的 `App_1ms()` 时间。
 4. 解释为什么在1 ms控制任务中直接擦除Flash会造成超期。
 
-## 掌握检查
+## 验收检查
 
-- [ ] 能区分可见性、原子性和一致性。
-- [ ] 知道何时使用PRIMASK、FreeRTOS临界区或互斥量。
-- [ ] 能识别优先级反转。
-- [ ] 能测量并解释任务WCET和抖动。
-- [ ] 能为共享数据指定唯一所有者。
+- [ ] 明确每个共享对象的读写者、生命周期和允许陈旧时间。
+- [ ] 核验 PRIMASK、BASEPRI、Mutex 或所有权协议覆盖全部访问者。
+- [ ] 检查锁顺序、最大持锁时长与优先级反转路径。
+- [ ] 记录任务响应、最长屏蔽与最大压力下的抖动。
+- [ ] 注入抢占与缓冲区满条件，验证无死锁、撕裂或静默覆盖。
 
 上一章：[04-FreeRTOS实时系统]({{ '/notes/freertos-realtime/' | relative_url }})  下一章：[06-PID与数字控制]({{ '/notes/pid-digital-control/' | relative_url }})

@@ -1,55 +1,36 @@
 ---
 layout: note
-title: "放大倍数dB"
+title: "放大倍数与 dB"
 category: "硬件基础与电源"
 level: "核心设计"
 order: 30
 permalink: /notes/放大倍数db/
-summary: "分贝不是一个绝对单位，而是一个比率的对数表示。它主要用于表示两个数值之间的相对关系，比如输出相对于输入的变化。"
+summary: "功率、电压分贝与绝对电平的换算，说明阻抗和测量基准。"
 source: "笔记/硬件/公式相关/放大倍数dB"
 ---
 
-# 放大倍数dB
+# 放大倍数与 dB
 
-### 1. 理解分贝 (dB)
+## 比值的定义与阻抗条件
 
-分贝不是一个绝对单位，而是一个**比率**的对数表示。它主要用于表示两个数值之间的相对关系，比如输出相对于输入的变化。
+功率增益 $G_P=10\log_{10}(P_o/P_i)$。电压增益常定义为 $G_V=20\log_{10}|V_o/V_i|$，但它与功率增益相等需要输入输出阻抗条件相同。对实电阻 $P=V_{rms}^2/R$，可得 $G_P=20\log_{10}(V_o/V_i)+10\log_{10}(R_i/R_o)$。
 
-对于**功率**，分贝的定义是：  
-**dB = 10 * log₁₀(P₂ / P₁)**
+因此 −3.0103 dB 对应功率一半；同阻抗时电压比为 $1/\sqrt2\approx0.7071$。电压减半为 −6.0206 dB。若阻抗不同，不能从电压减半直接推出功率减少四倍。
 
-其中：
+## dBm、dBV 与谱密度
 
-- `P₁` 是参考功率（输入功率）
-    
-- `P₂` 是被比较的功率（输出功率）
-    
+dBm 以 1 mW 为基准：$P_{mW}=10^{P_{dBm}/10}$；dBV 以 1 V RMS 为基准。0 dBm 在 50 Ω 上对应 223.6 mV RMS，在 600 Ω 上则为 774.6 mV RMS。仪器显示的 dBm 转换成电压时必须知道端口阻抗和正弦/脉冲测量方式。
 
-对于**电压**（或电流），由于功率与电压的平方成正比（P = V²/R），其分贝定义是：  
-**dB = 20 * log₁₀(V₂ / V₁)**
+噪声密度 dBm/Hz 需积分带宽才能成为总噪声功率；白噪声近似增加 $10\log_{10}B$。改变 RBW 后噪声底变化并不一定意味着被测电路改变。
 
-其中：
+## 测试中的常见偏差
 
-- `V₁` 是参考电压（输入电压）
-    
-- `V₂` 是被比较的电压（输出电压）
-    
-- （假设负载电阻 R 保持不变）
-    
+50 Ω 信号源面板幅度可能按 50 Ω 负载校准，接高阻示波器时电压可能加倍。测增益应记录输入实际电压而非只抄信号源设置。多级增益 dB 可相加，但压缩、限幅和带宽变化会破坏线性假设；先用小信号扫频，再测目标幅度的失真与裕量。
 
-注意公式里的系数不同（功率用10，电压用20），这正是理解这个问题的钥匙。
-
-### 2. 计算功率下降一半时的 dB 值
-
-现在，我们计算当功率下降一半时，即 `P₂ / P₁ = 0.5` 时，对应的分贝值是多少。
-
-使用功率的公式：  
-**dB = 10 * log₁₀(0.5)**  
-**dB = 10 * (-0.3010...)**  
-**dB ≈ -3.01 dB**
-
-所以，**功率降低一半，在分贝表示上就是大约 -3 dB**。我们通常简称为 **-3dB**。
+## 原始图示
 
 <figure class="note-figure"><img src="{{ '/assets/attachments/attachment-021.png' | relative_url }}" alt="附件：Pasted image 20250529140737.png"><figcaption>Pasted image 20250529140737.png</figcaption></figure>
+
 <figure class="note-figure"><img src="{{ '/assets/attachments/attachment-022.png' | relative_url }}" alt="附件：Pasted image 20250529140748.png"><figcaption>Pasted image 20250529140748.png</figcaption></figure>
+
 <figure class="note-figure"><img src="{{ '/assets/attachments/attachment-023.png' | relative_url }}" alt="附件：Pasted image 20250529141630.png"><figcaption>Pasted image 20250529141630.png</figcaption></figure>

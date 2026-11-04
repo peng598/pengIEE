@@ -89,8 +89,12 @@
       "notes": ["/notes/power-input-design/", "/notes/power-sequencing/", "/notes/电源功率选型/", "/notes/简易的降压电路/"]
     },
     {
-      "topic": "MOS 与三极管应用",
-      "notes": ["/notes/mos/", "/notes/mos管/", "/notes/mos管n-和p-管工艺区别/", "/notes/三极管及mos管选型及应用/", "/notes/电机的dcr吸收电路/", "/notes/判断三极管在放大还是饱和的关键/", "/notes/三极管au-aus计算/", "/notes/三极管vbe会随温度变化/"]
+      "topic": "MOS 功率开关与驱动",
+      "notes": ["/notes/mos/", "/notes/mos管/", "/notes/mos管n-和p-管工艺区别/", "/notes/三极管及mos管选型及应用/", "/notes/电机的dcr吸收电路/"]
+    },
+    {
+      "topic": "三极管偏置、增益与工作区",
+      "notes": ["/notes/判断三极管在放大还是饱和的关键/", "/notes/三极管au-aus计算/", "/notes/三极管vbe会随温度变化/", "/notes/三极管及mos管选型及应用/"]
     },
     {
       "topic": "二极管与稳压保护",
@@ -117,8 +121,16 @@
       "notes": ["/notes/audio_codec通用选型与硬件设计经验手册/", "/notes/audio-input-capacitor/", "/notes/audio-mixing/", "/notes/音频处理对音频参数影响/"]
     },
     {
-      "topic": "运放与模拟放大",
-      "notes": ["/notes/运放指标/", "/notes/input-impedance-scenarios/", "/notes/op-amp-input-impedance/", "/notes/non-inverting-inverting-input/", "/notes/op-amp-attenuator/", "/notes/op-amp-phase-shift/", "/notes/负反馈电容/", "/notes/audio-differential-amplifier/", "/notes/cross-coupling/", "/notes/unbalanced-to-balanced/"]
+      "topic": "运放输入阻抗与级间加载",
+      "notes": ["/notes/input-impedance-scenarios/", "/notes/op-amp-input-impedance/", "/notes/non-inverting-inverting-input/"]
+    },
+    {
+      "topic": "运放反馈、噪声增益与稳定性",
+      "notes": ["/notes/运放指标/", "/notes/op-amp-attenuator/", "/notes/op-amp-phase-shift/", "/notes/负反馈电容/"]
+    },
+    {
+      "topic": "平衡音频驱动与差分接收",
+      "notes": ["/notes/audio-differential-amplifier/", "/notes/cross-coupling/", "/notes/unbalanced-to-balanced/"]
     },
     {
       "topic": "功率放大与 D 类功放",
@@ -138,7 +150,19 @@
     },
     {
       "topic": "接口与电路隔离",
-      "notes": ["/notes/光耦隔离器件计算/", "/notes/光耦应用注意点/", "/notes/io口没用到-需要接地/"]
+      "notes": ["/notes/光耦隔离器件计算/", "/notes/光耦应用注意点/"]
+    },
+    {
+      "topic": "GPIO 电气配置与外设调试",
+      "notes": ["/notes/io口没用到-需要接地/", "/notes/at32-peripherals/"]
+    },
+    {
+      "topic": "触摸采样与输入抗扰",
+      "notes": ["/notes/触摸方案/", "/notes/adc精度/", "/notes/adc-divider-noise/", "/notes/esd-principles/"]
+    },
+    {
+      "topic": "视频投屏与显示时序",
+      "notes": ["/notes/tspi-cast-使用说明/", "/notes/画面有撕裂横-高低温开机时间/"]
     }
   ]
 }

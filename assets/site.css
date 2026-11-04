@@ -389,6 +389,9 @@ button { font: inherit; }
 .reference-directory-folder span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .reference-directory-folder small { flex: 0 0 auto; color: #9ba59c; font-size: 9px; }
 .reference-directory-children { margin-left: 10px; padding-left: 5px; border-left: 1px solid #e1e8df; }
+.hardware-sibling-nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 24px; }
+.hardware-sibling-nav a { padding: 6px 12px; border: 1px solid var(--line); color: var(--muted); font-size: 12px; text-decoration: none; }
+.hardware-sibling-nav a:hover, .hardware-sibling-nav a[aria-current="page"] { border-color: var(--accent); color: var(--accent-dark); background: #fff8f6; }
 .reference-main { min-width: 0; padding: 19px 20px 17px; }
 .reference-toolbar { display: flex; gap: 9px; }
 .reference-search { display: flex; height: 39px; min-width: 0; flex: 1; align-items: center; gap: 8px; padding: 0 10px; border: 1px solid #e1e5e0; background: #fff; color: #7a847c; }

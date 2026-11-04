@@ -24,6 +24,8 @@ import { createPdfReader } from './pdf-reader.js?v=range-queue-1';
   const pageSize = 40;
   const technicalCategory = '03.大厂技术资料';
   const state = { catalog: null, category: '', folder: '', query: '', sort: 'name', page: 1, serviceReady: false };
+  state.query = new URLSearchParams(window.location.search).get('q') || '';
+  nodes.search.value = state.query;
   const number = new Intl.NumberFormat('zh-CN');
   const categoryName = (title) => title === technicalCategory ? '技术资料' : title.replace(/^\d+[.、]?/, '');
   const referenceEndpoint = (root.dataset.referenceApi || '').trim().replace(/\/+$/, '');

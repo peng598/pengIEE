@@ -1,6 +1,12 @@
 # PENGIEE
 
-个人嵌入式与电子技术笔记，内容来自 Obsidian 笔记的整理版。目前整理了 156 篇公开页面，网站按“一级主题 → 二级专题 → 三级内容”整理硬件文档目录，并分为嵌入式系统、实时系统与软件、硬件基础与电源、PCB 与信号完整性、模拟/音频与声学、测试与工程经验六个笔记方向。笔记中实际引用的图片和 PDF 附件已恢复，另整理了 19 份硬件参考资料放在[资料库](https://peng598.github.io/pengIEE/resources/)中。面试/求职相关内容、空白笔记、Obsidian 配置和企业自查资料未发布。
+面向工程设计与调试的嵌入式、电子技术文档，内容以 Obsidian 笔记的整理版为基础。目前有 156 篇技术笔记、51 页电子基础专题和 15 页电源设计专题，按“一级主题 → 二级专题 → 三级内容”组织。正文覆盖器件模型、公式假设、参数意义、最坏情况计算、实现和测量方法，保留原笔记中引用的图片与附件。六个笔记方向为嵌入式系统、实时系统与软件、硬件基础与电源、PCB 与信号完整性、模拟/音频与声学、测试与工程经验。[资料库](https://peng598.github.io/pengIEE/resources/)索引 1,258 份 PDF，通过在线阅读服务访问。面试/求职相关内容、空白笔记、Obsidian 配置和企业自查资料未发布。
+
+本轮十次内容迭代的范围、技术修正与校核结果见 [迭代记录](tools/reports/content-iterations-2026-11-04.md)。
+
+## 内容维护
+
+笔记正文在 `notes/`；硬件基础正文在 `_data/hardware_topics.json`，补充推导与算例在 `_data/hardware_engineering.yml`；15 个电源专题由 `_data/power_topics_expansion.json` 维护。修改电源专题后运行 `node tools/generate-hardware-pages.mjs` 更新硬件汇总数据和页面，再运行 `node tools/generate-note-search.mjs` 更新笔记全文索引。使用 `node tools/audit-content.mjs` 检查导航、正文、关联笔记及本地链接。对修改前后的附件与 URL 做保留检查可加 `--base=<修改前提交>`。
 
 网站：<https://peng598.github.io/pengIEE/>
 
@@ -12,10 +18,10 @@
 
 ## 本地预览
 
-这是一个 GitHub Pages / Jekyll 网站。安装 Ruby 和 Bundler 后运行：
+这是一个 GitHub Pages / Jekyll 网站。发布构建由 GitHub Actions 完成；本机已安装兼容的 Ruby、Jekyll 及依赖时，可在仓库目录运行：
 
 ```sh
-bundle exec jekyll serve
+jekyll serve
 ```
 
 首次发布前，在仓库的 **Settings → Pages → Build and deployment** 中把来源设为 **GitHub Actions**。之后每次推送到 `main`，Actions 会自动构建并部署网站。
