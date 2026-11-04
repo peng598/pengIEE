@@ -290,6 +290,9 @@ button { font: inherit; }
 .article-level { color: var(--accent-dark); font-weight: 650; }
 .article-layout { display: grid; grid-template-columns: minmax(0, 780px) 190px; align-items: start; gap: clamp(28px, 4vw, 58px); }
 .prose { min-width: 0; overflow-wrap: anywhere; color: #333835; font-size: 14px; line-height: 1.8; }
+.prose mjx-container { max-width: 100%; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; padding: 2px; }
+.prose mjx-container::-webkit-scrollbar { display: none; }
+.prose mjx-container:not([display="true"]) { display: inline-grid; }
 .prose h1 { margin: 0 0 26px; padding: 0 0 17px; border-bottom: 1px solid var(--line); color: #242825; font-size: 28px; font-weight: 650; line-height: 1.35; }
 .prose h2 { margin: 36px 0 13px; padding-bottom: 6px; border-bottom: 1px solid #ececea; color: #2c312e; font-size: 20px; font-weight: 650; line-height: 1.45; }
 .prose h3 { margin: 26px 0 10px; color: #343936; font-size: 16px; font-weight: 650; line-height: 1.5; }
