@@ -26,6 +26,7 @@ jobs:
           node-version: '20'
       - run: node tools/generate-site-updates.mjs
       - run: node tools/generate-hardware-pages.mjs
+      - run: node tools/generate-engineering-figures.mjs
       - run: node tools/generate-note-search.mjs
       - run: node tools/audit-content.mjs
       - run: node --test tests/homepage.test.cjs

@@ -1,0 +1,14 @@
+{% for diagram in site.data.engineering_figures %}
+  {% if diagram.pages contains page.url %}
+  <section class="engineering-illustration" aria-labelledby="diagram-{{ diagram.id }}">
+    <h2 id="diagram-{{ diagram.id }}">图解：{{ diagram.title }}</h2>
+    <figure class="engineering-figure">
+      <div class="engineering-figure-scroll" tabindex="0" role="region" aria-label="{{ diagram.title | escape }}，可横向滚动">
+        <img src="{{ diagram.src | relative_url }}" width="960" height="540" loading="lazy" decoding="async" alt="{{ diagram.alt | escape }}">
+      </div>
+      <figcaption>{{ diagram.caption }} <a href="{{ diagram.src | relative_url }}" target="_blank" rel="noopener">打开大图 ↗</a></figcaption>
+    </figure>
+    <div class="engineering-figure-reading">{{ diagram.explanation | markdownify }}</div>
+  </section>
+  {% endif %}
+{% endfor %}

@@ -13,8 +13,20 @@ layout: default
   <nav class="hardware-sibling-nav" aria-label="{{ topic.branch | escape }}专题内容">
     {% for sibling in siblings %}<a href="{{ sibling.url | relative_url }}"{% if sibling.url == page.url %} aria-current="page"{% endif %}>{{ sibling.leaf }}</a>{% endfor %}
   </nav>
+  <details class="article-toc hardware-toc">
+    <summary>本页目录</summary>
+    <ol class="article-toc-list"></ol>
+  </details>
   {% assign engineering = site.data.hardware_engineering[topic.branch][topic.leaf] %}
-  <div class="hardware-content prose">{{ topic.content | markdownify }}{% if engineering %}{{ engineering | markdownify }}{% endif %}{{ content }}</div>
+  {% assign case_studies = site.data.hardware_cases_passive | concat: site.data.hardware_cases_active_power %}
+  {% assign case_study = case_studies | where: "url", page.url | first %}
+  <div class="hardware-content prose">
+    {{ topic.content | markdownify }}
+    {% if engineering %}{{ engineering | markdownify }}{% endif %}
+    {% include engineering-figures.html %}
+    {% if case_study %}<section class="engineering-case-study" aria-label="工程案例与深入分析">{{ case_study.content | markdownify }}</section>{% endif %}
+    {{ content }}
+  </div>
   {% if topic.images.size > 0 %}
     <div class="hardware-images">
       {% for image in topic.images %}

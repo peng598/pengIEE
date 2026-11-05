@@ -18,6 +18,7 @@ layout: default
   <div class="article-layout">
       <div class="prose">
       {{ content }}
+      {% include engineering-figures.html %}
       {% assign related_urls = nil %}
       {% for related_group in site.data.related_notes.groups %}
         {% if related_group.notes contains page.url %}

@@ -150,8 +150,14 @@
       const article = document.querySelector('.prose');
       const toc = document.querySelector('.article-toc-list');
       if (article && toc) {
-        article.querySelectorAll('h2, h3').forEach((heading) => {
-          if (!heading.id) return;
+        const usedHeadingIds = new Set();
+        article.querySelectorAll('h2, h3').forEach((heading, index) => {
+          const stem = heading.id || `section-${index + 1}`;
+          let identifier = stem;
+          let suffix = 2;
+          while (usedHeadingIds.has(identifier)) identifier = `${stem}-${suffix++}`;
+          heading.id = identifier;
+          usedHeadingIds.add(identifier);
           const item = document.createElement('li');
           if (heading.tagName === 'H3') item.className = 'toc-subitem';
           const link = document.createElement('a');

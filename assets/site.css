@@ -342,6 +342,18 @@ button { font: inherit; }
 .hardware-heading { max-width: 900px; }
 .hardware-heading h1 { overflow-wrap: anywhere; }
 .hardware-content { max-width: 820px; margin-top: 25px; }
+.hardware-toc { position: static; max-width: 820px; margin-top: 18px; padding: 10px 14px; border: 1px solid var(--line); background: #fafbf9; }
+.hardware-toc summary { color: #515b55; font-size: 12px; cursor: pointer; }
+.hardware-toc .article-toc-list { max-height: 300px; margin-top: 8px; columns: 2 260px; }
+.hardware-toc .article-toc-list li { break-inside: avoid; }
+.hardware-toc .article-toc-list a { font-size: 12px; }
+.engineering-figure { margin: 17px 0; }
+.engineering-figure-scroll { max-width: 100%; overflow-x: auto; border: 1px solid #dce4e4; border-radius: 4px; background: #fff; }
+.engineering-figure-scroll:focus-visible { outline: 2px solid #286a72; outline-offset: 3px; }
+.engineering-figure img { display: block; width: 100%; min-width: 720px; max-width: none; height: auto; margin: 0; }
+.engineering-figure figcaption { margin-top: 9px; color: #68736d; font-size: 12px; line-height: 1.7; }
+.engineering-figure figcaption a { white-space: nowrap; }
+.engineering-figure-reading { padding: 2px 14px; border-left: 2px solid #7d9e9b; background: #f7faf9; }
 .hardware-images { max-width: 820px; margin-top: 23px; padding-top: 1px; border-top: 1px solid var(--line); }
 .hardware-images .note-figure { margin: 16px 0 21px; }
 .hardware-images .note-figure img { max-width: 100%; }

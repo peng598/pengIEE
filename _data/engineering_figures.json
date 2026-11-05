@@ -1,0 +1,158 @@
+[
+  {
+    "id": "divider-acquisition",
+    "title": "分压精度还受采样建立时间限制",
+    "src": "/assets/engineering/divider-acquisition.svg",
+    "alt": "90千欧与10千欧分压的输出通过采样开关连接20皮法电容。等效电阻9千欧，时间常数180纳秒，12位满幅建立需约1.62微秒。",
+    "caption": "原创工程示意；图中参数为声明的假设条件。窄屏可左右滑动，或打开大图。",
+    "pages": [
+      "/hardware/electronic-basics/resistor/basics/",
+      "/hardware/electronic-basics/data-converters/adc/",
+      "/notes/adc精度/"
+    ],
+    "explanation": "图中的 1.62 μs 是**满量程跳变、单极点且采样电容初态最坏**时的计算值。多路复用 ADC 切换通道可能触发这个条件；固定直流输入连续采样却可能掩盖问题。将采样窗口加倍后误差显著下降，提示建立不足；改变分压阻值而保持比例不变，可进一步区分静态比例误差与驱动问题。"
+  },
+  {
+    "id": "capacitor-antiresonance",
+    "title": "不同电容并联后的反谐振",
+    "src": "/assets/engineering/capacitor-antiresonance.svg",
+    "alt": "对数坐标展示10微法与100纳法电容的串联RLC阻抗及并联总阻抗，红线在两支路的自谐振频率之间出现反谐振峰。",
+    "caption": "原创工程示意；图中参数为声明的假设条件。窄屏可左右滑动，或打开大图。",
+    "pages": [
+      "/hardware/electronic-basics/capacitor/basics/",
+      "/hardware/electronic-basics/ferrite-bead/applications/",
+      "/notes/ferrite-bead-selection/",
+      "/notes/lc-filter-design/"
+    ],
+    "explanation": "蓝、金两支路各有低阻抗点，红色总阻抗却可能在中间频段上升。关注**峰值幅度、频率和负载激励频谱是否重合**，再决定增加损耗、改变安装位置或调整容量。给某一支路串阻会同时改变损耗与谷值；应使用带偏置的阻抗模型复算，并以实际测试板确认。"
+  },
+  {
+    "id": "buck-current",
+    "title": "Buck 电感电流：斜率、峰值与 RMS",
+    "src": "/assets/engineering/buck-current.svg",
+    "alt": "Buck电感电流在2.708安与3.292安之间呈三角波，导通0.833微秒，周期2微秒，虚线表示3安平均值。",
+    "caption": "原创工程示意；图中参数为声明的假设条件。窄屏可左右滑动，或打开大图。",
+    "pages": [
+      "/hardware/electronic-basics/inductor/basics/",
+      "/hardware/power-design/power-basics/topology/",
+      "/notes/dc-dc/"
+    ],
+    "explanation": "把实测上升斜率与 $(V_{in}-V_o)/L$ 对照，再看峰值是否接近限流。若同一导通段越往后斜率越陡，应排查偏置降感、饱和和探头带宽，而不是只改补偿。导通损耗使用 RMS，限流与饱和使用峰值，磁芯损耗还取决于波形和磁通摆幅。"
+  },
+  {
+    "id": "mosfet-miller",
+    "title": "米勒平台对应漏极电压转换",
+    "src": "/assets/engineering/mosfet-miller.svg",
+    "alt": "上方栅源电压曲线在米勒段形成平台，下方漏源电压在同一电荷区间下降。Qgd除以平台栅极电流可估转换时间。",
+    "caption": "原创工程示意；图中参数为声明的假设条件。窄屏可左右滑动，或打开大图。",
+    "pages": [
+      "/hardware/electronic-basics/mosfet/basics/",
+      "/hardware/electronic-basics/mosfet/applications/",
+      "/notes/mos/"
+    ],
+    "explanation": "平台期间栅极电流主要用于改变栅漏电荷。计算 $t\\approx Q_{gd}/I_g$ 时，$I_g$ 应由驱动电压减平台电压后，除以驱动器、外部栅阻与内部栅阻之和来估计。缩小栅阻会加快转换，也会增加振铃、共源电感反馈和误导通风险，必须同时测量器件引脚处的 VGS 与 VDS。"
+  },
+  {
+    "id": "tvs-load-line",
+    "title": "TVS 钳位必须与浪涌源共同求解",
+    "src": "/assets/engineering/tvs-load-line.svg",
+    "alt": "蓝色浪涌源负载线与红色TVS近似伏安曲线相交于10.43安、27.13伏，说明钳位电压取决于浪涌源阻抗和动态电阻。",
+    "caption": "原创工程示意；图中参数为声明的假设条件。窄屏可左右滑动，或打开大图。",
+    "pages": [
+      "/hardware/electronic-basics/tvs/parameters/",
+      "/hardware/electronic-basics/tvs/applications/",
+      "/notes/电源输入保护/"
+    ],
+    "explanation": "把后级可承受电压、TVS 电压公差和安装电感一起放进保护预算。该图只取单个瞬时点；评估吸收能量需要积分 $\\int v(t)i(t)\\,dt$，还要使用对应脉宽、温度和重复率的额定曲线。减小 TVS 到回流点的环路，往往比单纯更换更大峰值功率器件更直接。"
+  },
+  {
+    "id": "opamp-noise-gain",
+    "title": "跨阻放大器的噪声增益与交越",
+    "src": "/assets/engineering/opamp-noise-gain.svg",
+    "alt": "开环增益随频率下降，跨阻反馈噪声增益从0dB上升并趋于20.83dB，反馈电容限制高频噪声增益。",
+    "caption": "原创工程示意；图中参数为声明的假设条件。窄屏可左右滑动，或打开大图。",
+    "pages": [
+      "/hardware/electronic-basics/op-amp/applications/",
+      "/notes/负反馈电容/",
+      "/notes/op-amp-phase-shift/"
+    ],
+    "explanation": "此例噪声增益零点约 72.3 kHz、极点约 795.8 kHz，高频渐近值为 $1+C_{in}/C_f=11$。交越附近要查看 $A\\beta$ 的相位，不能用两条幅值曲线的交点单独宣告稳定。增大 Cf 通常降低信号带宽，也改变噪声积分；应连同上升时间、过冲和输出噪声一起验收。"
+  },
+  {
+    "id": "source-termination",
+    "title": "源端串联端接的行波往返",
+    "src": "/assets/engineering/source-termination.svg",
+    "alt": "匹配源端发出1.65伏行波，高阻接收端在单程延迟td时反射相同幅度并达到3.3伏，反射波在2td回到源端后被匹配吸收。",
+    "caption": "原创工程示意；图中参数为声明的假设条件。窄屏可左右滑动，或打开大图。",
+    "pages": [
+      "/notes/源端匹配/",
+      "/notes/impedance-matching/",
+      "/notes/termination-resistor-placement/"
+    ],
+    "explanation": "接收端看到完整电平，并不意味着线上所有位置同时达到该电平。中途挂接负载可能看到较长的半幅平台，所以源端端接适合相应的点到点拓扑。串联电阻靠近驱动器放置；调试时同时记录驱动器输出阻抗的工作点、边沿、线长和接收端输入电容。"
+  },
+  {
+    "id": "kelvin-sensing",
+    "title": "Kelvin 采样把功率压降排除在测量之外",
+    "src": "/assets/engineering/kelvin-sensing.svg",
+    "alt": "5安功率电流流过2毫欧铜箔和10毫欧分流器。独立蓝色感测线只取分流器两端50毫伏，避免铜箔10毫伏导致20%误差。",
+    "caption": "原创工程示意；图中参数为声明的假设条件。窄屏可左右滑动，或打开大图。",
+    "pages": [
+      "/hardware/electronic-basics/resistor/applications/",
+      "/hardware/power-design/power-test/efficiency-thermal/",
+      "/notes/adc-divider-noise/"
+    ],
+    "explanation": "示意图忽略感测输入偏置电流与热电势。毫欧测量不仅要四线连接，还要限制热梯度、保持两侧滤波对称，并区分电流零点与增益误差。验证时以已知正负电流拟合斜率和偏置，在冷态、热稳态与实际共模电压下重复比较。"
+  },
+  {
+    "id": "dma-ownership",
+    "title": "DMA 半缓冲交接的所有权与截止时间",
+    "src": "/assets/engineering/dma-ownership.svg",
+    "alt": "16格循环缓冲分为A和B两个半区。CPU读取已完成的A时DMA写B，CPU必须在DMA再次回到A前读完，否则发生覆盖。",
+    "caption": "原创工程示意；图中参数为声明的假设条件。窄屏可左右滑动，或打开大图。",
+    "pages": [
+      "/notes/uart-dma-ble/",
+      "/notes/realtime-concurrency/"
+    ],
+    "explanation": "时间预算使用**最坏调度延迟与最坏处理时间**，不能仅用平均处理速度。若预算不足，应加大缓冲、把数据复制到拥有明确生命周期的队列、降低生产速率或按协议施加背压。出现覆盖时应累计溢出计数并显式丢弃无效帧，不能让消费者把半新半旧数据当成完整包。"
+  },
+  {
+    "id": "load-step-budget",
+    "title": "负载阶跃中的 ESR 台阶与电荷缺口",
+    "src": "/assets/engineering/load-step-budget.svg",
+    "alt": "在1安电流缺口下，100微法电容以每微秒10毫伏的速度放电，20毫欧ESR额外造成20毫伏台阶，20微秒时合计跌落220毫伏。",
+    "caption": "原创工程示意；图中参数为声明的假设条件。窄屏可左右滑动，或打开大图。",
+    "pages": [
+      "/hardware/electronic-basics/capacitor/applications/",
+      "/hardware/power-design/power-test/load-transient/",
+      "/notes/ldo-output-capacitor/"
+    ],
+    "explanation": "实际电流缺口一般不是理想矩形，应从负载电流与电感/稳压器输出电流之差积分。最初窄尖峰对安装电感和测量回路敏感；随后台阶对 ESR 敏感；较慢的斜率包含电容量和控制响应。把不同时间尺度分开看，比仅记录一个峰峰值更容易定位问题。"
+  },
+  {
+    "id": "thermal-transient",
+    "title": "热稳态与短脉冲温升不是同一问题",
+    "src": "/assets/engineering/thermal-transient.svg",
+    "alt": "2瓦阶跃作用于20开尔文每瓦、5秒时间常数的单阶热模型，温升指数趋近40开尔文，5秒时达到25.3开尔文。",
+    "caption": "原创工程示意；图中参数为声明的假设条件。窄屏可左右滑动，或打开大图。",
+    "pages": [
+      "/hardware/power-design/power-test/efficiency-thermal/",
+      "/hardware/electronic-basics/mosfet/parameters/",
+      "/notes/ldo/"
+    ],
+    "explanation": "结温必须带上初始温度和实际热边界。一次短脉冲温升小，不能推出高重复率下也安全；应按脉冲序列叠加或使用厂商重复脉冲曲线。还要独立检查电气 SOA，尤其 MOSFET 在线性区可能在达到平均结温上限前发生局部热点失效。"
+  },
+  {
+    "id": "crystal-bvd",
+    "title": "石英晶体的 BVD 等效模型",
+    "src": "/assets/engineering/crystal-bvd.svg",
+    "alt": "两端晶体由串联Rm、Lm、Cm的运动支路与静态电容C0并联构成。外部负载电容改变加载谐振频率，不能把标称负载频率直接当串联频率。",
+    "caption": "原创工程示意；图中参数为声明的假设条件。窄屏可左右滑动，或打开大图。",
+    "pages": [
+      "/hardware/electronic-basics/crystal/basics/",
+      "/hardware/electronic-basics/crystal/parameters/",
+      "/notes/crystal-structure/"
+    ],
+    "explanation": "数据手册的标称频率通常对应指定负载条件；图中把 fs 指定为 16 MHz 只是为了说明拉频方向。CL 是晶体看到的**有效负载**，不能把每个外接电容的标称值直接当成 CL。校核起振时还需要负阻裕量、驱动电平、偏置和温度，频率正确不等于启动一定可靠。"
+  }
+]

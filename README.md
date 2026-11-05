@@ -4,9 +4,13 @@
 
 本轮十次内容迭代的范围、技术修正与校核结果见 [迭代记录](tools/reports/content-iterations-2026-11-04.md)。
 
+第二批十轮深化增加 66 个专题工程案例、24 篇笔记增补与 12 张原创矢量图，集中解释模型边界、最坏条件、计算过程和测量判据，详见 [第 11—20 轮记录](tools/reports/content-iterations-2026-11-05.md)。图中参数均为明确声明的分析假设，不作为具体器件规格。
+
 ## 内容维护
 
 笔记正文在 `notes/`；硬件基础正文在 `_data/hardware_topics.json`，补充推导与算例在 `_data/hardware_engineering.yml`；15 个电源专题由 `_data/power_topics_expansion.json` 维护。修改电源专题后运行 `node tools/generate-hardware-pages.mjs` 更新硬件汇总数据和页面，再运行 `node tools/generate-note-search.mjs` 更新笔记全文索引。使用 `node tools/audit-content.mjs` 检查导航、正文、关联笔记及本地链接。对修改前后的附件与 URL 做保留检查可加 `--base=<修改前提交>`。
+
+深入案例按专题 URL 分别保存在 `_data/hardware_cases_passive.json` 与 `_data/hardware_cases_active_power.json`。原创插图及读图说明由 `tools/generate-engineering-figures.mjs` 维护；运行该脚本会生成 `assets/engineering/*.svg` 和 `_data/engineering_figures.json`，后者按页面 URL 精确关联图片。图片在网页中可横向滑动，也可打开矢量原图放大。
 
 网站：<https://peng598.github.io/pengIEE/>
 

@@ -33,6 +33,8 @@ if (baseline) for (const note of notes) {
   }
 }
 const topics = JSON.parse(read('_data/hardware_topics.json'));
+const caseStudies = ['_data/hardware_cases_passive.json', '_data/hardware_cases_active_power.json'].flatMap((file) => JSON.parse(read(file)));
+const figures = JSON.parse(read('_data/engineering_figures.json'));
 const referenceFiles = new Map(JSON.parse(read('assets/reference-library.json')).files.map((file) => [file.id, file]));
 const identities = new Set();
 for (const topic of topics) {
@@ -52,6 +54,27 @@ for (const topic of topics) {
   for (const pdf of topic.pdfs || []) {
     if (pdf.reference_id && referenceFiles.get(pdf.reference_id)?.key !== pdf.catalog_key) errors.push(`Unmatched reference: ${topic.url} -> ${pdf.title}`);
   }
+}
+const caseUrls = new Set();
+for (const study of caseStudies) {
+  if (!topics.some((topic) => topic.url === study.url)) errors.push(`Case study has no topic: ${study.url}`);
+  if (caseUrls.has(study.url)) errors.push(`Duplicate case study: ${study.url}`);
+  caseUrls.add(study.url);
+  if (!study.content?.trim()) errors.push(`Empty case study: ${study.url}`);
+}
+for (const topic of topics) if (!caseUrls.has(topic.url)) errors.push(`Topic lacks a case study: ${topic.url}`);
+const figureIds = new Set();
+for (const figure of figures) {
+  if (!/^[a-z0-9-]+$/.test(figure.id) || figureIds.has(figure.id)) errors.push(`Invalid or duplicate figure ID: ${figure.id}`);
+  figureIds.add(figure.id);
+  if (!figure.alt || !figure.caption || !figure.explanation) errors.push(`Missing figure reading guidance: ${figure.id}`);
+  if (!fs.existsSync(path.join(root, figure.src))) errors.push(`Missing figure: ${figure.src}`);
+  else {
+    const svg = read(figure.src);
+    if (!svg.includes('<title') || !svg.includes('<desc') || !svg.includes('viewBox="0 0 960 540"')) errors.push(`Invalid SVG metadata: ${figure.src}`);
+  }
+  if (!figure.pages?.length || new Set(figure.pages).size !== figure.pages.length) errors.push(`Invalid figure page mapping: ${figure.id}`);
+  for (const url of figure.pages || []) if (!urls.has(url)) errors.push(`Figure points to missing page: ${figure.id} -> ${url}`);
 }
 const tree = JSON.parse(read('_data/knowledge_tree.json'));
 for (const group of tree.slice(0, 2)) {
@@ -78,7 +101,9 @@ const checkLink = (sourceFile, raw) => {
   try { target = decodeURIComponent(target); } catch { errors.push(`Invalid link encoding in ${sourceFile}`); return; }
   if (target && !urls.has(target) && !fs.existsSync(path.join(root, target))) errors.push(`Broken local link: ${sourceFile} -> ${target}`);
 };
-for (const entry of [...notes, ...topics.map((topic) => ({ file: topic.url, body: topic.content }))]) {
+for (const entry of [...notes, ...topics.map((topic) => ({ file: topic.url, body: topic.content })), ...caseStudies.map((study) => ({ file: `case:${study.url}`, body: study.content })), ...figures.map((figure) => ({ file: `figure:${figure.id}`, body: figure.explanation }))]) {
+  if (/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/.test(entry.body)) errors.push(`Control character in content: ${entry.file}`);
+  if ((entry.body.match(/\$\$/g) || []).length % 2) errors.push(`Unclosed display math: ${entry.file}`);
   const body = entry.body.replace(/```[\s\S]*?```/g, '');
   for (const match of body.matchAll(/!?\[[^\]]*\]\(([^)]+)\)/g)) checkLink(entry.file, match[1]);
   for (const match of body.matchAll(/\{\{\s*['"]([^'"]+)['"]\s*\|\s*relative_url\s*\}\}/g)) checkLink(entry.file, match[1]);
@@ -86,6 +111,9 @@ for (const entry of [...notes, ...topics.map((topic) => ({ file: topic.url, body
 const report = {
   notes: notes.length,
   hardwareTopics: topics.length,
+  caseStudies: caseStudies.length,
+  originalFigures: figures.length,
+  figurePagePlacements: figures.reduce((sum, figure) => sum + figure.pages.length, 0),
   totalNoteCharacters: notes.reduce((sum, note) => sum + note.body.length, 0),
   shortestNotes: notes.toSorted((a, b) => a.body.length - b.body.length).slice(0, 8).map((note) => ({ file: note.file, characters: note.body.length })),
   errors: [...new Set(errors)]
