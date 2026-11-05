@@ -61,6 +61,7 @@ for (const study of caseStudies) {
   if (caseUrls.has(study.url)) errors.push(`Duplicate case study: ${study.url}`);
   caseUrls.add(study.url);
   if (!study.content?.trim()) errors.push(`Empty case study: ${study.url}`);
+  if (/\$[^$\n]*\|[^$\n]*\$/.test(study.content)) errors.push(`Raw math pipe may be parsed as a Markdown table: ${study.url}`);
 }
 for (const topic of topics) if (!caseUrls.has(topic.url)) errors.push(`Topic lacks a case study: ${topic.url}`);
 const figureIds = new Set();
