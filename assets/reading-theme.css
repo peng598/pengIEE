@@ -1,0 +1,101 @@
+/* Keep the reading surface light, including Chromium automatic darkening.
+   Do not filter document images or disable OS forced-colors accessibility. */
+:root {
+  color-scheme: only light;
+  --ink: #202020;
+  --muted: #595959;
+  --line: #d5d5d5;
+  --paper: #f5f5f5;
+  --canvas: #ededed;
+  --accent: #3b3b3b;
+  --accent-dark: #161616;
+  --accent-soft: #e7e7e7;
+  --code: #e8e8e8;
+}
+html, body { background-color: #ededed; color: #202020; }
+.sidebar, .mobile-bar, .content-frame { background: #f5f5f5; color: #202020; }
+.sidebar, .content-frame { border-color: #d5d5d5; }
+body .content-frame { background: #f5f5f5; }
+.prose, .work-home, .article, .formula-page { color: #202020; }
+.prose h1, .prose h2, .prose h3, .prose h4, .prose strong,
+.work-hero h1, .work-section-heading h2, .work-domain strong,
+.work-link-list strong, .work-doc-drawer > summary strong,
+.work-update-list strong, .reference-heading h1, .reference-file-title {
+  color: #202020;
+}
+.work-hero > p:not(.eyebrow), .work-login-intro, .work-search-status,
+.work-domain small, .work-domain em, .work-link-list span,
+.work-section-heading > span, .work-section-heading > a,
+.work-login-form label, .work-login-status, .work-login-user > span,
+.work-doc-drawer > summary small, .work-doc-drawer > summary > span:last-child,
+.work-doc-drawer > p, .work-hero > span, .reference-file-path, .reference-file-size,
+.nav-label, .nav-tree-count, .nav-note-group > summary small, .sidebar-bottom,
+.page-kicker, .article-meta, .article-toc > p, .article-toc-list a, .site-footer {
+  color: #595959;
+}
+.nav-link, .nav-tree-root > summary, .nav-tree-branch > summary,
+.nav-tree-leaf, .nav-note-group > summary, .work-update-list a,
+.work-domain li a, .reference-category, .reference-breadcrumb, .reference-file-action {
+  color: #292929;
+}
+.work-updates, .work-login, .work-domain, .work-link-list a,
+.work-search-form, .work-doc-drawer, .tree-root, .category-card,
+.formula-card, .formula-dialog, .formula-library-domain, .reference-sidebar,
+.reference-file, .reference-browser, .account-panel, .ai-panel,
+body .reference-reader, body .reference-reader-header, body .pdf-toolbar,
+body .pdf-toc, body .pdf-toc-heading {
+  background-color: #f5f5f5;
+  color: #202020;
+}
+.work-domain-grid, .work-link-list { background-color: #d5d5d5; border-color: #d5d5d5; }
+.prose pre, .prose blockquote, .prose th, .formula-entry-expression,
+.formula-result, .formula-dialog-detail, .ai-context, .ai-message {
+  background: #eaeaea;
+  color: #252525;
+}
+.prose code { color: #292929; }
+input, textarea, select,
+.work-login-form input, .submit-form input, .submit-form textarea,
+.formula-field input, .formula-field select,
+body .pdf-toolbar input, body .pdf-toolbar select {
+  color-scheme: only light;
+  color: #202020;
+  background-color: #fafafa;
+  caret-color: #202020;
+}
+input::placeholder, textarea::placeholder,
+.work-search-form input::placeholder { color: #666; opacity: 1; }
+.work-search-form input { background-color: transparent; color: #202020; }
+.work-search-form button, .work-login-form button, .submit-button, .ai-send,
+.skip-link, body .pdf-toolbar button, body .reference-reader-actions button {
+  background: #dedede;
+  color: #171717;
+  border-color: #bcbcbc;
+}
+.work-search-form button:hover, .work-login-form button:hover:not(:disabled),
+.submit-button:hover, .ai-send:hover, body .pdf-toolbar button:hover:not(:disabled) {
+  background: #d1d1d1;
+  color: #111;
+}
+.work-domain > summary:hover, .work-domain[open] > summary,
+.work-link-list a:hover, .work-update-list a:hover, .nav-link:hover,
+.nav-link.is-active, .nav-tree-leaf.is-active,
+.formula-domain > summary:hover, .formula-domain[open] > summary {
+  background: #e6e6e6;
+  color: #171717;
+}
+.prose a { color: #252525; text-decoration: underline; }
+.reference-library { --reference-ink: #202020; --reference-muted: #595959; --reference-line: #d5d5d5; }
+.reference-hero { background: #ededed; border-color: #d5d5d5; }
+.reference-hero h1, .reference-stats strong, .account-panel-heading strong { color: #202020; }
+.reference-hero-copy > p:last-child, .reference-stats span,
+.reference-category-label small, .reference-sidebar-heading,
+.reference-directory-all, .reference-directory-folder { color: #595959; }
+.reference-stats, .reference-search { background: #f5f5f5; }
+.reference-category.is-active, .reference-file-action.is-live {
+  background: #e7e7e7; color: #202020; border-color: #ccc;
+}
+::selection { background: #cbd2d9; color: #111; }
+@media print {
+  html, body, .content-frame { background: #fff; color: #000; }
+}
