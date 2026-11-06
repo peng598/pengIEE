@@ -1,16 +1,17 @@
-/* Decorative background supplied by the site owner. Keep text on a light surface. */
+/* Topmost decorative image: blend into the page without intercepting input. */
 body {
   isolation: isolate;
-  background: #d5d0c8;
+  background: #f1f0ed;
 }
 body::before {
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: 10001;
   pointer-events: none;
   content: "";
-  background: linear-gradient(rgba(22, 29, 38, .14), rgba(22, 29, 38, .14)),
-    url("./backgrounds/site-scene.jpg") center 43% / cover no-repeat;
+  opacity: .18;
+  mix-blend-mode: multiply;
+  background: url("./backgrounds/site-scene.jpg") center 43% / cover no-repeat;
 }
 .sidebar {
   background: rgba(255, 255, 255, .94);
@@ -26,7 +27,7 @@ body::before {
   padding: 32px clamp(22px, 3vw, 44px) 24px;
   border: 1px solid rgba(255, 255, 255, .72);
   border-radius: 18px;
-  background: rgba(255, 255, 255, .90);
+  background: #fff;
   box-shadow: 0 12px 48px rgba(24, 31, 41, .13);
 }
 .mobile-bar {
@@ -38,17 +39,18 @@ body::before {
   .content-frame { padding: 26px 22px 20px; }
 }
 @media (max-width: 720px) {
-  body::before { background-position: center, 68% center; }
+  body::before { background-position: 68% center; }
   .main-content,
   .is-home .main-content { padding: 18px 10px 22px; }
   .content-frame {
     padding: 22px 16px 18px;
     border-radius: 13px;
-    background: rgba(255, 255, 255, .92);
+    background: #fff;
   }
   .sidebar { background: rgba(255, 255, 255, .98); }
 }
 @media (prefers-reduced-transparency: reduce) {
+  body::before { display: none; }
   .sidebar, .mobile-bar, .content-frame { background: #fff; }
 }
 @media print {
