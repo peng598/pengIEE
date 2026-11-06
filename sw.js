@@ -1,5 +1,5 @@
 const CACHE_PREFIX = 'pengiee-shell-';
-const CACHE_NAME = `${CACHE_PREFIX}v20`;
+const CACHE_NAME = `${CACHE_PREFIX}v21`;
 const APP_ROOT = new URL(self.registration.scope).pathname;
 const APP_SHELL = [
   APP_ROOT,
@@ -7,7 +7,7 @@ const APP_SHELL = [
   `${APP_ROOT}assets/site.css`,
   `${APP_ROOT}assets/background.css`,
   `${APP_ROOT}assets/reading-theme.css`,
-  `${APP_ROOT}assets/backgrounds/site-scene.jpg`,
+  `${APP_ROOT}assets/backgrounds/site-scene-portrait.jpg`,
   `${APP_ROOT}assets/ai-assistant.js`,
   `${APP_ROOT}assets/pwa/icon-192.png`,
   `${APP_ROOT}assets/pwa/icon-512.png`,

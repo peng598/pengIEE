@@ -11,7 +11,7 @@ body::before {
   content: "";
   opacity: .18;
   mix-blend-mode: multiply;
-  background: url("./backgrounds/site-scene.jpg") center 43% / cover no-repeat;
+  background: url("./backgrounds/site-scene-portrait.jpg") center 12% / cover no-repeat;
 }
 .sidebar {
   background: rgba(255, 255, 255, .94);
@@ -39,7 +39,7 @@ body::before {
   .content-frame { padding: 26px 22px 20px; }
 }
 @media (max-width: 720px) {
-  body::before { background-position: 68% center; }
+  body::before { background-position: center; }
   .main-content,
   .is-home .main-content { padding: 18px 10px 22px; }
   .content-frame {
