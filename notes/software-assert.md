@@ -18,13 +18,13 @@ source: "soft/软件散装笔记/assert函数"
 下面仅针对设计已保证不会满的内部队列；普通通信队列满应作为可预期运行错误处理，不应每次触发断言。
 
 ~~~c
-/* 先执行有副作用的操作，再断言；发布版仍保留错误处理。 */
+/* 先处理必要的保护/记录，再断言；不依赖断言返回。 */
 BaseType_t result = xQueueSend(queue, &message, 0);
-configASSERT(result == pdPASS);
 if (result != pdPASS) {
     queue_overflow_count++;
     HandleQueueOverflow();
 }
+configASSERT(result == pdPASS);
 ~~~
 
 禁止把必须执行的动作放在 assert 参数中，例如 assert(InitDevice())。标准 C assert 在定义 NDEBUG 后可能完全移除表达式；“调试版可用、发布版设备未初始化”正是这种副作用造成的。
@@ -48,3 +48,17 @@ if (result != pdPASS) {
 
 <figure class="note-figure"><img src="{{ '/assets/attachments/attachment-012.png' | relative_url }}" alt="附件：Pasted image 20250416205734.png"><figcaption>Pasted image 20250416205734.png</figcaption></figure>
 <figure class="note-figure"><img src="{{ '/assets/attachments/attachment-013.png' | relative_url }}" alt="附件：Pasted image 20250416205749.png"><figcaption>Pasted image 20250416205749.png</figcaption></figure>合理使用`assert`可显著提升代码可靠性，但需区分调试断言与生产环境的错误处理机制，确保程序的健壮性和用户体验。
+
+## 故障响应预算应先到达可验证的安全输出
+
+对需要限时撤销能量的控制系统，预算可拆为 $T_{\mathrm{detect}}+T_{\mathrm{dispatch}}+T_{\mathrm{disable}}+T_{\mathrm{actuator}}$。它包括故障被检测到、软件取得执行权、撤销控制信号，以及功率器件/机械系统真正到达所定义状态的时间。日志保存应安排在不阻塞必要保护的路径上；“已调用关断函数”不等于绕组电流或输出能量已消失。
+
+示例：每 1 ms 轮询一次故障，最坏检测等待近 1 ms；调度再等待 0.5 ms，即使 GPIO 写入只需微秒，也无法满足 100 μs 的总关断要求。这时需要调整检测架构，例如独立比较器、驱动器保护或硬件 PWM 刹车，并验证它们在 CPU 卡死/中断屏蔽时仍有效。具体安全状态可能是关断、受控制动或保持支撑，必须由设备危险分析确定，不能一律关闭所有输出。
+
+## 断言开关与故障注入的组合验收
+
+标准 C 的 NDEBUG 不一定控制 RTOS 的 configASSERT；两套宏的启用方式和处理函数应分别核对。若 configASSERT 进入无限循环，放在其后的普通错误处理不会执行，因此要求继续降级的运行错误应走明确返回路径，致命内部错误则应在断言处理器自身完成必要保护。两者都不能依赖“断言后面的代码总会运行”。
+
+测试矩阵应覆盖调试/发布构建、任务/ISR 上下文、调度器尚未启动、持锁状态和中断被屏蔽。用逻辑分析仪测从故障注入到真实功率使能下降的时间，并确认故障记录不会递归触发错误。故障 RAM 记录需要长度、版本和完整性标记；复位后先验证再导出，防止将随机 RAM 或旧版本结构解释为当前现场。
+
+看门狗应验证最坏恢复时延和复位后的输出默认态，不能只验证“最终发生复位”。复位循环也可能反复短暂使能负载，应增加明确的故障锁定/恢复条件。这样的验证把断言从一条调试语句扩展为可观察、可复现的故障处理行为。

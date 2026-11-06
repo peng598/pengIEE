@@ -57,3 +57,21 @@ $$
 <figure class="note-figure"><img src="{{ '/assets/attachments/attachment-080.png' | relative_url }}" alt="附件：Pasted image 20251202085054.png"><figcaption>Pasted image 20251202085054.png</figcaption></figure>
 
 <figure class="note-figure"><img src="{{ '/assets/attachments/attachment-081.png' | relative_url }}" alt="附件：Pasted image 20251202085105.png"><figcaption>Pasted image 20251202085105.png</figcaption></figure>
+
+## 6. 抖动预算必须先声明概率与时钟参考
+
+高斯随机抖动没有固定的有限峰峰值，采样越久通常能看到越远的尾部。常用 dual-Dirac 近似把有界抖动分离量 $DJ_{\mathrm{pp}}$ 与随机标准差 $\sigma_{\mathrm{RJ}}$ 组合：
+
+$$
+TJ(BER)\approx DJ_{\mathrm{pp}}+2Q(BER)\sigma_{\mathrm{RJ}}.
+$$
+
+这里 $Q$ 是所采用尾概率约定对应的高斯分位数，不是品质因数。按常见 $BER=10^{-12}$ 的约定，$2Q$ 约为 14.07；若 $\sigma_{\mathrm{RJ}}=1\,ps,DJ_{\mathrm{pp}}=20\,ps$，外推 $TJ$ 约 34.07 ps。它依赖模型和外推拟合，$DJ_{\mathrm{pp}}$ 也不一定等于直接观察到的全部确定性抖动峰峰值；不能把这个算式当成真实 BER 测试的替代品。
+
+以线侧原始 20 Gb/s PAM4 为例，码元率 10 GBd、UI 为 100 ps。上述 34.07 ps 相当于 0.341 UI，但不能直接据此宣布剩余 65.93 ps 就是接收器可用眼宽：PAM4 有三个判决眼、幅度噪声与斜率耦合，协议还规定参考接收器、CDR、均衡及误码映射。不同 CDR 带宽得到的残余抖动也不可直接比较。
+
+## 7. 区分测量本底、通道退化和接收器跟踪
+
+用已知低抖动源测同一仪器配置，确认时基、触发与探头本底。只有噪声近似独立、模型允许且不确定度足够小时，才能用方差相减估计被测随机量；两个接近的标准差相减会放大误差，不能通过数学扣除获得虚假的高精度。
+
+调试可固定发射设置依次改变通道、邻近 aggressor、供电和温度，比较 bathtub 曲线与频谱，而不只比一张眼图。对每个结果注明测量时间、码型长度、误码计数、训练/重锁次数及丢锁期间是否计入统计。均衡后的眼口变大同时 BER 变差时，应查噪声增强、DFE 误判传播、CDR 跟踪和训练状态，不应只继续加大均衡。

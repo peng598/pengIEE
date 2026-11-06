@@ -154,5 +154,53 @@
       "/notes/crystal-structure/"
     ],
     "explanation": "数据手册的标称频率通常对应指定负载条件；图中把 fs 指定为 16 MHz 只是为了说明拉频方向。CL 是晶体看到的**有效负载**，不能把每个外接电容的标称值直接当成 CL。校核起振时还需要负阻裕量、驱动电平、偏置和温度，频率正确不等于启动一定可靠。"
+  },
+  {
+    "id": "nonlinear-capacitor-energy",
+    "title": "非线性电容：标称容量为何会高估储能",
+    "src": "/assets/engineering/nonlinear-capacitor-energy.svg",
+    "alt": "固定10微法在10伏储能500微焦，而示例微分电容随电压下降的模型仅储能225.35微焦。",
+    "caption": "原创工程示意；图中参数为声明的假设条件。窄屏可左右滑动，或打开大图。",
+    "pages": [
+      "/notes/capacitor-formulas/",
+      "/hardware/electronic-basics/capacitor/basics/"
+    ],
+    "explanation": "比较同一横坐标下的两条曲线，而不是把蓝线当作某款 MLCC 的实测指标。有效保持能量还需取初始电压与最低工作电压之间的能量差；漏电、ESR 和转换损耗会进一步减少可用能量。"
+  },
+  {
+    "id": "uart-backlog-budget",
+    "title": "UART 缓存必须容纳流控生效前的数据",
+    "src": "/assets/engineering/uart-backlog-budget.svg",
+    "alt": "缓存先在5毫秒内积压461字节，停止等待2毫秒和另计64字节在途数据后，向上取整需710字节。",
+    "caption": "原创工程示意；图中参数为声明的假设条件。窄屏可左右滑动，或打开大图。",
+    "pages": [
+      "/notes/芯片之间为什么用串口多/",
+      "/notes/uart-dma-ble/"
+    ],
+    "explanation": "图中“发停止请求”与“对端停止发送”是两个事件。真实门限需根据实测最长响应、FIFO、DMA 和任务调度计算；如果停止延迟已包含 FIFO 排空，则不能再加同一批字节。持续接收时，还要证明长期服务速率足够。"
+  },
+  {
+    "id": "filter-sample-delay",
+    "title": "极点相同，采样时序不同：相位仍会改变",
+    "src": "/assets/engineering/filter-sample-delay.svg",
+    "alt": "一千赫采样的一阶滤波器增加一个采样延迟后，80赫相位额外滞后28.8度，幅频响应不变。",
+    "caption": "原创工程示意；图中参数为声明的假设条件。窄屏可左右滑动，或打开大图。",
+    "pages": [
+      "/notes/sensors-digital-filtering/",
+      "/notes/balance-car-cascade-control/"
+    ],
+    "explanation": "推导时应给输入采样和输出更新标注同一时间轴。图中的相差只是额外纯延迟的贡献，不是整套控制环的相位裕量；环路交越和传感器内部滤波还需一起计算。"
+  },
+  {
+    "id": "zero-failure-confidence",
+    "title": "零失效不等于失效概率为零",
+    "src": "/assets/engineering/zero-failure-confidence.svg",
+    "alt": "零失效二项置信上界随样本数增多而降低，300个样本对应约0.994%，2995个样本才能低于0.1%。",
+    "caption": "原创工程示意；图中参数为声明的假设条件。窄屏可左右滑动，或打开大图。",
+    "pages": [
+      "/notes/pcb-lifetime/",
+      "/notes/工艺与良率控制/"
+    ],
+    "explanation": "看曲线时先确定“失效”对应多长时间、何种应力和哪一批总体。来自同一异常批次或共同环境的样品可能相关；只增加同类重复测量，不能自动获得图中假设的独立样本数量。"
   }
 ]

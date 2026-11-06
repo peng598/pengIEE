@@ -29,6 +29,8 @@ jobs:
       - run: node tools/generate-engineering-figures.mjs
       - run: node tools/generate-note-search.mjs
       - run: node tools/audit-content.mjs
+      - run: node tools/verify-engineering-calculations.mjs
+      - run: node --test tests/formula-guides.test.cjs
       - run: node --test tests/homepage.test.cjs
       - uses: actions/configure-pages@v5
       - uses: actions/jekyll-build-pages@v1

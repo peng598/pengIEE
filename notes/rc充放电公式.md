@@ -42,3 +42,27 @@ R、C 容差和门限分散要按最坏组合核算。若 R 为 ±1%、C 有 ±2
 <figure class="note-figure"><img src="{{ '/assets/attachments/attachment-032.png' | relative_url }}" alt="附件：Pasted image 20251103184809.png"><figcaption>Pasted image 20251103184809.png</figcaption></figure>
 
 <figure class="note-figure"><img src="{{ '/assets/attachments/attachment-031.png' | relative_url }}" alt="附件：Pasted image 20251103183453.png"><figcaption>Pasted image 20251103183453.png</figcaption></figure>
+
+## 漏电与测量负载如何改变门限时间
+
+把输入漏电近似为从节点流向地的恒定电流 $I_\ell$，并联探头/负载为 $R_L$，则节点方程是：
+
+$$
+C\frac{dv}{dt}=\frac{V_s-v}{R}-\frac{v}{R_L}-I_\ell,\qquad
+V_\infty=\frac{V_s/R-I_\ell}{1/R+1/R_L},\quad
+\tau=\frac{C}{1/R+1/R_L}.
+$$
+
+注意漏电的正方向；若器件向节点注入电流，$I_\ell$ 应带负号。假设 $V_s=3.3\,V,R=1\,M\Omega,C=100\,nF,R_L=10\,M\Omega,I_\ell=0.20\,\mu A$，可得终值约 2.818 V、时间常数约 90.91 ms。从零到 2.0 V 的门限时间约 112.43 ms；没有负载和漏电时约为 93.16 ms。若门限升到 2.9 V，前一种电路根本不会触发，不能只把误差写成“延时略长”。实际漏电可能随电压和温度变化，此时要用分段模型或数值积分。
+
+## 门限附近的灵敏度与最坏组合
+
+由 $t=\tau\ln[(V_\infty-V_i)/(V_\infty-V_{th})]$ 对门限求导：
+
+$$
+\frac{\partial t}{\partial V_{th}}=\frac{\tau}{V_\infty-V_{th}}.
+$$
+
+门限越接近终值，同样的毫伏偏差产生越大的时间不确定度。因此参数表应分别列出门限最小/最大值、漏电方向与范围、C 的有效偏压值、R 温漂、初始残压和探头负载。先检查所有角落是否都能跨越门限，再比较最短和最长时间；如果条件之间相关，例如电源同时决定门限和终值，应保持相关关系，不能拼出物理上不存在的角落。
+
+台架上逐步增加断电间隔，观察下一次上电的延时是否趋于稳定；另测慢斜坡电源，此时阶跃解已不适用，应把实际 $V_s(t)$ 代入微分方程。记录“源达到有效电压”“节点穿越输入门限”“后级输出改变”三个时间点，后级传播延迟不应归到 RC 元件误差中。

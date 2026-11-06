@@ -93,7 +93,7 @@
         "id": "02.04",
         "title": "电容储能",
         "expression": "E=CV²/2",
-        "conditions": "用于保持电源、放电与储能估算。"
+        "conditions": "线性、可逆且 C 不随电压变化；非线性电容应积分 E=∫v·Cd(v)dv，迟滞损耗另计。"
       },
       {
         "id": "02.05",
@@ -189,8 +189,8 @@
       {
         "id": "03.09",
         "title": "栅极驱动与自举",
-        "expression": "Igate≈Qg/tsw；Pgate≈Qg·Vgate·fs；Cboot≥Qtotal/ΔVboot",
-        "conditions": "Qtotal 包含栅极电荷、驱动器消耗和漏电。"
+        "expression": "Igate,avg≈Qg/tcharge；IMiller,avg≈Qgd/tMiller；Pgate≈Qg·Vgate·fs；Cboot≥Qtotal/ΔVboot",
+        "conditions": "总栅极充电与漏极电压转换是不同时间段；Qtotal 含驱动消耗和漏电，自举还需检查周期刷新。"
       },
       {
         "id": "03.10",
@@ -573,8 +573,8 @@
       {
         "id": "09.06",
         "title": "电感量与匝数",
-        "expression": "L=NΦ/I=N²/ℜ≈ALN²",
-        "conditions": "未饱和小信号条件；AL 取对应气隙与磁芯。"
+        "expression": "Lsec=NΦ/I；Linc=N·dΦ/dI；线性磁路 L=N²/ℜ≈ALN²",
+        "conditions": "存在直流偏置或磁芯非线性时，割线与增量电感不相等；AL 取对应气隙与测量条件。"
       },
       {
         "id": "09.07",
@@ -1091,8 +1091,8 @@
       {
         "id": "17.03",
         "title": "一阶数字低通",
-        "expression": "yk=ayk-1+(1-a)xk；a=e^(-Ts/τ)",
-        "conditions": "零阶保持等效离散，`τ=1/(2πfc)`，高频形状与连续模型有差别。"
+        "expression": "yk=ayk-1+(1-a)xk；a=e^(-Ts/τ)；H(z)=(1-a)/(1-az^-1)",
+        "conditions": "当前输入指数平滑；精确 ZOH 状态递推为 y[k+1]=ay[k]+(1-a)x[k]，两者索引/延时不可混用。τ 的连续截止频率不等于所有采样率下的数字 -3 dB 点。"
       },
       {
         "id": "17.04",
@@ -1193,9 +1193,9 @@
       },
       {
         "id": "18.09",
-        "title": "恒定失效率可靠性",
-        "expression": "MTBF=1/λ；R(t)=e^(-λt)",
-        "conditions": "恒定失效率指数模型；MTBF 不等于保修寿命或确定失效时间。"
+        "title": "恒定失效率与平均失效前时间",
+        "expression": "R(t)=e^(-λt)；MTTF=1/λ",
+        "conditions": "不可修复件的恒定危险率指数模型；可修复系统 MTBF 的统计定义需另声明，平均值不是保证寿命。"
       },
       {
         "id": "18.10",

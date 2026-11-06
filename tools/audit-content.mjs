@@ -33,6 +33,29 @@ if (baseline) for (const note of notes) {
   }
 }
 const topics = JSON.parse(read('_data/hardware_topics.json'));
+// This repository's supplement is a two-level YAML map of literal (|) blocks.
+// Fail closed on other YAML syntax instead of silently skipping that content.
+const engineeringSections = [];
+let engineeringBranch, engineeringCurrent;
+for (const [index, line] of read('_data/hardware_engineering.yml').split(/\r?\n/).entries()) {
+  if (!line.trim()) { if (engineeringCurrent) engineeringCurrent.body += '\n'; continue; }
+  const branch = line.match(/^([^\s:#][^:]*):\s*$/);
+  const leaf = line.match(/^  ([^:]+): \|\s*$/);
+  if (branch) { engineeringBranch = branch[1]; engineeringCurrent = null; }
+  else if (leaf && engineeringBranch) {
+    engineeringCurrent = { branch: engineeringBranch, leaf: leaf[1], file: 'engineering:' + engineeringBranch + '/' + leaf[1], body: '' };
+    engineeringSections.push(engineeringCurrent);
+  } else if (line.startsWith('    ') && engineeringCurrent) engineeringCurrent.body += line.slice(4) + '\n';
+  else errors.push('Unsupported supplement YAML at line ' + (index+1));
+}
+const engineeringKeys = new Set();
+for (const section of engineeringSections) {
+  const key = section.branch + '/' + section.leaf;
+  if (engineeringKeys.has(key)) errors.push('Duplicate engineering supplement: ' + key);
+  engineeringKeys.add(key);
+  if (!section.body.trim()) errors.push('Empty engineering supplement: ' + key);
+  if (!topics.some(t => t.branch === section.branch && t.leaf === section.leaf)) errors.push('Unmapped engineering supplement: ' + key);
+}
 const caseStudies = ['_data/hardware_cases_passive.json', '_data/hardware_cases_active_power.json'].flatMap((file) => JSON.parse(read(file)));
 const figures = JSON.parse(read('_data/engineering_figures.json'));
 const referenceFiles = new Map(JSON.parse(read('assets/reference-library.json')).files.map((file) => [file.id, file]));
@@ -102,7 +125,7 @@ const checkLink = (sourceFile, raw) => {
   try { target = decodeURIComponent(target); } catch { errors.push(`Invalid link encoding in ${sourceFile}`); return; }
   if (target && !urls.has(target) && !fs.existsSync(path.join(root, target))) errors.push(`Broken local link: ${sourceFile} -> ${target}`);
 };
-for (const entry of [...notes, ...topics.map((topic) => ({ file: topic.url, body: topic.content })), ...caseStudies.map((study) => ({ file: `case:${study.url}`, body: study.content })), ...figures.map((figure) => ({ file: `figure:${figure.id}`, body: figure.explanation }))]) {
+for (const entry of [...notes, ...engineeringSections, ...topics.map((topic) => ({ file: topic.url, body: topic.content })), ...caseStudies.map((study) => ({ file: `case:${study.url}`, body: study.content })), ...figures.map((figure) => ({ file: `figure:${figure.id}`, body: figure.explanation }))]) {
   if (/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/.test(entry.body)) errors.push(`Control character in content: ${entry.file}`);
   if ((entry.body.match(/\$\$/g) || []).length % 2) errors.push(`Unclosed display math: ${entry.file}`);
   const body = entry.body.replace(/```[\s\S]*?```/g, '');
@@ -112,6 +135,7 @@ for (const entry of [...notes, ...topics.map((topic) => ({ file: topic.url, body
 const report = {
   notes: notes.length,
   hardwareTopics: topics.length,
+  engineeringSupplements: engineeringSections.length,
   caseStudies: caseStudies.length,
   originalFigures: figures.length,
   figurePagePlacements: figures.reduce((sum, figure) => sum + figure.pages.length, 0),

@@ -209,5 +209,57 @@ function save(id, title, subtitle, body, description, pages, explanation) {
     '数据手册的标称频率通常对应指定负载条件；图中把 fs 指定为 16 MHz 只是为了说明拉频方向。CL 是晶体看到的**有效负载**，不能把每个外接电容的标称值直接当成 CL。校核起振时还需要负阻裕量、驱动电平、偏置和温度，频率正确不等于启动一定可靠。');
 }
 
+// 13: Numerical energy comparison, not a manufacturer DC-bias curve.
+{
+  const p = chart({ xmin: 0, xmax: 10, ymin: 0, ymax: 500, xticks: [[0,'0'],[2,'2'],[4,'4'],[6,'6'],[8,'8'],[10,'10']], yticks: [[0,'0'],[100,'100'],[200,'200'],[300,'300'],[400,'400'],[500,'500']], xLabel:'V', yLabel:'储能 / μJ' });
+  let s = legend([['固定 C = 10 μF', C.red], ['Cd = 10/(1+V/5) μF', C.blue]]) + p.svg;
+  s += p.curve(v => 5*v*v, C.red) + p.curve(v => 50*(v-5*Math.log1p(v/5)), C.blue);
+  s += text(500, 210, '零偏容量代入：500 μJ', 19, C.red) + text(500, 375, '积分储能：225.35 μJ', 19, C.blue);
+  s += footer('电荷 Q = ∫Cd(v)dv；可逆储能 E = ∫vCd(v)dv，不能把两种等效容量混用。', '假设无迟滞，曲线仅解释模型差异；实际器件应使用对应温度、偏压和频率的数据。');
+  save('nonlinear-capacitor-energy', '非线性电容：标称容量为何会高估储能', '两条曲线的零偏容量相同；蓝线把偏压下的微分容量变化积分进储能。', s,
+    '固定10微法在10伏储能500微焦，而示例微分电容随电压下降的模型仅储能225.35微焦。',
+    ['/notes/capacitor-formulas/', '/hardware/electronic-basics/capacitor/basics/'],
+    '比较同一横坐标下的两条曲线，而不是把蓝线当作某款 MLCC 的实测指标。有效保持能量还需取初始电压与最低工作电压之间的能量差；漏电、ESR 和转换损耗会进一步减少可用能量。');
+}
+// 14: Arrival/service accounting with explicitly separate FIFO bytes.
+{
+  const p = chart({ xmin:0,xmax:8,ymin:0,ymax:1100,xticks:[[0,'0'],[2,'2'],[4,'4'],[5,'5'],[7,'7'],[8,'8']],yticks:[[0,'0'],[256,'256'],[512,'512'],[768,'768'],[1024,'1024']],xLabel:'ms',yLabel:'占用 / B' });
+  let s = p.svg + line(100,p.y(1024),850,p.y(1024),C.red,2,'6 5');
+  s += poly([[p.x(0),p.y(0)],[p.x(5),p.y(460.8)],[p.x(7),p.y(645.12)],[p.x(7),p.y(709.12)],[p.x(8),p.y(709.12)]],C.blue);
+  s += line(p.x(5),150,p.x(5),400,C.gold,1.5,'5 5') + text(145,156,'容量 1024 B',18,C.red);
+  s += text(140,280,'5 ms 暂停：约 461 B',18,C.blue) + text(600,205,'最终预算 ≥710 B',18,C.blue);
+  s += text(500,365,'发停止请求',17,C.gold);
+  s += footer('921600 baud、8N1；停止响应额外 2 ms，再加未计入该时延的 64 B 在途数据。', '为展示最坏积压，图中暂停服务；64 B 在终点汇总示意，不表示 UART 能瞬间传送。');
+  save('uart-backlog-budget','UART 缓存必须容纳流控生效前的数据','假设发送始终满速；停止请求发出后仍有数据到达，不能等缓冲已满才拉流控。',s,
+    '缓存先在5毫秒内积压461字节，停止等待2毫秒和另计64字节在途数据后，向上取整需710字节。',
+    ['/notes/芯片之间为什么用串口多/','/notes/uart-dma-ble/'],
+    '图中“发停止请求”与“对端停止发送”是两个事件。真实门限需根据实测最长响应、FIFO、DMA 和任务调度计算；如果停止延迟已包含 FIFO 排空，则不能再加同一批字节。持续接收时，还要证明长期服务速率足够。');
+}
+// 15: Same digital pole, one sample difference in phase.
+{
+  const a = Math.exp(-2*Math.PI*.1);
+  const phase = f => -Math.atan2(a*Math.sin(2*Math.PI*f/1000),1-a*Math.cos(2*Math.PI*f/1000))*180/Math.PI;
+  const p = chart({xmin:0,xmax:200,ymin:-120,ymax:0,xticks:[[0,'0'],[40,'40'],[80,'80'],[120,'120'],[160,'160'],[200,'200']],yticks:[[-120,'−120'],[-90,'−90'],[-60,'−60'],[-30,'−30'],[0,'0']],xLabel:'Hz',yLabel:'相位 / °'});
+  let s = legend([['当前样本更新 H(z)',C.blue],['增加一个 z⁻¹',C.red]]) + p.svg + p.curve(phase,C.blue) + p.curve(f=>phase(f)-.36*f,C.red);
+  s += line(p.x(80),p.y(phase(80)),p.x(80),p.y(phase(80)-28.8),C.gold,3) + text(430,240,'80 Hz：相差 28.8°',19,C.gold);
+  s += footer('fs = 1 kHz，a = exp(−2π×100/1000)；两者幅频完全相同，数字 −3 dB 点约 103.47 Hz。', '额外 1 ms 纯延迟只改变相位；真实闭环还须计入采样保持、计算和执行器更新。');
+  save('filter-sample-delay','极点相同，采样时序不同：相位仍会改变','曲线对比 H(z) 与 z⁻¹H(z)，没有把软件时间标记差异藏在滤波系数中。',s,
+    '一千赫采样的一阶滤波器增加一个采样延迟后，80赫相位额外滞后28.8度，幅频响应不变。',
+    ['/notes/sensors-digital-filtering/','/notes/balance-car-cascade-control/'],
+    '推导时应给输入采样和输出更新标注同一时间轴。图中的相差只是额外纯延迟的贡献，不是整套控制环的相位裕量；环路交越和传感器内部滤波还需一起计算。');
+}
+// 16: Exact one-sided binomial zero-failure bound.
+{
+  const p = chart({xmin:10,xmax:10000,ymin:.01,ymax:30,logX:true,logY:true,xticks:[[10,'10'],[100,'100'],[1000,'1000'],[10000,'10000']],yticks:[[.01,'0.01'],[.1,'0.1'],[1,'1'],[10,'10'],[30,'30']],xLabel:'n',yLabel:'上界 / %'});
+  let s = p.svg + p.curve(n=>100*(-Math.expm1(Math.log(.05)/n)),C.blue);
+  s += dot(p.x(300),p.y(100*(1-.05**(1/300))),C.gold) + text(435,220,'n = 300 → 0.994%',19,C.gold);
+  s += dot(p.x(2995),p.y(100*(1-.05**(1/2995))),C.green) + text(440,370,'n = 2995 → 不超过 0.1%',19,C.green);
+  s += footer('独立同分布、同一试验条件、零失效：单侧 95% 上界 p = 1 − 0.05^(1/n)。', '这是规定试验的失效概率上界，不是每小时失效率，也不能直接外推到现场十年。');
+  save('zero-failure-confidence','零失效不等于失效概率为零','横纵轴均为对数刻度；样本增加会收紧上界，前提是抽样和独立性假设成立。',s,
+    '零失效二项置信上界随样本数增多而降低，300个样本对应约0.994%，2995个样本才能低于0.1%。',
+    ['/notes/pcb-lifetime/','/notes/工艺与良率控制/'],
+    '看曲线时先确定“失效”对应多长时间、何种应力和哪一批总体。来自同一异常批次或共同环境的样品可能相关；只增加同类重复测量，不能自动获得图中假设的独立样本数量。');
+}
+
 fs.writeFileSync(path.join(root, '_data', 'engineering_figures.json'), JSON.stringify(figures, null, 2) + '\n');
 console.log(`Generated ${figures.length} original engineering figures and their page mappings.`);

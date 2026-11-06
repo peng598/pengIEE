@@ -6,6 +6,8 @@
 
 第二批十轮深化增加 66 个专题工程案例、24 篇笔记增补与 12 张原创矢量图，集中解释模型边界、最坏条件、计算过程和测量判据，详见 [第 11—20 轮记录](tools/reports/content-iterations-2026-11-05.md)。图中参数均为明确声明的分析假设，不作为具体器件规格。
 
+第三批十轮从非线性模型、启动保护、接口状态、存储与通信、场耦合、链路、模拟误差、可靠性统计、声学及实时控制十个角度深化 20 篇笔记，修订 14 组公式的适用条件与配套解释，新增 4 张原创图。详见 [第 21—30 轮记录](tools/reports/content-iterations-2026-11-06.md)。运行 `node tools/verify-engineering-calculations.mjs` 可复算本批 34 项数值检查；它验证声明模型下的算例，不代替具体器件与实物测试。
+
 ## 内容维护
 
 笔记正文在 `notes/`；硬件基础正文在 `_data/hardware_topics.json`，补充推导与算例在 `_data/hardware_engineering.yml`；15 个电源专题由 `_data/power_topics_expansion.json` 维护。修改电源专题后运行 `node tools/generate-hardware-pages.mjs` 更新硬件汇总数据和页面，再运行 `node tools/generate-note-search.mjs` 更新笔记全文索引。使用 `node tools/audit-content.mjs` 检查导航、正文、关联笔记及本地链接。对修改前后的附件与 URL 做保留检查可加 `--base=<修改前提交>`。

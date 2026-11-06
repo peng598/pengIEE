@@ -51,3 +51,22 @@ $$
 <figure class="note-figure"><img src="{{ '/assets/attachments/attachment-111.png' | relative_url }}" alt="附件：Pasted image 20260114152324.png"><figcaption>Pasted image 20260114152324.png</figcaption></figure>
 
 <figure class="note-figure"><img src="{{ '/assets/attachments/attachment-112.png' | relative_url }}" alt="附件：Pasted image 20260114152429.png"><figcaption>Pasted image 20260114152429.png</figcaption></figure>
+
+## 比例误差中的相关性：匹配不等于绝对精度
+
+分压比例 $k=R_2/(R_1+R_2)$ 的一阶相对变化是 $(1-k)(\delta_2-\delta_1)$。若 $\delta_i$ 是零均值随机偏差、标准差分别为 $\sigma_i$、相关系数为 $\rho$，则：
+
+$$
+\sigma_{k,\mathrm{rel}}^2=(1-k)^2
+(\sigma_1^2+\sigma_2^2-2\rho\sigma_1\sigma_2).
+$$
+
+例如 $k=0.25$，两电阻随机相对标准差都为 0.1%，不相关时比例标准差约 0.1061%；若同温匹配网络的相关系数确为 0.9，则约为 0.03354%。相关系数必须来自器件数据或测量，不能把“同批采购”自动当成高度相关。规格书的 ±0.1% 容差通常是界限，并不等于 1σ；做最坏保证时仍需按界限计算，不能直接代入上述统计式。
+
+温漂还应拆成绝对 TCR、比例跟踪 TCR 和自热温差。上下臂耗散不同、铜箔散热不对称时，即使同封装也可能产生比例漂移。记录输入电压变化后的热稳定过程，可区分快速电气建立与慢速热漂移。
+
+## 参考相关误差与 ADC 采样链路
+
+理想 ADC 码值比例取决于 $V_{\mathrm{pin}}/V_{\mathrm{ref}}$，小信号相对误差满足 $\delta_{\mathrm{code}}\approx\delta_{\mathrm{pin}}-\delta_{\mathrm{ref}}$。比率式传感器由同一参考激励并采样时，共同参考波动可能部分抵消；外部独立电池测量通常不具备这种抵消。只有频率、相位和传递路径一致的共同分量才可按相关性消除，参考缓冲器延迟和输入滤波会破坏高频抵消。
+
+调试时同时采集输入节点和参考脚，比较码值与二者比值；分别延长采样窗口、降低采样率、改变通道顺序。若误差随前一通道电压改变，优先检查采样电容残余电荷和驱动建立。若误差随输入幅值或温升缓慢改变，检查比例漂移、自热、漏电和 ADC 增益。噪声、系统偏差和动态建立应分别报告，不能用单次校准把三者合并成一个“精度”数字。
