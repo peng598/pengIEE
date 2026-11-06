@@ -33,7 +33,7 @@ permalink: /formulas/
 
 ### 灵敏度、最坏情况与相关误差
 
-对 $y=f(x_1,\ldots,x_n)$，一阶误差为 $\Delta y\approx\sum_i (\partial f/\partial x_i)\Delta x_i$。若各误差只知道有界范围，保守上界为 $|\Delta y|\le\sum_i|\partial f/\partial x_i|\,|\Delta x_i|$。统计合成则为 $\sigma_y^2\approx\sum_i\sum_j (\partial f/\partial x_i)(\partial f/\partial x_j)\operatorname{Cov}(x_i,x_j)$；只有协方差交叉项为零时才简化为 RSS。规格书最大值不是标准差，不能不加区分地进行 RSS。
+对 $y=f(x_1,\ldots,x_n)$，一阶误差为 $\Delta y\approx\sum_i (\partial f/\partial x_i)\Delta x_i$。若各误差只知道有界范围，保守上界为 $\lvert \Delta y\rvert\le\sum_i\lvert \partial f/\partial x_i\rvert\,\lvert \Delta x_i\rvert$。统计合成则为 $\sigma_y^2\approx\sum_i\sum_j (\partial f/\partial x_i)(\partial f/\partial x_j)\operatorname{Cov}(x_i,x_j)$；只有协方差交叉项为零时才简化为 RSS。规格书最大值不是标准差，不能不加区分地进行 RSS。
 
 以 $f_c=1/(2\pi RC)$ 为例，R 为 ±1%、C 为 ±10%，一阶最坏频率误差约 ±11%。直接按边界计算得到最高倍率 $1/(0.99\times0.90)=1.1223$，最低倍率 $1/(1.01\times1.10)=0.9001$，实际是不对称的 +12.23%/−9.99%。容差大、接近阈值或函数明显非线性时，应使用边界计算或带相关性的统计仿真。
 

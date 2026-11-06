@@ -25,7 +25,7 @@ $$
 Z_{\mathrm{port}}=R_{\mathrm{in}}+\frac{R_f}{1+A}
 $$
 
-当 $|A|\gg R_f/R_{\mathrm{in}}$ 时近似为 $R_{\mathrm{in}}$；高频时 A 是复数，端口阻抗也随频率变化。进入限幅、压摆或输入共模越界后，不能继续使用虚地假设。
+当 $\lvert A\rvert\gg R_f/R_{\mathrm{in}}$ 时近似为 $R_{\mathrm{in}}$；高频时 A 是复数，端口阻抗也随频率变化。进入限幅、压摆或输入共模越界后，不能继续使用虚地假设。
 
 ## 信号增益与噪声增益
 

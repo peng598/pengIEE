@@ -125,10 +125,15 @@ const checkLink = (sourceFile, raw) => {
   try { target = decodeURIComponent(target); } catch { errors.push(`Invalid link encoding in ${sourceFile}`); return; }
   if (target && !urls.has(target) && !fs.existsSync(path.join(root, target))) errors.push(`Broken local link: ${sourceFile} -> ${target}`);
 };
-for (const entry of [...notes, ...engineeringSections, ...topics.map((topic) => ({ file: topic.url, body: topic.content })), ...caseStudies.map((study) => ({ file: `case:${study.url}`, body: study.content })), ...figures.map((figure) => ({ file: `figure:${figure.id}`, body: figure.explanation }))]) {
+for (const entry of [...notes, { file: 'formulas.md', body: read('formulas.md') }, ...engineeringSections, ...topics.map((topic) => ({ file: topic.url, body: topic.content })), ...caseStudies.map((study) => ({ file: `case:${study.url}`, body: study.content })), ...figures.map((figure) => ({ file: `figure:${figure.id}`, body: figure.explanation }))]) {
   if (/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/.test(entry.body)) errors.push(`Control character in content: ${entry.file}`);
   if ((entry.body.match(/\$\$/g) || []).length % 2) errors.push(`Unclosed display math: ${entry.file}`);
-  const body = entry.body.replace(/```[\s\S]*?```/g, '');
+  const body = entry.body.replace(/```[\s\S]*?```|~~~[\s\S]*?~~~|<script\b[\s\S]*?<\/script>/gi, '');
+  if (entry.file.startsWith('notes/') || entry.file === 'formulas.md') {
+    for (const math of body.matchAll(/\$[^$\n]+\$/g)) {
+      if (math[0].includes('|')) errors.push(`Raw inline math pipe may form an unintended table: ${entry.file}`);
+    }
+  }
   for (const match of body.matchAll(/!?\[[^\]]*\]\(([^)]+)\)/g)) checkLink(entry.file, match[1]);
   for (const match of body.matchAll(/\{\{\s*['"]([^'"]+)['"]\s*\|\s*relative_url\s*\}\}/g)) checkLink(entry.file, match[1]);
 }
