@@ -1,5 +1,6 @@
 // PDF bytes are fetched by PDF.js and painted to canvas. Never navigate an
 // iframe/window to COS: its default domain deliberately forces downloads.
+import { createPdfTranslator, pdfText } from './pdf-translation.js?v=1';
 const vendor = new URL('./vendor/pdfjs-6.4.299/', import.meta.url);
 let enginePromise;
 
@@ -91,20 +92,23 @@ export function createPdfReader(dialog) {
     'zoom', 'rotate', 'stage', 'page', 'notice', 'error-title', 'error', 'retry',
     'status', 'toc-toggle', 'toc-close', 'toc', 'toc-backdrop', 'outline'
   ].map((name) => [name, get(name)]));
-  let documentTask, pdf, renderTask, currentFile, opener;
+  let documentTask, pdf, renderTask, textTask, currentFile, opener, translator;
   let session = 0, layoutVersion = 0, pumpId = 0, pageNumber = 1, rotation = 0;
   let loadTimer, resizeTimer, scrollFrame, stageWidth = 0, renderingPage = 0;
   let pageSlots = [], baseSize = { width: 1, height: 1 }, pageSizes = new Map();
   let rendered = new Map(), pending = new Set(), rendering = false, outlineEntries = [];
+  const pageTexts = new Map();
 
   function controls() {
     ui.number.disabled = ui.jump.disabled = ui.zoom.disabled = ui.rotate.disabled = !pdf;
     if (document.activeElement !== ui.number) ui.number.value = String(pageNumber);
     ui.number.max = String(pdf?.numPages || 1);
     ui.total.textContent = pdf ? String(pdf.numPages) : '—';
+    translator?.setEnabled(Boolean(pdf));
   }
 
   function setTocOpen(open) {
+    if (open) translator?.hide();
     ui.toc.hidden = !open;
     ui['toc-backdrop'].hidden = !open;
     ui['toc-toggle'].setAttribute('aria-expanded', String(open));
@@ -118,7 +122,11 @@ export function createPdfReader(dialog) {
     clearTimeout(resizeTimer);
     cancelAnimationFrame(scrollFrame);
     renderTask?.cancel();
+    textTask?.cancel();
+    textTask = null;
     renderTask = null;
+    translator?.reset();
+    pageTexts.clear();
     // Destroying the loading task also terminates its worker and range requests.
     documentTask?.destroy().catch(() => {});
     documentTask = pdf = null;
@@ -183,6 +191,7 @@ export function createPdfReader(dialog) {
       if (Math.abs(number - pageNumber) <= 3) continue;
       pageSlots[number - 1].replaceChildren(placeholder(number));
       rendered.delete(number);
+      pageTexts.delete(number);
     }
   }
 
@@ -193,14 +202,17 @@ export function createPdfReader(dialog) {
       number <= Math.min(pdf.numPages, pageNumber + 2); number += 1) {
       if (!rendered.has(number)) pending.add(number);
     }
-    if (renderingPage && Math.abs(renderingPage - pageNumber) > 3) renderTask?.cancel();
+    if (renderingPage && Math.abs(renderingPage - pageNumber) > 3) {
+      renderTask?.cancel();
+      textTask?.cancel();
+    }
     releaseDistantPages();
     pump();
   }
 
   async function renderPage(number, activeSession, version) {
     const slot = pageSlots[number - 1];
-    let page, task;
+    let page, task, layerTask;
     try {
       page = await pdf.getPage(number);
       if (activeSession !== session || version !== layoutVersion) return;
@@ -235,6 +247,24 @@ export function createPdfReader(dialog) {
       rendered.set(number, canvas);
       ui.stage.setAttribute('aria-busy', 'false');
       updateStatus();
+      // Text extraction must never prevent a scanned or unusual PDF from rendering.
+      try {
+        const content = await page.getTextContent();
+        if (activeSession !== session || version !== layoutVersion || rendered.get(number) !== canvas) return;
+        pageTexts.set(number, pdfText(content.items));
+        const engine = await loadEngine();
+        if (activeSession !== session || version !== layoutVersion || rendered.get(number) !== canvas) return;
+        const layer = document.createElement('div');
+        layer.className = 'pdf-text-layer';
+        layer.style.setProperty('--total-scale-factor', String(scale));
+        layerTask = new engine.TextLayer({ textContentSource: content, container: layer, viewport });
+        // Explicit dimensions also support browsers without CSS round().
+        layer.style.width = `${viewport.rawDims.pageWidth * scale}px`;
+        layer.style.height = `${viewport.rawDims.pageHeight * scale}px`;
+        slot.append(layer);
+        textTask = layerTask;
+        await layerTask.render();
+      } catch { /* Keep the canvas readable when a PDF's text layer is unavailable. */ }
     } catch (error) {
       if (activeSession !== session || version !== layoutVersion || error?.name === 'RenderingCancelledException') return;
       const retry = document.createElement('button');
@@ -249,6 +279,7 @@ export function createPdfReader(dialog) {
       }
     } finally {
       if (renderTask === task) renderTask = null;
+      if (textTask === layerTask) textTask = null;
       page?.cleanup();
     }
   }
@@ -334,8 +365,10 @@ export function createPdfReader(dialog) {
     const anchor = pageNumber;
     layoutVersion += 1;
     renderTask?.cancel();
+    textTask?.cancel();
     pending.clear();
     rendered.clear();
+    pageTexts.clear();
     for (let number = 1; number <= pageSlots.length; number += 1) {
       pageSlots[number - 1].replaceChildren(placeholder(number));
       sizeSlot(number);
@@ -527,6 +560,23 @@ export function createPdfReader(dialog) {
     if (typeof dialog.close === 'function') dialog.close();
     else { dialog.removeAttribute('open'); closed(); }
   }
+
+  translator = createPdfTranslator({
+    dialog,
+    onOpen: () => setTocOpen(false),
+    getPageText: async () => {
+      const number = pageNumber, activeSession = session, document = pdf;
+      if (!document) throw new Error('No open PDF');
+      let text = pageTexts.get(number);
+      if (text === undefined) {
+        const page = await document.getPage(number);
+        const content = await page.getTextContent();
+        if (activeSession !== session) throw new Error('PDF changed');
+        text = pdfText(content.items);
+      }
+      return { text, label: `第 ${number} 页 · 原文` };
+    }
+  });
 
   ui.close.addEventListener('click', close);
   dialog.addEventListener('close', closed);

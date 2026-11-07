@@ -42,6 +42,45 @@ body.pdf-reading { overflow: hidden; }
 .pdf-page canvas { display: block; max-width: none; }
 .pdf-page-placeholder { display: flex; box-sizing: border-box; width: 100%; height: 100%; align-items: center; justify-content: center; padding: 20px; color: #89978b; font-size: 12px; text-align: center; }
 .pdf-page-label { position: absolute; right: 10px; bottom: 8px; padding: 3px 6px; border-radius: 4px; background: #ffffffe0; color: #758278; font-size: 10px; }
+.pdf-page-label { pointer-events: none; user-select: none; }
+/* TextLayer geometry follows PDF.js 6.4.299 (Apache-2.0, assets/vendor/pdfjs-6.4.299/LICENSE). */
+.pdf-text-layer { position: absolute; inset: 0; overflow: hidden; color-scheme: only light; line-height: 1; text-align: initial; letter-spacing: normal; word-spacing: normal; -webkit-text-size-adjust: none; text-size-adjust: none; forced-color-adjust: none; transform-origin: 0 0; --min-font-size: 1; --text-scale-factor: calc(var(--total-scale-factor) * var(--min-font-size)); --min-font-size-inv: calc(1 / var(--min-font-size)); }
+.pdf-text-layer :is(span, br) { position: absolute; color: transparent; white-space: pre; cursor: text; transform-origin: 0 0; -webkit-user-select: text; user-select: text; }
+.pdf-text-layer > :not(.markedContent), .pdf-text-layer .markedContent span:not(.markedContent) { --font-height: 0; --scale-x: 1; --rotate: 0deg; font-size: calc(var(--text-scale-factor) * var(--font-height)); transform: rotate(var(--rotate)) scaleX(var(--scale-x)) scale(var(--min-font-size-inv)); }
+.pdf-text-layer .markedContent { display: contents; }
+.pdf-text-layer[data-main-rotation="90"] { transform: rotate(90deg) translateY(-100%); }
+.pdf-text-layer[data-main-rotation="180"] { transform: rotate(180deg) translate(-100%, -100%); }
+.pdf-text-layer[data-main-rotation="270"] { transform: rotate(270deg) translateX(-100%); }
+.pdf-text-layer ::selection { background: #5185c455; color: transparent; }
+.pdf-text-layer br::selection { background: transparent; }
+.pdf-translation { box-sizing: border-box; flex: 0 0 350px; min-width: 0; overflow: auto; border-left: 1px solid #d5d5d5; background: #f5f5f5; color: #202020; overscroll-behavior: contain; }
+.pdf-translation[hidden], .pdf-translation [hidden] { display: none; }
+.pdf-translation-heading { position: sticky; top: 0; z-index: 1; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid #ddd; background: #f5f5f5; font-size: 14px; }
+.pdf-translation-heading small { margin-left: 6px; font-size: 10px; font-weight: 500; color: #666; }
+.pdf-translation button, .pdf-translation select, .pdf-translation textarea { box-sizing: border-box; min-height: 36px; padding: 7px 10px; border: 1px solid #ccc; border-radius: 6px; background: #fff; color: #202020; font: inherit; font-size: 12px; }
+.pdf-translation button, .pdf-translation select { cursor: pointer; }
+.pdf-translation button:hover:not(:disabled) { background: #e9e9e9; }
+.pdf-translation :disabled { opacity: .5; cursor: default; }
+.pdf-translation :focus-visible { outline: 2px solid #586b81; outline-offset: 2px; }
+.pdf-translation-heading button { min-width: 34px; padding: 0; font-size: 21px; }
+.pdf-translation-body { padding: 12px 16px 20px; }
+.pdf-translation-hint { margin: 0 0 12px; color: #666; font-size: 11px; line-height: 1.7; }
+.pdf-translation-sources, .pdf-translation-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 14px; }
+.pdf-translation-source-label { display: block; margin-bottom: 6px; color: #595959; font-size: 11px; }
+.pdf-translation textarea { display: block; width: 100%; min-height: 110px; max-height: 320px; margin-bottom: 12px; resize: vertical; line-height: 1.6; }
+.pdf-translation-controls label { display: flex; align-items: center; gap: 5px; font-size: 12px; }
+.pdf-translation-controls select { max-width: 124px; }
+.pdf-translation .pdf-translation-start { background: #dedede; border-color: #bcbcbc; color: #171717; }
+.pdf-translation .pdf-translation-start:hover:not(:disabled) { background: #d1d1d1; }
+.pdf-translation-status { margin: 0 0 14px; color: #505b68; font-size: 12px; line-height: 1.7; overflow-wrap: anywhere; }
+.pdf-translation h3 { margin: 0 0 8px; font-size: 12px; }
+.pdf-translation-result { min-height: 80px; margin-bottom: 16px; padding: 14px; border: 1px solid #ddd; border-radius: 8px; background: #fff; font-size: 14px; line-height: 1.9; white-space: pre-wrap; overflow-wrap: anywhere; }
+@media (max-width: 900px) {
+  .pdf-reader-content:has(.pdf-translation:not([hidden])) { flex-direction: column; }
+  .pdf-translation { flex: 0 0 52%; width: 100%; border-top: 1px solid #ccc; border-left: 0; }
+  .pdf-translation textarea { min-height: 86px; }
+  .pdf-translation-body { padding: 10px 14px 18px; }
+}
 .pdf-page-retry { display: block; width: 100%; height: 100%; border: 0; background: #fff; color: #526f56; cursor: pointer; font: inherit; font-size: 12px; }
 .pdf-status { min-height: 34px; box-sizing: border-box; padding: 8px 12px; border-top: 1px solid #d4ddd5; background: #f8faf7; color: #657269; font-size: 11px; text-align: center; }
 .pdf-stage[aria-busy="true"]::before { position: sticky; top: 18px; left: calc(50% - 15px); z-index: 1; display: block; width: 24px; height: 24px; margin: 0 auto -28px; border: 3px solid #c2d3c3; border-top-color: #466b4e; border-radius: 50%; content: ''; animation: pdf-spin .8s linear infinite; }

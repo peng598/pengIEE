@@ -1,4 +1,4 @@
-import { createPdfReader } from './pdf-reader.js?v=range-queue-1';
+import { createPdfReader } from './pdf-reader.js?v=translation-1';
 
 (() => {
   const root = document.querySelector('[data-reference-library]');

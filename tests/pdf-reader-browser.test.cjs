@@ -11,9 +11,9 @@ const chrome = process.env.CHROME_PATH || (process.platform === 'win32'
   ? 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
   : '/usr/bin/google-chrome');
 
-function fixturePdf(withOutline = true) {
+function fixturePdf(withOutline = true, withoutText = false) {
   const stream = (page) => {
-    const content = `BT /F1 24 Tf 50 700 Td (Page ${page}) Tj ET`;
+    const content = withoutText ? '' : `BT /F1 24 Tf 50 700 Td (Page ${page}) Tj ET`;
     return `<< /Length ${Buffer.byteLength(content)} >>\nstream\n${content}\nendstream`;
   };
   const objects = [
@@ -111,7 +111,7 @@ async function captureScreenshot(port, profile, mobile, target) {
 }
 
 const html = `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="stylesheet" href="/assets/pdf-reader.css"></head><body>
+<link rel="stylesheet" href="/assets/pdf-reader.css"></head><body data-ai-endpoint="/mock-translate">
 <dialog class="reference-reader" data-reference-reader>
 <div class="reference-reader-shell">
 <header class="reference-reader-header"><div class="reference-reader-heading">
@@ -135,6 +135,12 @@ const reader = createPdfReader(document.querySelector('dialog'));
 const one = (selector) => document.querySelector(selector);
 const params = new URLSearchParams(location.search);
 const noOutline = params.has('no-outline');
+const translationRequests = [];
+const originalFetch = window.fetch;
+window.fetch = async (url, options) => {
+  if (url === '/mock-translate') translationRequests.push(JSON.parse(options.body));
+  return originalFetch(url, options);
+};
 const wait = async (condition) => {
   for (let i = 0; i < 120; i++) {
     if (condition()) return;
@@ -175,6 +181,64 @@ try {
   one('[data-reader-zoom]').dispatchEvent(new Event('change'));
   await wait(() => document.querySelectorAll('.pdf-page')[0].querySelector('canvas'));
   if (one('[data-reader-download]')) throw new Error('Download control exposed');
+  await wait(() => one('.pdf-text-layer span'));
+  const layer = one('.pdf-text-layer');
+  const canvasRect = layer.parentElement.querySelector('canvas').getBoundingClientRect();
+  const layerRect = layer.getBoundingClientRect();
+  if (Math.abs(layerRect.width - canvasRect.width) > 2 || Math.abs(layerRect.height - canvasRect.height) > 2) throw new Error('Rotated text layer alignment');
+  const range = document.createRange();
+  range.selectNodeContents(layer.querySelector('span'));
+  document.getSelection().removeAllRanges();
+  document.getSelection().addRange(range);
+  document.dispatchEvent(new Event('selectionchange'));
+  one('[data-reader-translate]').click();
+  await wait(() => one('[data-translation-source]').value.includes('Page 1'));
+  if (!one('[data-reader-toc]').hidden) throw new Error('Contents should make room for translation');
+  if (translationRequests.length) throw new Error('Text sent before explicit translate action');
+  one('[data-translation-start]').click();
+  await wait(() => one('[data-translation-status]').textContent.includes('翻译完成'));
+  if (!one('[data-translation-result]').textContent.includes('第 1 页')) throw new Error('Translation result');
+  if (translationRequests[0].messages[1].content !== 'Page 1') throw new Error('Wrong selected text sent');
+  one('[data-translation-start]').click();
+  await wait(() => one('[data-translation-status]').textContent.includes('翻译完成'));
+  if (translationRequests.length !== 1) throw new Error('Repeated translation missed cache');
+  one('[data-reader-number]').value = '2';
+  one('[data-reader-jump]').click();
+  await wait(() => one('[data-reader-number]').value === '2');
+  one('[data-translation-page]').click();
+  await wait(() => one('[data-translation-source]').value.includes('Page 2'));
+  one('[data-translation-language]').value = 'en';
+  one('[data-translation-language]').dispatchEvent(new Event('input'));
+  one('[data-translation-start]').click();
+  await wait(() => one('[data-translation-status]').textContent.includes('翻译完成'));
+  if (!translationRequests.at(-1).messages[0].content.includes('English')) throw new Error('Target language not sent');
+  const source = one('[data-translation-source]');
+  source.value = 'busy';
+  source.dispatchEvent(new Event('input'));
+  one('[data-translation-start]').click();
+  await wait(() => one('[data-translation-status]').textContent.includes('服务正忙'));
+  if (source.value !== 'busy' || one('[data-translation-start]').disabled) throw new Error('Retry unavailable after error');
+  source.value = '<img src=x onerror=alert(1)>';
+  source.dispatchEvent(new Event('input'));
+  one('[data-translation-start]').click();
+  await wait(() => one('[data-translation-status]').textContent.includes('翻译完成'));
+  if (one('[data-translation-result] img')) throw new Error('Translation executed HTML');
+  source.value = 'slow';
+  source.dispatchEvent(new Event('input'));
+  one('[data-translation-start]').click();
+  one('[data-translation-cancel]').click();
+  if (one('[data-translation-start]').disabled || !one('[data-translation-cancel]').hidden) throw new Error('Cancel did not unlock controls');
+  one('[data-reader-close]').click();
+  await wait(() => !document.querySelector('dialog').open);
+  reader.open({ title: 'Second document', readUrl: location.origin + '/fixture-no-outline.pdf' });
+  await wait(() => one('[data-reader-page] canvas'));
+  if (source.value || one('[data-translation-result]').textContent.includes('第 1 页')) throw new Error('Translation leaked into next PDF');
+  if (!one('.pdf-translation').hidden) throw new Error('New PDF retained translation panel');
+  reader.open({ title: 'Scanned page fixture', readUrl: location.origin + '/fixture-scan.pdf' });
+  await wait(() => one('[data-reader-page] canvas'));
+  one('[data-reader-translate]').click();
+  await wait(() => one('[data-translation-status]').textContent.includes('没有可提取的文字'));
+  if (!one('[data-translation-start]').disabled) throw new Error('Scanning fixture allowed empty translation');
   one('#result').textContent = 'PASS continuous scrolling, jump, outline, zoom, rotate';
 } catch (error) {
   one('#result').textContent = 'FAIL ' + error.stack;
@@ -194,6 +258,20 @@ async function runReaderTest(mobile, noOutline = false) {
     } else if (req.url === '/fixture-no-outline.pdf') {
       res.writeHead(200, { 'Content-Type': 'application/pdf' });
       res.end(pdfWithoutOutline);
+    } else if (req.url === '/fixture-scan.pdf') {
+      res.writeHead(200, { 'Content-Type': 'application/pdf' });
+      res.end(fixturePdf(false, true));
+    } else if (req.url === '/mock-translate' && req.method === 'POST') {
+      let body = '';
+      req.on('data', (chunk) => { body += chunk; });
+      req.on('end', () => {
+        const text = JSON.parse(body).messages[1].content;
+        if (text === 'busy') { res.writeHead(429); res.end(); return; }
+        const send = () => { res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ choices: [{ message: { content: text.replace(/Page (\d+)/g, '第 $1 页') } }] })); };
+        if (text === 'slow') setTimeout(send, 400);
+        else send();
+      });
     } else if (req.url?.startsWith('/assets/')) {
       const target = path.resolve(root, req.url.slice(1).split('?')[0]);
       if (!target.startsWith(path.join(root, 'assets') + path.sep) || !fs.existsSync(target)) {
