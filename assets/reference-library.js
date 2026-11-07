@@ -1,4 +1,4 @@
-import { createPdfReader } from './pdf-reader.js?v=translation-1';
+import { createPdfReader } from './pdf-reader.js?v=translation-2';
 
 (() => {
   const root = document.querySelector('[data-reference-library]');

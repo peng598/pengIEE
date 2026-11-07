@@ -202,11 +202,29 @@ try {
   one('[data-translation-start]').click();
   await wait(() => one('[data-translation-status]').textContent.includes('翻译完成'));
   if (translationRequests.length !== 1) throw new Error('Repeated translation missed cache');
+  if (one('[data-translation-editor]').open) throw new Error('Source editor should stay collapsed');
+  if (!one('.pdf-translation-original').textContent.includes('Page 1') || !one('.pdf-translation-translated').textContent.includes('第 1 页')) throw new Error('Bilingual pair lost its source or translation');
+  if (innerWidth <= 900) {
+    const stage = one('[data-reader-stage]');
+    const originalTop = stage.scrollTop;
+    const originalWidth = stage.clientWidth;
+    const contentHeight = one('.pdf-reader-content').clientHeight;
+    if (one('.pdf-translation').clientHeight < contentHeight * 0.8) throw new Error('Mobile translation still squeezed into half screen');
+    if (!stage.inert || getComputedStyle(one('.pdf-translation-original')).display === 'none') throw new Error('Bilingual view not active');
+    one('[data-translation-view="translation"]').click();
+    if (getComputedStyle(one('.pdf-translation-original')).display !== 'none') throw new Error('Translation-only view still shows source');
+    one('[data-translation-view="original"]').click();
+    if (stage.inert || getComputedStyle(stage).visibility !== 'visible') throw new Error('Original PDF is inaccessible');
+    one('[data-translation-view="compare"]').click();
+    if (Math.abs(stage.scrollTop - originalTop) > 1 || stage.clientWidth !== originalWidth) throw new Error('Switching views moved the original PDF');
+    if (translationRequests.length !== 1) throw new Error('View switch unnecessarily requests a new translation');
+  }
   one('[data-reader-number]').value = '2';
   one('[data-reader-jump]').click();
   await wait(() => one('[data-reader-number]').value === '2');
   one('[data-translation-page]').click();
-  await wait(() => one('[data-translation-source]').value.includes('Page 2'));
+  await wait(() => one('[data-translation-source]').value.includes('Page 2') && one('[data-translation-status]').textContent.includes('翻译完成'));
+  if (!one('[data-translation-source-label]').textContent.includes('第 2 页')) throw new Error('Translated page is not identified');
   one('[data-translation-language]').value = 'en';
   one('[data-translation-language]').dispatchEvent(new Event('input'));
   one('[data-translation-start]').click();

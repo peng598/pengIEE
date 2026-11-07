@@ -1,6 +1,6 @@
 // PDF bytes are fetched by PDF.js and painted to canvas. Never navigate an
 // iframe/window to COS: its default domain deliberately forces downloads.
-import { createPdfTranslator, pdfText } from './pdf-translation.js?v=1';
+import { createPdfTranslator, pdfText } from './pdf-translation.js?v=2';
 const vendor = new URL('./vendor/pdfjs-6.4.299/', import.meta.url);
 let enginePromise;
 
@@ -105,6 +105,7 @@ export function createPdfReader(dialog) {
     ui.number.max = String(pdf?.numPages || 1);
     ui.total.textContent = pdf ? String(pdf.numPages) : '—';
     translator?.setEnabled(Boolean(pdf));
+    translator?.setPage(pageNumber);
   }
 
   function setTocOpen(open) {
@@ -341,7 +342,7 @@ export function createPdfReader(dialog) {
   function onScroll() {
     cancelAnimationFrame(scrollFrame);
     scrollFrame = requestAnimationFrame(() => {
-      if (!pdf) return;
+      if (!pdf || ui.stage.inert) return;
       const visible = visiblePage();
       if (visible !== pageNumber) {
         pageNumber = visible;

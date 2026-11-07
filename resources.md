@@ -6,7 +6,7 @@ permalink: /resources/
 ---
 
 {% assign resource_categories = site.data.resources | map: "category" | uniq %}
-<link rel="stylesheet" href="{{ '/assets/pdf-reader.css' | relative_url }}?v=translation-1">
+<link rel="stylesheet" href="{{ '/assets/pdf-reader.css' | relative_url }}?v=translation-2">
 <section class="reference-library" data-reference-library data-catalog-url="{{ '/assets/reference-library.json' | relative_url }}?v=2" data-reference-api="{{ site.submission_endpoint | default: '' | escape }}" aria-labelledby="reference-title">
   <header class="reference-hero">
     <div class="reference-hero-copy">
@@ -121,4 +121,4 @@ permalink: /resources/
 {% endif %}
 
 <script defer src="{{ '/assets/submission-api.js' | relative_url }}"></script>
-<script type="module" src="{{ '/assets/reference-library.js' | relative_url }}?v=translation-1"></script>
+<script type="module" src="{{ '/assets/reference-library.js' | relative_url }}?v=translation-2"></script>

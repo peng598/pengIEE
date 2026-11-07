@@ -72,29 +72,58 @@ export function createPdfTranslator({ dialog, getPageText, onOpen }) {
   panel.setAttribute('aria-label', 'PDF 对照翻译');
   panel.innerHTML = `
     <div class="pdf-translation-heading"><strong>对照翻译 <small>AI</small></strong><button type="button" data-translation-close aria-label="收起翻译">×</button></div>
+    <div class="pdf-translation-controls">
+      <label><span class="sr-only">翻译目标语言</span><select data-translation-language aria-label="翻译目标语言"><option value="zh-CN">简体中文</option><option value="en">English</option></select></label>
+      <button type="button" class="pdf-translation-start" data-translation-start>翻译</button>
+      <button type="button" data-translation-cancel hidden>停止</button>
+      <button type="button" data-translation-page>翻译当前页</button>
+    </div>
     <div class="pdf-translation-body">
-      <p class="pdf-translation-hint">选中文字或提取当前页，边读边译。</p>
-      <div class="pdf-translation-sources"><button type="button" data-translation-selection disabled>使用选中文字</button><button type="button" data-translation-page>提取当前页</button></div>
-      <label class="pdf-translation-source-label" for="pdf-translation-source" data-translation-source-label>原文 · 可编辑</label>
-      <textarea id="pdf-translation-source" data-translation-source rows="5" placeholder="也可在这里粘贴需要翻译的段落" spellcheck="false"></textarea>
-      <div class="pdf-translation-controls">
-        <label>译为 <select data-translation-language aria-label="翻译目标语言"><option value="zh-CN">简体中文</option><option value="en">English</option></select></label>
-        <button type="button" class="pdf-translation-start" data-translation-start>翻译</button>
-        <button type="button" data-translation-cancel hidden>停止</button>
-      </div>
+      <details class="pdf-translation-editor" data-translation-editor>
+        <summary><span data-translation-source-label>原文</span><span>调整原文</span></summary>
+        <label class="sr-only" for="pdf-translation-source">待翻译原文，可编辑</label>
+        <textarea id="pdf-translation-source" data-translation-source rows="5" placeholder="也可在这里粘贴需要翻译的段落" spellcheck="false"></textarea>
+        <button type="button" data-translation-selection disabled>使用选中文字</button>
+      </details>
       <p class="pdf-translation-status" data-translation-status role="status" aria-live="polite"></p>
-      <h3>译文</h3>
       <div class="pdf-translation-result" data-translation-result aria-label="译文" tabindex="0">译文会显示在这里。</div>
-      <p class="pdf-translation-hint">点击翻译后，仅将本次原文发送至本站 AI 服务。公式、数值与术语请对照原文。</p>
+      <p class="pdf-translation-hint">由本站 AI 翻译，公式与数值请核对原文。</p>
     </div>`;
-  dialog.querySelector('.pdf-reader-content').append(panel);
+  const contentArea = dialog.querySelector('.pdf-reader-content');
+  const stage = dialog.querySelector('[data-reader-stage]');
+  const mobile = window.matchMedia('(max-width: 900px)');
+  const views = document.createElement('div');
+  views.className = 'pdf-translation-views';
+  views.hidden = true;
+  views.setAttribute('role', 'group');
+  views.setAttribute('aria-label', '阅读视图');
+  views.innerHTML = `<button type="button" data-translation-view="original" aria-pressed="false">原文 PDF</button><button type="button" data-translation-view="compare" aria-pressed="true">双语对照</button><button type="button" data-translation-view="translation" aria-pressed="false">只看译文</button><button type="button" data-translation-dismiss aria-label="退出翻译，返回原文">×</button>`;
+  contentArea.prepend(views);
+  contentArea.append(panel);
   const get = (name) => panel.querySelector(`[data-translation-${name}]`);
   const ui = Object.fromEntries(['close', 'selection', 'page', 'source', 'source-label',
-    'language', 'start', 'cancel', 'status', 'result'].map((name) => [name, get(name)]));
+    'language', 'start', 'cancel', 'status', 'result', 'editor'].map((name) => [name, get(name)]));
+  const body = panel.querySelector('.pdf-translation-body');
   ui.source.maxLength = maxInput;
   let enabled = false, busy = false, generation = 0, controller;
   let selection = null, loadedSelection = '';
+  let view = 'compare';
+  const scrollPositions = { compare: 0, translation: 0 };
   const cache = new Map();
+
+  function setView(next) {
+    const pdfPosition = { top: stage.scrollTop, left: stage.scrollLeft };
+    if (view !== 'original') scrollPositions[view] = body.scrollTop;
+    view = next;
+    contentArea.dataset.translationView = view;
+    for (const button of views.querySelectorAll('[data-translation-view]')) {
+      button.setAttribute('aria-pressed', String(button.dataset.translationView === view));
+    }
+    stage.inert = mobile.matches && !panel.hidden && view !== 'original';
+    panel.inert = mobile.matches && view === 'original';
+    if (!stage.inert) { stage.scrollTop = pdfPosition.top; stage.scrollLeft = pdfPosition.left; }
+    if (view !== 'original') body.scrollTop = scrollPositions[view] || 0;
+  }
 
   function controls() {
     toggle.disabled = !enabled;
@@ -104,6 +133,7 @@ export function createPdfTranslator({ dialog, getPageText, onOpen }) {
     ui.language.disabled = busy;
     ui.start.disabled = busy || !enabled || !endpoint || !ui.source.value.trim() || ui.source.value.length > maxInput;
     ui.cancel.hidden = !busy;
+    ui.start.hidden = busy;
     ui.result.setAttribute('aria-busy', String(busy));
   }
 
@@ -137,19 +167,24 @@ export function createPdfTranslator({ dialog, getPageText, onOpen }) {
     busy = true;
     controls();
     ui.source.value = '';
+    ui.editor.open = false;
+    body.scrollTop = 0;
+    scrollPositions.compare = scrollPositions.translation = 0;
     ui.result.textContent = '译文会显示在这里。';
     ui.status.textContent = '正在提取原文…';
     try {
       const content = useSelection && selection ? { ...selection } : await getPageText();
       if (active !== generation) return;
       ui.source.value = content.text;
-      ui['source-label'].textContent = `${content.label} · 可编辑`;
+      ui['source-label'].textContent = content.label;
       loadedSelection = useSelection ? content.text : '';
       ui.status.textContent = !content.text.trim()
         ? '本页没有可提取的文字，可能是扫描图片。暂不支持图片识字，可手动粘贴原文。'
         : content.text.length > maxInput ? `本页文字较多，请选取不超过 ${maxInput} 字符的段落。`
-          : '可先修正原文中的分栏顺序，再点击翻译。';
+          : '点击翻译，查看分段对照译文。';
+      ui.editor.open = !content.text.trim() || content.text.length > maxInput;
       if (!endpoint) ui.status.textContent = '翻译服务尚未配置，请联系网站维护者。';
+      return Boolean(endpoint && content.text.trim() && content.text.length <= maxInput);
     } catch {
       if (active === generation) ui.status.textContent = '原文暂时无法提取，请重试，或手动粘贴需要翻译的内容。';
     } finally {
@@ -158,8 +193,15 @@ export function createPdfTranslator({ dialog, getPageText, onOpen }) {
   }
 
   function hide() {
+    const position = { top: stage.scrollTop, left: stage.scrollLeft };
     cancel('翻译已停止。已完成的段落保留，再次点击翻译可继续。');
     panel.hidden = true;
+    views.hidden = true;
+    contentArea.classList.remove('translation-open');
+    stage.inert = false;
+    panel.inert = false;
+    stage.scrollTop = position.top;
+    stage.scrollLeft = position.left;
     toggle.setAttribute('aria-expanded', 'false');
   }
 
@@ -167,8 +209,11 @@ export function createPdfTranslator({ dialog, getPageText, onOpen }) {
     captureSelection();
     onOpen();
     panel.hidden = false;
+    views.hidden = false;
+    contentArea.classList.add('translation-open');
+    setView(view === 'original' ? 'compare' : view);
     toggle.setAttribute('aria-expanded', 'true');
-    ui.close.focus({ preventScroll: true });
+    (mobile.matches ? views.querySelector('[aria-pressed="true"]') : ui.close).focus({ preventScroll: true });
     if (selection && selection.text !== loadedSelection) await prepare(true);
     else if (!ui.source.value) await prepare();
   }
@@ -177,10 +222,14 @@ export function createPdfTranslator({ dialog, getPageText, onOpen }) {
     if (busy || ui.start.disabled) return;
     cancel();
     const active = generation;
-    const chunks = translationChunks(ui.source.value);
+    const chunks = translationChunks(ui.source.value, 900);
     const language = ui.language.value;
     const answers = [];
     busy = true;
+    ui.editor.open = false;
+    if (view === 'original') setView('compare');
+    body.scrollTop = 0;
+    scrollPositions.compare = scrollPositions.translation = 0;
     controls();
     ui.result.textContent = '';
     try {
@@ -204,11 +253,24 @@ export function createPdfTranslator({ dialog, getPageText, onOpen }) {
         }
         if (active !== generation) return;
         answers.push(answer);
-        ui.result.textContent = answers.join('\n\n');
-        if (i === 0 && window.innerWidth <= 900) {
-          // Keep the first result visible in the phone's smaller split pane.
-          panel.scrollTop += ui.status.getBoundingClientRect().top - panel.getBoundingClientRect().top - 68;
-        }
+        const pair = document.createElement('article');
+        pair.className = 'pdf-translation-pair';
+        const original = document.createElement('div');
+        original.className = 'pdf-translation-original';
+        const originalLabel = document.createElement('h3');
+        originalLabel.textContent = `原文 · ${i + 1}`;
+        const originalText = document.createElement('p');
+        originalText.textContent = chunks[i].trim();
+        original.append(originalLabel, originalText);
+        const translated = document.createElement('div');
+        translated.className = 'pdf-translation-translated';
+        const translatedLabel = document.createElement('h3');
+        translatedLabel.textContent = `译文 · ${i + 1}`;
+        const translatedText = document.createElement('p');
+        translatedText.textContent = answer;
+        translated.append(translatedLabel, translatedText);
+        pair.append(original, translated);
+        ui.result.append(pair);
       }
       ui.status.textContent = `翻译完成 · ${chunks.length} 段 · ${languages[language]}`;
     } catch (error) {
@@ -224,7 +286,13 @@ export function createPdfTranslator({ dialog, getPageText, onOpen }) {
   toggle.addEventListener('pointerdown', captureSelection);
   toggle.addEventListener('click', () => panel.hidden ? show() : hide());
   ui.close.addEventListener('click', () => { hide(); toggle.focus(); });
-  ui.page.addEventListener('click', () => prepare());
+  views.querySelector('[data-translation-dismiss]').addEventListener('click', () => { hide(); toggle.focus(); });
+  for (const button of views.querySelectorAll('[data-translation-view]')) button.addEventListener('click', () => setView(button.dataset.translationView));
+  mobile.addEventListener('change', () => setView(view));
+  ui.page.addEventListener('click', async () => {
+    const ready = await prepare();
+    if (ready && !panel.hidden) await translate();
+  });
   ui.selection.addEventListener('click', () => prepare(true));
   ui.start.addEventListener('click', translate);
   ui.cancel.addEventListener('click', () => cancel('翻译已停止。已完成的段落保留，再次点击翻译可继续。'));
@@ -241,14 +309,18 @@ export function createPdfTranslator({ dialog, getPageText, onOpen }) {
   return {
     hide,
     setEnabled(value) { enabled = value; controls(); },
+    setPage(number) { ui.page.textContent = `翻译第 ${number} 页`; },
     reset() {
       hide();
       enabled = false;
       selection = null;
       loadedSelection = '';
       cache.clear();
+      view = 'compare';
+      scrollPositions.compare = scrollPositions.translation = 0;
+      body.scrollTop = 0;
       ui.source.value = '';
-      ui['source-label'].textContent = '原文 · 可编辑';
+      ui['source-label'].textContent = '原文';
       ui.result.textContent = '译文会显示在这里。';
       ui.status.textContent = '';
       controls();
